@@ -4,11 +4,11 @@
     <script>
         frequency = (initalFrequency, halfSteps) => initalFrequency * (1.059463) ** (halfSteps)
 
-        const majorHalfSteps = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0]
-        const naturalMinorHalfSteps = [0, 2, 3, 5, 7, 8, 10, 12, 10, 8, 7, 5, 3, 2, 0]
-        const harmonicMinorHalfSteps = [0, 2, 3, 5, 7, 8, 11, 12, 11, 8, 7, 5, 3, 2, 0]
-        const melodicMinorHalfSteps = [0, 2, 3, 5, 7, 9, 11, 12, 10, 8, 7, 5, 3, 2, 0]
-        const bluesHalfSteps = [0, 3, 5, 6, 7, 10, 12, 10, 7, 6, 5, 3, 0]
+        const majorScale = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0]
+        const naturalMinorScale = [0, 2, 3, 5, 7, 8, 10, 12, 10, 8, 7, 5, 3, 2, 0]
+        const harmonicMinorScale = [0, 2, 3, 5, 7, 8, 11, 12, 11, 8, 7, 5, 3, 2, 0]
+        const melodicMinorScale = [0, 2, 3, 5, 7, 9, 11, 12, 10, 8, 7, 5, 3, 2, 0]
+        const bluesScale = [0, 3, 5, 6, 7, 10, 12, 10, 7, 6, 5, 3, 0]
 
         const Notes = Object.freeze(
             {
@@ -49,46 +49,69 @@
             }
         )
 
-        function playScale(context, initialNote, halfSteps, noteDuration) {
+        function playScale(initialNote, scale, noteDuration) {
             return new Promise((completionFunction) => {
                 const oscillator = context.createOscillator();
                 // oscillator.type = "sine";
                 const initialFrequency = frequency(440, initialNote)
-                halfSteps.forEach((halfStep, index) => {
-                    oscillator.frequency.setValueAtTime(frequency(initialFrequency, halfStep), context.currentTime + index * noteDuration);
+                scale.forEach((halfStep, index) => {
+                    oscillator.frequency.setValueAtTime(
+                        frequency(initialFrequency, halfStep),
+                        context.currentTime + index * noteDuration);
                 })
                 oscillator.connect(context.destination);
                 oscillator.start(context.currentTime);
-                oscillator.stop(context.currentTime + halfSteps.length * noteDuration)
-                oscillator.onended = () => {
-                    completionFunction()
-                }
+                oscillator.stop(context.currentTime + scale.length * noteDuration)
+                oscillator.onended = () => { completionFunction() }
             })
         }
 
-        async function playAllScales(context) {
+        async function playAllScales(startingNote) {
             for (const scale of [
-                majorHalfSteps,
-                naturalMinorHalfSteps.map(note => note - 3),
-                harmonicMinorHalfSteps.map(note => note - 3),
-                melodicMinorHalfSteps.map(note => note - 3),
-                bluesHalfSteps
+                majorScale,
+                naturalMinorScale.map(note => note - 3),
+                harmonicMinorScale.map(note => note - 3),
+                melodicMinorScale.map(note => note - 3),
+                bluesScale
             ]) {
-                try {
-                    await playScale(context, Notes.D4, scale, 0.25)
-                } catch (error) {
-                    console.log(error)
-                }
+                await playScale(startingNote, scale, 0.25)
             }
         }
+        var context
         function doit() {
-            const context = new (window.AudioContext || window.webkitAudioContext)();
-            playAllScales(context)
+            if (context) {
+                context.close()
+                context = undefined
+            } else {
+                context = new (window.AudioContext || window.webkitAudioContext)();
+                const startingNote = Notes[document.querySelector("#notes").value]
+                playAllScales(startingNote).then(() => {
+                    context.close()
+                    context.onended = undefined
+                    context = undefined
+                })
+            }
         }
     </script>
 </head>
 
 <body>
+    <select name="notes" id="notes">
+        <option value="C4">C4</option>
+        <option value="CS4">C#4</option>
+        <option value="D4">D</option>
+        <option value="DS4">D#4</option>
+        <option value="E4">E4</option>
+        <option value="F4">F4</option>
+        <option value="FS4">F#4</option>
+        <option value="G4">G4</option>
+        <option value="GS4">G#4</option>
+        <option value="A4">A4</option>
+        <option value="AS4">A#4</option>
+        <option value="B4">B4</option>
+        <option value="C5">C5</option>
+    </select>
+
     <button onclick="doit()">Click me</button>
 </body>
 
