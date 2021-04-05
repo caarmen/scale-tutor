@@ -17,7 +17,9 @@ class ScaleGenerator {
         this._settings = settings
     }
 
-    createScales(baseNote) {
+    createScales = () => this._getScaleBaseNotes().map(baseNote => this._createScales(baseNote)).flat()
+
+    _createScales(baseNote) {
         const minorScaleShift = this._settings.getMinorScaleShift()
         return settings.getScaleTypes().map(name => {
             if (name == Settings.ScaleTypes.MAJOR) return new Scale(baseNote, Scale.MAJOR)
@@ -27,6 +29,30 @@ class ScaleGenerator {
             else if (name == Settings.ScaleTypes.BLUES) return new Scale(baseNote, Scale.BLUES)
             else return undefined
         })
+    }
+
+    _getScaleBaseNotes() {
+        const scaleOrder = this._settings.getScaleOrder()
+        if (scaleOrder == Settings.ScaleOrder.INCREASING_FLATS) {
+            return [Note.Notes.C4, Note.Notes.F4, Note.Notes.AS4, Note.Notes.DS4, Note.Notes.GS4, Note.Notes.CS4, Note.Notes.FS4,
+            Note.Notes.B4, Note.Notes.E4, Note.Notes.A4, Note.Notes.D4, Note.Notes.G4]
+        } else if (scaleOrder == Settings.ScaleOrder.INCREASING_SHARPS) {
+            return [Note.Notes.C4, Note.Notes.G4, Note.Notes.D4, Note.Notes.A4, Note.Notes.E4, Note.Notes.B4, Note.Notes.FS4,
+            Note.Notes.CS4, Note.Notes.GS4, Note.Notes.DS4, Note.Notes.AS4, Note.Notes.F4]
+        } else if (scaleOrder == Settings.ScaleOrder.INCREASING_FLATS_AND_SHARPS) {
+            return [Notes.Notes.C4, Note.Notes.F4, Note.Notes.G4, Note.Notes.AS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.A4,
+            Note.Notes.GS4, Note.Notes.E4, Note.Notes.CS4, Note.Notes.B4, Note.Notes.FS4]
+        } else if (scaleOrder == Settings.ScaleOrder.INCREASING_NOTES) {
+            return [Note.Notes.C4, Note.Notes.CS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.E4, Note.Notes.F4, Note.Notes.FS4,
+            Note.Notes.G4, Note.Notes.GS4, Note.Notes.A4, Note.Notes.AS4, Note.Notes.B4]
+        } else if (scaleOrder == Settings.ScaleOrder.DECREASING_NOTES) {
+            return [Note.Notes.C4, Note.Notes.B4, Note.Notes.AS4, Note.Notes.A4, Note.Notes.GS4, Note.Notes.G4, Note.Notes.FS4,
+            Note.Notes.F4, Note.Notes.E4, Note.Notes.DS4, Note.Notes.D4, Note.Notes.CS4]
+        } else if (scaleOrder == Settings.ScaleOrder.RANDOM) {
+            // TODO randomize this
+            return [Note.Notes.C4, Note.Notes.CS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.E4, Note.Notes.F4, Note.Notes.FS4,
+            Note.Notes.G4, Note.Notes.GS4, Note.Notes.A4, Note.Notes.AS4, Note.Notes.B4]
+        }
     }
 
 }

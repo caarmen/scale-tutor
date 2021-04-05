@@ -24,7 +24,7 @@
     <script>
         async function playAllScales(startingNote) {
             const elemScaleId = document.querySelector("#scale-id")
-            const scales = scaleGenerator.createScales(startingNote)
+            const scales = scaleGenerator.createScales()
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
             const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))

@@ -29,15 +29,26 @@ class Settings {
 
     getMinorScaleShift = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, -3)
 
+    getScaleOrder = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_ORDER, Settings.ScaleOrder.INCREASING_FLATS)
+
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
 }
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMNOIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
+Settings.ScaleOrder = Object.freeze({
+    INCREASING_NOTES: "increasing_notes",
+    DECREASING_NOTES: "decreasing_notes",
+    INCREASING_FLATS: "increasing_flats",
+    INCREASING_SHARPS: "increasing_sharps",
+    INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps",
+    RANDOM: "random"
+})
 Settings.NoteNameFormat = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
 
 Settings._KEY_SCALE_TYPES = "scale_types"
+Settings._KEY_SCALE_ORDER = "scale_order"
 Settings._KEY_NOTE_NAME_FORMAt = "note_name_format"
 Settings._KEY_MINOR_SCALE_SHIFT = "minor_scale_shift"
 Settings._KEY_TEMPO_BPM = "tempo_bpm"
