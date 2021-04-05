@@ -24,14 +24,16 @@
     <script>
         async function playAllScales(startingNote) {
             const elemScaleId = document.querySelector("#scale-id")
-            const scales = scaleGenerator.createScales()
+            const scales = scaleGenerator.createScales(startingNote)
+            console.log(scales)
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
             const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))
             for (const scale of scales) {
                 const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
+                const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
                 elemScaleId.innerText = currentlyPlayingText
-                speechEngine.playText(currentlyPlayingText)
+                speechEngine.playText(currentlyPlayingTextTts)
                 await countdownTimer.start(settings.getPreparationTimeS())
                 await scalePlayer.playScale(scale, tempoBpm)
             }
@@ -61,7 +63,7 @@
     <select name="notes" id="notes">
         <option value="C4" string-key="C_abc"></option>
         <option value="CS4" string-key="CS_abc"></option>
-        <option value="D4" string-key="D4_abc"></option>
+        <option value="D4" string-key="D_abc"></option>
         <option value="DS4" string-key="DS_abc"></option>
         <option value="E4" string-key="E_abc"></option>
         <option value="F4" string-key="F_abc"></option>

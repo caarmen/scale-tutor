@@ -23,4 +23,9 @@ class NoteName {
         return this._i18n.translate(`${note.name}_${noteNameFormat}`)
     }
 
+    getTtsNoteName(note) {
+        const noteNameFormat = this._settings.getNoteNameFormat()
+        return this._i18n.translate(`${note.name}_tts_${noteNameFormat}`)
+    }
+
 }

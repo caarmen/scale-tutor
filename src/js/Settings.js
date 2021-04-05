@@ -36,7 +36,7 @@ class Settings {
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
 }
-Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMNOIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
+Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
 Settings.ScaleOrder = Object.freeze({
     INCREASING_NOTES: "increasing_notes",
     DECREASING_NOTES: "decreasing_notes",

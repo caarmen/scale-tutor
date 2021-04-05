@@ -17,7 +17,12 @@ class ScaleGenerator {
         this._settings = settings
     }
 
-    createScales = () => this._getScaleBaseNotes().map(baseNote => this._createScales(baseNote)).flat()
+    createScales(startingNote) {
+        const scaleBaseNotes = this._getScaleBaseNotes()
+        const startingNoteIndex = scaleBaseNotes.indexOf(startingNote)
+        const rotatedBaseNotes = scaleBaseNotes.slice(startingNoteIndex, scaleBaseNotes.length).concat(scaleBaseNotes.slice(0, startingNoteIndex))
+        return rotatedBaseNotes.map(baseNote => this._createScales(baseNote)).flat()
+    }
 
     _createScales(baseNote) {
         const minorScaleShift = this._settings.getMinorScaleShift()
