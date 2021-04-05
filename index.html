@@ -9,18 +9,18 @@
 
     <!-- Our own resources-->
     <link rel="stylesheet" href="src/css/theme.css">
-    <script src="src/js/CountdownTimer.js"></script>
-    <script src="src/js/I18n.js"></script>
     <script src="src/js/Note.js"></script>
-    <script src="src/js/NoteName.js"></script>
     <script src="src/js/Scale.js"></script>
-    <script src="src/js/ScaleGenerator.js"></script>
-    <script src="src/js/ScaleName.js"></script>
-    <script src="src/js/ScalePlayer.js"></script>
-    <script src="src/js/Settings.js"></script>
-    <script src="src/js/SettingsAccess.js"></script>
-    <script src="src/js/SpeechEngine.js"></script>
-    <script src="src/js/strings_en.js"></script>
+    <script src="src/js/i18n/I18n.js"></script>
+    <script src="src/js/i18n/strings_en.js"></script>
+    <script src="src/js/model/ScaleGenerator.js"></script>
+    <script src="src/js/model/ScalePlayer.js"></script>
+    <script src="src/js/model/Settings.js"></script>
+    <script src="src/js/model/SettingsAccess.js"></script>
+    <script src="src/js/model/SpeechEngine.js"></script>
+    <script src="src/js/view/CountdownTimer.js"></script>
+    <script src="src/js/viewmodel/NoteName.js"></script>
+    <script src="src/js/viewmodel/ScaleName.js"></script>
     <script>
         async function playAllScales(startingNote) {
             const elemScaleId = document.querySelector("#scale-id")
