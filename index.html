@@ -36,6 +36,7 @@
         // view
         const scaleView = new ScaleView()
         const controlsView = new ControlsView()
+        const countdownTimer = new CountdownTimer()
 
         // connect view to model: TODO introduce proper viewmodel layer
         controlsView.onStartListener = () => {
@@ -46,8 +47,10 @@
         }
         controlsView.onStopListener = () => {
             scalePlayer.stop()
+            countdownTimer.reset()
         }
         controlsView.onNextListener = () => {
+            countdownTimer.reset()
             scaleIndex++;
             if (scaleIndex >= scales.length) scaleIndex = 0
             scaleView.displayScale(scales[scaleIndex])
@@ -71,7 +74,6 @@
             scaleView.displayScale(scale)
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
-            const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))
             const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
             speechEngine.playText(currentlyPlayingTextTts)
             countdownTimer.start(settings.getPreparationTimeS())
@@ -86,6 +88,7 @@
             scaleView.displayScale(scales[0])
             i18n.translateElement(document.documentElement)
             controlsView.initViews()
+            countdownTimer.initViews()
         }
     </script>
 </head>

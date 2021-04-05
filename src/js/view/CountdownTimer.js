@@ -13,8 +13,20 @@ You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 class CountdownTimer {
-    constructor(elem) {
-        this._elem = elem
+    constructor() {
+        this._elem
+        this._intervalId = undefined
+    }
+    initViews() {
+        this._elem = document.querySelector("#countdown-timer")
+    }
+
+    reset = () => {
+        this._elem.innerText = ""
+        this._elem.style.display = "none"
+        if (this._intervalId != undefined) {
+            clearInterval(this._intervalId)
+        }
     }
 
     start = (durationS) =>
@@ -22,11 +34,12 @@ class CountdownTimer {
             var remainingTimeS = durationS
             this._elem.style.display = "block"
             this._elem.innerText = remainingTimeS
-            const intervalId = setInterval(() => {
+            this._intervalId = setInterval(() => {
                 remainingTimeS--
                 this._elem.innerText = remainingTimeS
                 if (remainingTimeS == 0) {
-                    clearInterval(intervalId)
+                    clearInterval(this._intervalId)
+                    this._intervalId = undefined
                     this._elem.style.display = "none"
                     completionFunc()
                 }
