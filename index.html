@@ -23,17 +23,25 @@
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script>
         async function playAllScales() {
+            const isAutoPlayEnabled = settings.isAutoPlayEnabled()
+            console.log("playAllScales autoplay " + isAutoPlayEnabled)
+            if (isAutoPlayEnabled) {
+                for (; scaleIndex < scales.length; scaleIndex++) {
+                    await playScale(scales[scaleIndex])
+                }
+            } else {
+                await playScale(scales[scaleIndex])
+            }
+        }
+        function playScale(scale) {
+            displayScale(scale)
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
             const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))
-            for (0; scaleIndex < scales.length; scaleIndex++) {
-                const scale = scales[scaleIndex]
-                displayScale(scale)
-                const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
-                speechEngine.playText(currentlyPlayingTextTts)
-                countdownTimer.start(settings.getPreparationTimeS())
-                await scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
-            }
+            const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
+            speechEngine.playText(currentlyPlayingTextTts)
+            countdownTimer.start(settings.getPreparationTimeS())
+            return scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
         }
         const i18n = new I18n()
         const scalePlayer = new ScalePlayer()
@@ -86,9 +94,7 @@
 
 <body onload="app_init()">
     <div id="scale-id"></div>
-    <div>
-        <img id="scale-img">
-    </div>
+    <div><img id="scale-img"></div>
     <div>
         <button id="button-start-stop" string-key="button_title_start" onclick="start()"></button>
         <button id="button-next" string-key="button_title_next" onclick="next()"></button>

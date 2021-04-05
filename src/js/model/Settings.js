@@ -35,6 +35,8 @@ class Settings {
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 6)
 
+    isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, true)
+
 }
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
 Settings.ScaleOrder = Object.freeze({
@@ -47,6 +49,7 @@ Settings.ScaleOrder = Object.freeze({
 })
 Settings.NoteNameFormat = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
 
+Settings._KEY_AUTOPLAY = "autoplay"
 Settings._KEY_SCALE_TYPES = "scale_types"
 Settings._KEY_SCALE_ORDER = "scale_order"
 Settings._KEY_NOTE_NAME_FORMAt = "note_name_format"
