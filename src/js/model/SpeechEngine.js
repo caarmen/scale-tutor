@@ -38,7 +38,6 @@ class SpeechEngine {
         const speechSynthesisUtterance = new SpeechSynthesisUtterance(text)
         speechSynthesisUtterance.voice = this.selectedVoice
         speechSynthesisUtterance.lang = this.selectedVoice.lang
-        console.log("speak " + speechSynthesisUtterance)
         this._synth.speak(speechSynthesisUtterance)
     }
 
