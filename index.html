@@ -10,25 +10,8 @@
     <link rel="stylesheet" href="src/css/theme.css">
     <script src="src/js/Note.js"></script>
     <script src="src/js/Scale.js"></script>
+    <script src="src/js/ScalePlayer.js"></script>
     <script>
-        frequency = (initalFrequency, halfSteps) => initalFrequency * (1.059463) ** (halfSteps)
-
-        function playScale(initialNote, scale, noteDuration) {
-            return new Promise((completionFunction) => {
-                const oscillator = context.createOscillator();
-                // oscillator.type = "sine";
-                scale.forEach((halfStep, index) => {
-                    oscillator.frequency.setValueAtTime(
-                        frequency(initialNote.frequency(), halfStep),
-                        context.currentTime + index * noteDuration);
-                })
-                oscillator.connect(context.destination);
-                oscillator.start(context.currentTime);
-                oscillator.stop(context.currentTime + scale.length * noteDuration)
-                oscillator.onended = () => { completionFunction() }
-            })
-        }
-
         async function playAllScales(startingNote) {
             for (const scale of [
                 Scale.MAJOR,
@@ -37,22 +20,16 @@
                 Scale.MELODIC_MINOR.map(note => note - 3),
                 Scale.BLUES
             ]) {
-                await playScale(startingNote, scale, 0.25)
+                await scalePlayer.playScale(startingNote, scale, 0.25)
             }
         }
-        var context
+        var scalePlayer = new ScalePlayer()
         function doit() {
-            if (context) {
-                context.close()
-                context = undefined
+            if (scalePlayer.isPlaying()) {
+                scalePlayer.stop()
             } else {
-                context = new (window.AudioContext || window.webkitAudioContext)();
                 const startingNote = Note.Notes[document.querySelector("#notes").value]
-                playAllScales(startingNote).then(() => {
-                    context.close()
-                    context.onended = undefined
-                    context = undefined
-                })
+                playAllScales(startingNote).then(() => scalePlayer.stop())
             }
         }
     </script>
