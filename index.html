@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <!-- Third party dependencies -->
     <link rel="stylesheet" href="libs/material-components-web-10.0.0.min.css">
     <link rel="stylesheet" href="libs/material-icons.css">
@@ -8,9 +9,13 @@
 
     <!-- Our own resources-->
     <link rel="stylesheet" href="src/css/theme.css">
+    <script src="src/js/I18n.js"></script>
     <script src="src/js/Note.js"></script>
     <script src="src/js/Scale.js"></script>
     <script src="src/js/ScalePlayer.js"></script>
+    <script src="src/js/Settings.js"></script>
+    <script src="src/js/SettingsAccess.js"></script>
+    <script src="src/js/strings_en.js"></script>
     <script>
         async function playAllScales(startingNote) {
             for (const scale of [
@@ -32,24 +37,28 @@
                 playAllScales(startingNote).then(() => scalePlayer.stop())
             }
         }
+        function app_init() {
+            const i18n = new I18n()
+            i18n.translateElement(document.documentElement)
+        }
     </script>
 </head>
 
-<body>
+<body onload="app_init()">
     <select name="notes" id="notes">
-        <option value="C4">C4</option>
-        <option value="CS4">C#4</option>
-        <option value="D4">D</option>
-        <option value="DS4">D#4</option>
-        <option value="E4">E4</option>
-        <option value="F4">F4</option>
-        <option value="FS4">F#4</option>
-        <option value="G4">G4</option>
-        <option value="GS4">G#4</option>
-        <option value="A4">A4</option>
-        <option value="AS4">A#4</option>
-        <option value="B4">B4</option>
-        <option value="C5">C5</option>
+        <option value="C4" string-key="C_abc"></option>
+        <option value="CS4" string-key="CS_abc"></option>
+        <option value="D4" string-key="D4_abc"></option>
+        <option value="DS4" string-key="DS_abc"></option>
+        <option value="E4" string-key="E_abc"></option>
+        <option value="F4" string-key="F_abc"></option>
+        <option value="FS4" string-key="FS_abc"></option>
+        <option value="G4" string-key="G_abc"></option>
+        <option value="GS4" string-key="GS_abc"></option>
+        <option value="A4" string-key="A_abc"></option>
+        <option value="AS4" string-key="AS_abc"></option>
+        <option value="B4" string-key="B_abc"></option>
+        <option value="C5" string-key="C_abc"></option>
     </select>
 
     <button onclick="doit()">Click me</button>
