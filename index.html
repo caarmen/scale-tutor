@@ -19,6 +19,7 @@
     <script src="src/js/model/SettingsAccess.js"></script>
     <script src="src/js/model/SpeechEngine.js"></script>
     <script src="src/js/view/CountdownTimer.js"></script>
+    <script src="src/js/view/ScaleView.js"></script>
     <script src="src/js/viewmodel/NoteName.js"></script>
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script>
@@ -34,7 +35,7 @@
             }
         }
         function playScale(scale) {
-            displayScale(scale)
+            scaleView.displayScale(scale)
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
             const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))
@@ -50,24 +51,18 @@
         const noteName = new NoteName(settings, i18n)
         const scaleName = new ScaleName(i18n)
         const speechEngine = new SpeechEngine()
+        const scaleView = new ScaleView()
+
         var scales = []
         var scaleIndex = 0
         function generateScales(startingNote) {
             scales = scaleGenerator.createScales(startingNote)
             scaleIndex = 0;
         }
-        function displayScale(scale) {
-            const elemScaleId = document.querySelector("#scale-id")
-            const elemScaleImg = document.querySelector("#scale-img")
-            const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
-            const scaleImgName = scaleName.getScaleImage(scale)
-            elemScaleId.innerText = currentlyPlayingText
-            elemScaleImg.src = scaleImgName
-        }
         function next() {
             scaleIndex++;
             if (scaleIndex >= scales.length) scaleIndex = 0
-            displayScale(scales[scaleIndex])
+            scaleView.displayScale(scales[scaleIndex])
             if (scalePlayer.isPlaying()) {
                 scalePlayer.stop()
                 playAllScales().then(() => scalePlayer.stop())
@@ -86,7 +81,7 @@
         }
         function app_init() {
             generateScales(Note.Notes.C4)
-            displayScale(scales[0])
+            scaleView.displayScale(scales[0])
             i18n.translateElement(document.documentElement)
         }
     </script>
