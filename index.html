@@ -1,62 +1,25 @@
 <html>
 
 <head>
+    <!-- Third party dependencies -->
+    <link rel="stylesheet" href="libs/material-components-web-10.0.0.min.css">
+    <link rel="stylesheet" href="libs/material-icons.css">
+    <script src="libs/material-components-web-10.0.0.min.js"></script>
+
+    <!-- Our own resources-->
+    <link rel="stylesheet" href="src/css/theme.css">
+    <script src="src/js/Note.js"></script>
+    <script src="src/js/Scale.js"></script>
     <script>
         frequency = (initalFrequency, halfSteps) => initalFrequency * (1.059463) ** (halfSteps)
-
-        const majorScale = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0]
-        const naturalMinorScale = [0, 2, 3, 5, 7, 8, 10, 12, 10, 8, 7, 5, 3, 2, 0]
-        const harmonicMinorScale = [0, 2, 3, 5, 7, 8, 11, 12, 11, 8, 7, 5, 3, 2, 0]
-        const melodicMinorScale = [0, 2, 3, 5, 7, 9, 11, 12, 10, 8, 7, 5, 3, 2, 0]
-        const bluesScale = [0, 3, 5, 6, 7, 10, 12, 10, 7, 6, 5, 3, 0]
-
-        const Notes = Object.freeze(
-            {
-                C3: -21,
-                CS3: -20,
-                D3: -19,
-                DS3: -18,
-                E3: -17,
-                F3: -16,
-                FS3: -15,
-                G3: -14,
-                GS3: -13,
-                A3: -12,
-                AS3: -11,
-                B3: -10,
-                C4: -9,
-                CS4: -8,
-                D4: -7,
-                DS4: -6,
-                E4: -5,
-                F4: -4,
-                FS4: -3,
-                G4: -2,
-                GS4: -1,
-                A4: 0,
-                AS4: 1,
-                B4: 2,
-                C5: 3,
-                CS5: 4,
-                D5: 5,
-                DS5: 6,
-                E5: 7,
-                F5: 8,
-                FS5: 9,
-                G5: 10,
-                GS5: 11,
-                A5: 12
-            }
-        )
 
         function playScale(initialNote, scale, noteDuration) {
             return new Promise((completionFunction) => {
                 const oscillator = context.createOscillator();
                 // oscillator.type = "sine";
-                const initialFrequency = frequency(440, initialNote)
                 scale.forEach((halfStep, index) => {
                     oscillator.frequency.setValueAtTime(
-                        frequency(initialFrequency, halfStep),
+                        frequency(initialNote.frequency(), halfStep),
                         context.currentTime + index * noteDuration);
                 })
                 oscillator.connect(context.destination);
@@ -68,11 +31,11 @@
 
         async function playAllScales(startingNote) {
             for (const scale of [
-                majorScale,
-                naturalMinorScale.map(note => note - 3),
-                harmonicMinorScale.map(note => note - 3),
-                melodicMinorScale.map(note => note - 3),
-                bluesScale
+                Scale.MAJOR,
+                Scale.NATURAL_MINOR.map(note => note - 3),
+                Scale.HARMONIC_MINOR.map(note => note - 3),
+                Scale.MELODIC_MINOR.map(note => note - 3),
+                Scale.BLUES
             ]) {
                 await playScale(startingNote, scale, 0.25)
             }
@@ -84,7 +47,7 @@
                 context = undefined
             } else {
                 context = new (window.AudioContext || window.webkitAudioContext)();
-                const startingNote = Notes[document.querySelector("#notes").value]
+                const startingNote = Note.Notes[document.querySelector("#notes").value]
                 playAllScales(startingNote).then(() => {
                     context.close()
                     context.onended = undefined
