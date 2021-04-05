@@ -9,6 +9,7 @@
 
     <!-- Our own resources-->
     <link rel="stylesheet" href="src/css/theme.css">
+    <script src="src/js/CountdownTimer.js"></script>
     <script src="src/js/I18n.js"></script>
     <script src="src/js/Note.js"></script>
     <script src="src/js/NoteName.js"></script>
@@ -25,26 +26,14 @@
             const scales = scaleGenerator.createScales(startingNote)
             const tempoBpm = settings.getTempoBpm()
             const preparationTimeS = settings.getPreparationTimeS()
+            const countdownTimer = new CountdownTimer(document.querySelector("#countdown-timer"))
             for (const scale of scales) {
                 const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
                 elemScaleId.innerText = currentlyPlayingText
-                await showCountdownTimer(settings.getPreparationTimeS())
+                await countdownTimer.start(settings.getPreparationTimeS())
                 await scalePlayer.playScale(scale, tempoBpm)
             }
         }
-        showCountdownTimer = (timeoutS) =>
-            new Promise(completionFunc => {
-                const elemCountdownTimer = document.querySelector("#countdown-timer")
-                var remainingTimeS = timeoutS
-                const intervalId = setInterval(() => {
-                    remainingTimeS--
-                    elemCountdownTimer.innerText = remainingTimeS
-                    if (remainingTimeS == 0) {
-                        clearInterval(intervalId)
-                        completionFunc()
-                    }
-                }, 1000)
-            })
         const i18n = new I18n()
         const scalePlayer = new ScalePlayer()
         const settings = new Settings(new SettingsAccess())
@@ -82,8 +71,8 @@
         <option value="C5" string-key="C_abc"></option>
     </select>
 
+    <div id="scale-id"></div>
     <div id="countdown-timer"></div>
-    Currently playing: <div id="scale-id"></div>
 
     <button onclick="doit()">Click me</button>
 </body>
