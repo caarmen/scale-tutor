@@ -26,6 +26,7 @@ class ScalePlayer {
             this._context.close()
             this._context = undefined
         }
+        this._isPlaying = false
     }
 
     playScale(scale, preparationTimeS, tempoBpm) {
@@ -38,6 +39,15 @@ class ScalePlayer {
             this._isPlaying = true
             const oscillator = this._context.createOscillator();
             // oscillator.type = "sine";
+            for (let i = 0; i <4; i++) {
+                oscillator.frequency.setValueAtTime(
+                    scale.startingNote.frequency(),
+                    this._context.currentTime + preparationTimeS - i - 1)
+                oscillator.frequency.setValueAtTime(
+                    0,
+                    this._context.currentTime + preparationTimeS - i - 0.5)
+            }
+            
             scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
@@ -47,7 +57,7 @@ class ScalePlayer {
 
                 })
             oscillator.connect(this._context.destination);
-            oscillator.start(this._context.currentTime + preparationTimeS);
+            oscillator.start(this._context.currentTime + preparationTimeS - 4)
             oscillator.stop(this._context.currentTime + preparationTimeS + scale.halfSteps.length * noteDuration)
             oscillator.onended = () => {
                 this._isPlaying = false
