@@ -34,8 +34,8 @@
                 const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
                 elemScaleId.innerText = currentlyPlayingText
                 speechEngine.playText(currentlyPlayingTextTts)
-                await countdownTimer.start(settings.getPreparationTimeS())
-                await scalePlayer.playScale(scale, tempoBpm)
+                countdownTimer.start(settings.getPreparationTimeS())
+                await scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
             }
         }
         const i18n = new I18n()

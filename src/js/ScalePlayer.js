@@ -14,10 +14,11 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 class ScalePlayer {
     constructor() {
-        this._context = undefined
+        this._context = new (window.AudioContext || window.webkitAudioContext)();
+        this._isPlaying = false
     }
 
-    isPlaying = () => this._context != undefined
+    isPlaying = () => this._isPlaying
 
     stop() {
         console.log("stop, context = " + this._context)
@@ -27,13 +28,14 @@ class ScalePlayer {
         }
     }
 
-    playScale(scale, tempoBpm) {
+    playScale(scale, preparationTimeS, tempoBpm) {
         const noteDuration = 60 / tempoBpm
         console.log("playScale, context = " + this._context)
         if (!this._context) {
             this._context = new (window.AudioContext || window.webkitAudioContext)();
         }
         return new Promise((completionFunction) => {
+            this._isPlaying = true
             const oscillator = this._context.createOscillator();
             // oscillator.type = "sine";
             scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep))
@@ -41,13 +43,14 @@ class ScalePlayer {
                 .forEach((note, index) => {
                     oscillator.frequency.setValueAtTime(
                         note.frequency(),
-                        this._context.currentTime + index * noteDuration);
+                        this._context.currentTime + preparationTimeS + index * noteDuration);
 
                 })
             oscillator.connect(this._context.destination);
-            oscillator.start(this._context.currentTime);
-            oscillator.stop(this._context.currentTime + scale.halfSteps.length * noteDuration)
+            oscillator.start(this._context.currentTime + preparationTimeS);
+            oscillator.stop(this._context.currentTime + preparationTimeS + scale.halfSteps.length * noteDuration)
             oscillator.onended = () => {
+                this._isPlaying = false
                 completionFunction()
             }
         })
