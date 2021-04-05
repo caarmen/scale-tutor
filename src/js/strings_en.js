@@ -40,4 +40,9 @@ const strings_en = {
     "A_solfege": "La",
     "AS_solfege": "Si♯/Si♭",
     "B_solfege": "Si",
+    "scale_type_major": "Major",
+    "scale_type_natural_minor": "Natural minor",
+    "scale_type_harmonic_minor": "Harmonic minor",
+    "scale_type_melodic_minor": "Melodic minor",
+    "scale_type_blues": "Blues",
 }

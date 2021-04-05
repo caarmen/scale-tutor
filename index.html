@@ -11,23 +11,46 @@
     <link rel="stylesheet" href="src/css/theme.css">
     <script src="src/js/I18n.js"></script>
     <script src="src/js/Note.js"></script>
+    <script src="src/js/NoteName.js"></script>
     <script src="src/js/Scale.js"></script>
     <script src="src/js/ScaleGenerator.js"></script>
+    <script src="src/js/ScaleName.js"></script>
     <script src="src/js/ScalePlayer.js"></script>
     <script src="src/js/Settings.js"></script>
     <script src="src/js/SettingsAccess.js"></script>
     <script src="src/js/strings_en.js"></script>
     <script>
         async function playAllScales(startingNote) {
+            const elemScaleId = document.querySelector("#scale-id")
             const scales = scaleGenerator.createScales(startingNote)
             const tempoBpm = settings.getTempoBpm()
+            const preparationTimeS = settings.getPreparationTimeS()
             for (const scale of scales) {
+                const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
+                elemScaleId.innerText = currentlyPlayingText
+                await showCountdownTimer(settings.getPreparationTimeS())
                 await scalePlayer.playScale(scale, tempoBpm)
             }
         }
+        showCountdownTimer = (timeoutS) =>
+            new Promise(completionFunc => {
+                const elemCountdownTimer = document.querySelector("#countdown-timer")
+                var remainingTimeS = timeoutS
+                const intervalId = setInterval(() => {
+                    remainingTimeS--
+                    elemCountdownTimer.innerText = remainingTimeS
+                    if (remainingTimeS == 0) {
+                        clearInterval(intervalId)
+                        completionFunc()
+                    }
+                }, 1000)
+            })
+        const i18n = new I18n()
         const scalePlayer = new ScalePlayer()
         const settings = new Settings(new SettingsAccess())
         const scaleGenerator = new ScaleGenerator(settings)
+        const noteName = new NoteName(settings, i18n)
+        const scaleName = new ScaleName(i18n)
         function doit() {
             if (scalePlayer.isPlaying()) {
                 scalePlayer.stop()
@@ -37,7 +60,6 @@
             }
         }
         function app_init() {
-            const i18n = new I18n()
             i18n.translateElement(document.documentElement)
         }
     </script>
@@ -59,6 +81,9 @@
         <option value="B4" string-key="B_abc"></option>
         <option value="C5" string-key="C_abc"></option>
     </select>
+
+    <div id="countdown-timer"></div>
+    Currently playing: <div id="scale-id"></div>
 
     <button onclick="doit()">Click me</button>
 </body>
