@@ -19,13 +19,46 @@
     <script src="src/js/model/SettingsAccess.js"></script>
     <script src="src/js/model/SpeechEngine.js"></script>
     <script src="src/js/view/CountdownTimer.js"></script>
+    <script src="src/js/view/ControlsView.js"></script>
     <script src="src/js/view/ScaleView.js"></script>
     <script src="src/js/viewmodel/NoteName.js"></script>
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script>
+        // model
+        const scalePlayer = new ScalePlayer()
+        const settings = new Settings(new SettingsAccess())
+        const scaleGenerator = new ScaleGenerator(settings)
+        const speechEngine = new SpeechEngine()
+        // viewmodel
+        const i18n = new I18n()
+        const noteName = new NoteName(settings, i18n)
+        const scaleName = new ScaleName(i18n)
+        // view
+        const scaleView = new ScaleView()
+        const controlsView = new ControlsView()
+
+        // connect view to model: TODO introduce proper viewmodel layer
+        controlsView.onStartListener = () => {
+            playAllScales().then(() => {
+                scalePlayer.stop()
+                controlsView.setPlayingState(false)
+            })
+        }
+        controlsView.onStopListener = () => {
+            scalePlayer.stop()
+        }
+        controlsView.onNextListener = () => {
+            scaleIndex++;
+            if (scaleIndex >= scales.length) scaleIndex = 0
+            scaleView.displayScale(scales[scaleIndex])
+            if (scalePlayer.isPlaying()) {
+                scalePlayer.stop()
+                playAllScales().then(() => scalePlayer.stop())
+            }
+        }
+
         async function playAllScales() {
             const isAutoPlayEnabled = settings.isAutoPlayEnabled()
-            console.log("playAllScales autoplay " + isAutoPlayEnabled)
             if (isAutoPlayEnabled) {
                 for (; scaleIndex < scales.length; scaleIndex++) {
                     await playScale(scales[scaleIndex])
@@ -44,45 +77,15 @@
             countdownTimer.start(settings.getPreparationTimeS())
             return scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
         }
-        const i18n = new I18n()
-        const scalePlayer = new ScalePlayer()
-        const settings = new Settings(new SettingsAccess())
-        const scaleGenerator = new ScaleGenerator(settings)
-        const noteName = new NoteName(settings, i18n)
-        const scaleName = new ScaleName(i18n)
-        const speechEngine = new SpeechEngine()
-        const scaleView = new ScaleView()
 
-        var scales = []
+        // global state: TODO move to a model
+        const scales = scaleGenerator.createScales(Note.Notes.C4)
         var scaleIndex = 0
-        function generateScales(startingNote) {
-            scales = scaleGenerator.createScales(startingNote)
-            scaleIndex = 0;
-        }
-        function next() {
-            scaleIndex++;
-            if (scaleIndex >= scales.length) scaleIndex = 0
-            scaleView.displayScale(scales[scaleIndex])
-            if (scalePlayer.isPlaying()) {
-                scalePlayer.stop()
-                playAllScales().then(() => scalePlayer.stop())
-            }
-        }
-        function start() {
-            const elemButtonStartStop = document.querySelector("#button-start-stop")
-            const elemButtonNext = document.querySelector("#button-next")
-            if (scalePlayer.isPlaying()) {
-                scalePlayer.stop()
-                elemButtonStartStop.innerText = i18n.translate("button_title_start")
-            } else {
-                elemButtonStartStop.innerText = i18n.translate("button_title_stop")
-                playAllScales().then(() => scalePlayer.stop())
-            }
-        }
+
         function app_init() {
-            generateScales(Note.Notes.C4)
             scaleView.displayScale(scales[0])
             i18n.translateElement(document.documentElement)
+            controlsView.initViews()
         }
     </script>
 </head>
@@ -91,8 +94,8 @@
     <div id="scale-id"></div>
     <div><img id="scale-img"></div>
     <div>
-        <button id="button-start-stop" string-key="button_title_start" onclick="start()"></button>
-        <button id="button-next" string-key="button_title_next" onclick="next()"></button>
+        <button id="button-start-stop" string-key="button_title_start"></button>
+        <button id="button-next" string-key="button_title_next"></button>
     </div>
     <div id="countdown-timer"></div>
 </body>
