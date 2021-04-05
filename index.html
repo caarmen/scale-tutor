@@ -19,6 +19,7 @@
     <script src="src/js/ScalePlayer.js"></script>
     <script src="src/js/Settings.js"></script>
     <script src="src/js/SettingsAccess.js"></script>
+    <script src="src/js/SpeechEngine.js"></script>
     <script src="src/js/strings_en.js"></script>
     <script>
         async function playAllScales(startingNote) {
@@ -30,6 +31,7 @@
             for (const scale of scales) {
                 const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
                 elemScaleId.innerText = currentlyPlayingText
+                speechEngine.playText(currentlyPlayingText)
                 await countdownTimer.start(settings.getPreparationTimeS())
                 await scalePlayer.playScale(scale, tempoBpm)
             }
@@ -40,6 +42,7 @@
         const scaleGenerator = new ScaleGenerator(settings)
         const noteName = new NoteName(settings, i18n)
         const scaleName = new ScaleName(i18n)
+        const speechEngine = new SpeechEngine()
         function doit() {
             if (scalePlayer.isPlaying()) {
                 scalePlayer.stop()
