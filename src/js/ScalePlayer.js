@@ -27,7 +27,8 @@ class ScalePlayer {
         }
     }
 
-    playScale(initialNote, scale, noteDuration) {
+    playScale(scale, tempoBpm) {
+        const noteDuration = 60 / tempoBpm
         console.log("playScale, context = " + this._context)
         if (!this._context) {
             this._context = new (window.AudioContext || window.webkitAudioContext)();
@@ -35,7 +36,7 @@ class ScalePlayer {
         return new Promise((completionFunction) => {
             const oscillator = this._context.createOscillator();
             // oscillator.type = "sine";
-            scale.map(halfStep => initialNote.getNote(halfStep))
+            scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
                     oscillator.frequency.setValueAtTime(
@@ -45,7 +46,7 @@ class ScalePlayer {
                 })
             oscillator.connect(this._context.destination);
             oscillator.start(this._context.currentTime);
-            oscillator.stop(this._context.currentTime + scale.length * noteDuration)
+            oscillator.stop(this._context.currentTime + scale.halfSteps.length * noteDuration)
             oscillator.onended = () => {
                 completionFunction()
             }

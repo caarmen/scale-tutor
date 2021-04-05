@@ -23,6 +23,18 @@ class Settings {
 
     getNoteNamesSetting = () => this._settingsAccess.getSetting(Settings._KEY_NOTE_NAMES, Settings.NoteNames.ABC)
 
+    getScaleTypesSetting = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
+        Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
+    ])))
+
+    getMinorScaleShift = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, -3)
+
+    getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
+
 }
+Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMNOIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
+Settings._KEY_SCALE_TYPES = "scale_types"
 Settings.NoteNames = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
 Settings._KEY_NOTE_NAMES = "note_names"
+Settings._KEY_MINOR_SCALE_SHIFT = "minor_scale_shift"
+Settings._KEY_TEMPO_BPM = "tempo_bpm"

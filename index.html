@@ -12,23 +12,22 @@
     <script src="src/js/I18n.js"></script>
     <script src="src/js/Note.js"></script>
     <script src="src/js/Scale.js"></script>
+    <script src="src/js/ScaleGenerator.js"></script>
     <script src="src/js/ScalePlayer.js"></script>
     <script src="src/js/Settings.js"></script>
     <script src="src/js/SettingsAccess.js"></script>
     <script src="src/js/strings_en.js"></script>
     <script>
         async function playAllScales(startingNote) {
-            for (const scale of [
-                Scale.MAJOR,
-                Scale.NATURAL_MINOR.map(note => note - 3),
-                Scale.HARMONIC_MINOR.map(note => note - 3),
-                Scale.MELODIC_MINOR.map(note => note - 3),
-                Scale.BLUES
-            ]) {
-                await scalePlayer.playScale(startingNote, scale, 0.25)
+            const scales = scaleGenerator.createScales(startingNote)
+            const tempoBpm = settings.getTempoBpm()
+            for (const scale of scales) {
+                await scalePlayer.playScale(scale, tempoBpm)
             }
         }
-        var scalePlayer = new ScalePlayer()
+        const scalePlayer = new ScalePlayer()
+        const settings = new Settings(new SettingsAccess())
+        const scaleGenerator = new ScaleGenerator(settings)
         function doit() {
             if (scalePlayer.isPlaying()) {
                 scalePlayer.stop()

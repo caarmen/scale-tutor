@@ -13,7 +13,10 @@ You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 class Scale {
-
+    constructor(startingNote, halfSteps) {
+        this.startingNote = startingNote
+        this.halfSteps = halfSteps
+    }
 }
 Scale.MAJOR = [0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0]
 Scale.NATURAL_MINOR = [0, 2, 3, 5, 7, 8, 10, 12, 10, 8, 7, 5, 3, 2, 0]
