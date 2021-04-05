@@ -24,6 +24,7 @@
     <script>
         async function playAllScales(startingNote) {
             const elemScaleId = document.querySelector("#scale-id")
+            const elemScaleImg = document.querySelector("#scale-img")
             const scales = scaleGenerator.createScales(startingNote)
             console.log(scales)
             const tempoBpm = settings.getTempoBpm()
@@ -32,7 +33,10 @@
             for (const scale of scales) {
                 const currentlyPlayingText = `${noteName.getNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
                 const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
+                const scaleImgName = scaleName.getScaleImage(scale)
+                console.log(scaleImgName)
                 elemScaleId.innerText = currentlyPlayingText
+                elemScaleImg.src = scaleImgName
                 speechEngine.playText(currentlyPlayingTextTts)
                 countdownTimer.start(settings.getPreparationTimeS())
                 await scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
@@ -77,6 +81,7 @@
     </select>
 
     <div id="scale-id"></div>
+    <img id="scale-img">
     <div id="countdown-timer"></div>
 
     <button onclick="doit()">Click me</button>

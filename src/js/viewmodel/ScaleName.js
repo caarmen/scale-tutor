@@ -19,6 +19,7 @@ class ScaleName {
 
     getScaleName = (scale) => this._i18n.translate(`scale_type_${this._getScaleNameKey(scale)}`)
 
+    getScaleImage = (scale) => `src/resources/${scale.startingNote.name.toLowerCase()}_${this._getScaleNameKey(scale)}.svg`
     _getScaleNameKey(scale) {
         if (scale.halfSteps == Scale.MAJOR) return "major"
         else if (scale.halfSteps == Scale.NATURAL_MINOR) return "natural_minor"
