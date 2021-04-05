@@ -21,9 +21,9 @@ class Settings {
         this._settingsAccess = settingsAccess
     }
 
-    getNoteNamesSetting = () => this._settingsAccess.getSetting(Settings._KEY_NOTE_NAMES, Settings.NoteNames.ABC)
+    getNoteNames = () => this._settingsAccess.getSetting(Settings._KEY_NOTE_NAMES, Settings.NoteNames.ABC)
 
-    getScaleTypesSetting = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
+    getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
