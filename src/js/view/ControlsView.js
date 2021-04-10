@@ -44,6 +44,6 @@ class ControlsView {
 
     setPlayingState(isPlaying) {
         this._isPlaying = isPlaying
-        this._elemButtonStartStop.innerText = i18n.translate(isPlaying ? "button_title_stop" : "button_title_start")
+        this._elemButtonStartStop.innerText = this._i18n.translate(isPlaying ? "button_title_stop" : "button_title_start")
     }
 }

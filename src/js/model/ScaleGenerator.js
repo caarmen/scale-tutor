@@ -26,7 +26,7 @@ class ScaleGenerator {
 
     _createScales(baseNote) {
         const minorScaleShift = this._settings.getMinorScaleShift()
-        return settings.getScaleTypes().map(name => {
+        return this._settings.getScaleTypes().map(name => {
             if (name == Settings.ScaleTypes.MAJOR) return new Scale(baseNote, Scale.MAJOR)
             else if (name == Settings.ScaleTypes.NATURAL_MINOR) return new Scale(baseNote.getNote(minorScaleShift), Scale.NATURAL_MINOR)
             else if (name == Settings.ScaleTypes.HARMONIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), Scale.HARMONIC_MINOR)

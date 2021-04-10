@@ -12,13 +12,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
-class ScaleView {
-    constructor() {
-        this._elemScaleName = document.querySelector("#scale-id")
-        this._elemScaleImg = document.querySelector("#scale-img")
+class ObservableField {
+    constructor(intialValue) {
+        this._value = intialValue
+        this._observer = (newValue) => { }
     }
-
-    displayScaleName = (scaleName) => this._elemScaleName.innerText = scaleName
-
-    displayScaleImage = (scaleImage) => this._elemScaleImg.src = scaleImage
+    get value() {
+        return this._value
+    }
+    set value(newValue) {
+        this._value = newValue
+        this._observer(this._value)
+    }
+    set observer(newObserver) {
+        this._observer = newObserver
+        if (this._value != undefined) this._observer(this._value)
+    }
 }

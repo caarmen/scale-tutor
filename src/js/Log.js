@@ -12,13 +12,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
-class ScaleView {
-    constructor() {
-        this._elemScaleName = document.querySelector("#scale-id")
-        this._elemScaleImg = document.querySelector("#scale-img")
-    }
-
-    displayScaleName = (scaleName) => this._elemScaleName.innerText = scaleName
-
-    displayScaleImage = (scaleImage) => this._elemScaleImg.src = scaleImage
+class Log{
 }
+Log.log = (tag, message) => console.log(`[${tag}] ${message}`)

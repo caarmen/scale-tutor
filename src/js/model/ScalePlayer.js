@@ -14,6 +14,7 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 class ScalePlayer {
     constructor() {
+        this._tag = "ScalePlayer"
         this._context = new (window.AudioContext || window.webkitAudioContext)();
         this._isPlaying = false
     }
@@ -21,7 +22,7 @@ class ScalePlayer {
     isPlaying = () => this._isPlaying
 
     stop() {
-        console.log("stop, context = " + this._context)
+        Log.log(this._tag, "stop, context = " + this._context)
         if (this._context) {
             this._context.close()
             this._context = undefined
@@ -31,7 +32,7 @@ class ScalePlayer {
 
     playScale(scale, preparationTimeS, tempoBpm, transposition) {
         const noteDuration = 60 / tempoBpm
-        console.log("playScale, context = " + this._context)
+        Log.log(this._tag, "playScale, context = " + this._context)
         if (!this._context) {
             this._context = new (window.AudioContext || window.webkitAudioContext)();
         }
