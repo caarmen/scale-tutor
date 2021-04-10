@@ -77,10 +77,10 @@
         function playScale(scale) {
             scaleView.displayScale(scale)
             const tempoBpm = settings.getTempoBpm()
-            const preparationTimeS = settings.getPreparationTimeS()
+            const preparationTimeS = settings.getPreparationTimeS() + (settings.isSpeechSynthesisEnabled() ? 1: 0)
             const currentlyPlayingTextTts = `${noteName.getTtsNoteName(scale.startingNote)} ${scaleName.getScaleName(scale)}`
-            speechEngine.playText(currentlyPlayingTextTts)
-            countdownTimer.start(settings.getPreparationTimeS())
+            if (settings.isSpeechSynthesisEnabled()) speechEngine.playText(currentlyPlayingTextTts)
+            countdownTimer.start(preparationTimeS)
             return scalePlayer.playScale(scale, preparationTimeS, tempoBpm)
         }
 

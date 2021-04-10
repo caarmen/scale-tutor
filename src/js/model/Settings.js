@@ -33,9 +33,11 @@ class Settings {
 
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
-    getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 6)
+    getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
     isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, true)
+
+    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, true)
 
 }
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
@@ -56,3 +58,4 @@ Settings._KEY_NOTE_NAME_FORMAt = "note_name_format"
 Settings._KEY_MINOR_SCALE_SHIFT = "minor_scale_shift"
 Settings._KEY_TEMPO_BPM = "tempo_bpm"
 Settings._KEY_PREPARATION_TIME_S = "preparation_time_s"
+Settings._KEY_SPEECH_SYNTHESIS = "speech_synthesis"
