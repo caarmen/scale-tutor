@@ -19,8 +19,13 @@ done
 for minor_type in natural harmonic melodic; do
   for i in ${!lilypond_minor_notes[@]}; do
     echo "${scale_tutor_notes[$i]} ${minor_type} minor"
+
     sed -e "s/transpose a a/transpose a ${lilypond_minor_notes[$i]}/" etc/a_${minor_type}_minor.ly > /tmp/temp.ly
     lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_${minor_type}_minor_treble /tmp/temp.ly >/dev/null 2>&1
+
+    sed -e "s/transpose a a/transpose a' ${lilypond_minor_bass_notes[$i]}/;s/\\\\key a \\\\minor/\\\\key a \\\\minor\\\\clef alto/" etc/a_${minor_type}_minor.ly > /tmp/temp.ly
+    lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_${minor_type}_minor_alto /tmp/temp.ly >/dev/null 2>&1
+
     sed -e "s/transpose a a/transpose a'' ${lilypond_minor_bass_notes[$i]}/;s/\\\\key a \\\\minor/\\\\key a \\\\minor\\\\clef bass/" etc/a_${minor_type}_minor.ly > /tmp/temp.ly
     lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_${minor_type}_minor_bass /tmp/temp.ly > /dev/null 2>&1
   done
