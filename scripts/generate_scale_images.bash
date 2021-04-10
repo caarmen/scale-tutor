@@ -6,6 +6,8 @@ for i in ${!lilypond_major_notes[@]}; do
   echo "${scale_tutor_notes[$i]} major"
   sed -e "s/transpose c c/transpose c ${lilypond_major_notes[$i]}/" etc/c_major.ly > /tmp/temp.ly
   lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major /tmp/temp.ly > /dev/null 2>&1
+  sed -e "s/transpose c c/transpose c'' ${lilypond_major_notes[$i]}/;s/\\\\key c \\\\major/\\\\key c \\\\major \\\\clef bass/" etc/c_major.ly > /tmp/temp.ly
+  lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major_bass /tmp/temp.ly > /dev/null 2>&1
 done
 
 for minor_type in natural harmonic melodic; do
