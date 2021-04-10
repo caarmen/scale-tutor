@@ -20,24 +20,10 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 class SpeechEngine {
     constructor() {
         this._synth = window.speechSynthesis
-        this.selectedVoice
-        this._populateVoiceList(false)
-        if (this._synth && this._synth.onvoiceschanged !== undefined) {
-            this._synth.onvoiceschanged = () => { this._populateVoiceList() }
-        }
-    }
-
-    _populateVoiceList() {
-        this.voices = this._synth.getVoices()
-        if (this.voices.length > 0) {
-            this.selectedVoice = this.voices[0]
-        }
     }
 
     playText(text) {
         const speechSynthesisUtterance = new SpeechSynthesisUtterance(text)
-        speechSynthesisUtterance.voice = this.selectedVoice
-        speechSynthesisUtterance.lang = this.selectedVoice.lang
         this._synth.speak(speechSynthesisUtterance)
     }
 
