@@ -29,7 +29,7 @@ class ScalePlayer {
         this._isPlaying = false
     }
 
-    playScale(scale, preparationTimeS, tempoBpm) {
+    playScale(scale, preparationTimeS, tempoBpm, transposition) {
         const noteDuration = 60 / tempoBpm
         console.log("playScale, context = " + this._context)
         if (!this._context) {
@@ -41,14 +41,14 @@ class ScalePlayer {
             // oscillator.type = "sine";
             for (let i = 0; i <4; i++) {
                 oscillator.frequency.setValueAtTime(
-                    scale.startingNote.frequency(),
+                    scale.startingNote.getNote(transposition).frequency(),
                     this._context.currentTime + preparationTimeS - i - 1)
                 oscillator.frequency.setValueAtTime(
                     0,
                     this._context.currentTime + preparationTimeS - i - 0.5)
             }
             
-            scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep))
+            scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep + transposition))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
                     oscillator.frequency.setValueAtTime(
