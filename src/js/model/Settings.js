@@ -44,7 +44,7 @@ class Settings {
     getClef = () => this._settingsAccess.getSetting(Settings._KEY_MINOR_SCALE_SHIFT, Settings.Clef.TREBLE)
 
 }
-Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass" })
+Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass", ALTO: "alto" })
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
 Settings.ScaleOrder = Object.freeze({
     INCREASING_NOTES: "increasing_notes",
