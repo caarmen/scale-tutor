@@ -49,15 +49,19 @@
             scalePlayer.stop()
             countdownTimer.reset()
         }
-        controlsView.onNextListener = () => {
-            countdownTimer.reset()
-            scaleIndex++;
+        controlsView.onPrevListener = () => onMoveToScale(scaleIndex - 1)
+        controlsView.onNextListener = () => onMoveToScale(scaleIndex + 1)
+        function onMoveToScale(newIndex) {
+            scaleIndex = newIndex
             if (scaleIndex >= scales.length) scaleIndex = 0
+            if (scaleIndex < 0) scaleIndex = scales.length - 1
+            countdownTimer.reset()
             scaleView.displayScale(scales[scaleIndex])
             if (scalePlayer.isPlaying()) {
                 scalePlayer.stop()
                 playAllScales().then(() => scalePlayer.stop())
             }
+
         }
 
         async function playAllScales() {
@@ -97,6 +101,7 @@
     <div id="scale-id"></div>
     <div><img id="scale-img"></div>
     <div>
+        <button id="button-prev" string-key="button_title_prev"></button>
         <button id="button-start-stop" string-key="button_title_start"></button>
         <button id="button-next" string-key="button_title_next"></button>
     </div>

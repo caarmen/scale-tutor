@@ -15,6 +15,7 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 const strings_en = {
     "button_title_start": "Start",
     "button_title_stop": "Stop",
+    "button_title_prev": "Previous",
     "button_title_next": "Next",
     "setting_title_note_names": "Note names",
     "setting_value_note_names_abc": "C, D, E...",

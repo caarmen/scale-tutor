@@ -15,17 +15,21 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 class ControlsView {
     constructor(i18n) {
         this._i18n = i18n
+        this._elemButtonPrev
         this._elemButtonStartStop
         this._elemButtonNext
         this._isPlaying = false
+        this.onPrevListener = () => { }
         this.onStartListener = () => { }
         this.onStopListener = () => { }
         this.onNextListener = () => { }
     }
 
     initViews() {
+        this._elemButtonPrev = document.querySelector("#button-prev")
         this._elemButtonStartStop = document.querySelector("#button-start-stop")
         this._elemButtonNext = document.querySelector("#button-next")
+        this._elemButtonPrev.onclick = () => this.onPrevListener()
         this._elemButtonNext.onclick = () => this.onNextListener()
         this._elemButtonStartStop.onclick = () => {
             if (this._isPlaying) {
