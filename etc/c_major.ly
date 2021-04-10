@@ -1,3 +1,5 @@
+\version "2.20.0"
+
 #(set! paper-alist (cons '("my size" . (cons (* 10 cm) (* 1.7 cm))) paper-alist))
 
 \paper {
