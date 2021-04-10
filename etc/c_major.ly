@@ -10,7 +10,11 @@
 \header {
   tagline = ""  % removed
 }
-\relative {
-  c' d e f g a b c b a g f e d c r
+
+\transpose c c {
+  \relative c {
+    \key c \major
+      c' d e f g a b c b a g f e d c r
+  }
 }
 
