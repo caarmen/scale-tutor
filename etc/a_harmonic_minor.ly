@@ -13,10 +13,10 @@
   tagline = ""  % removed
 }
 
-\transpose c c {
-  \relative c {
-    \key c \major
-      c' d e f g a b c b a g f e d c r
+\transpose a a {
+  \relative a {
+    \key a \minor
+      a b c d e f gis a gis f e d c b a r
   }
 }
 
