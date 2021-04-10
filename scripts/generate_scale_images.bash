@@ -1,13 +1,18 @@
 lilypond_major_notes=(   c des d ees e f ges g aes a bes b)
-lilypond_minor_notes=(   c\' cis\' d\' dis\' e\' f\' fis\' g\' gis\' a bes b)
+lilypond_minor_notes=(   c\' cis\' d\' ees\' e\' f\' fis\' g\' aes\' a bes b)
 scale_tutor_notes=(      c cs  d ds  e f fs  g gs  a as  b)
 
 for i in ${!lilypond_major_notes[@]}; do
+  echo "${scale_tutor_notes[$i]} major"
   sed -e "s/transpose c c/transpose c ${lilypond_major_notes[$i]}/" etc/c_major.ly > /tmp/temp.ly
-  lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major /tmp/temp.ly
+  lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major /tmp/temp.ly > /dev/null 2>&1
 done
 
-for i in ${!lilypond_minor_notes[@]}; do
-  sed -e "s/transpose a a/transpose a ${lilypond_minor_notes[$i]}/" etc/a_natural_minor.ly > /tmp/temp.ly
-  lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_natural_minor /tmp/temp.ly
+for minor_type in natural harmonic; do
+  for i in ${!lilypond_minor_notes[@]}; do
+    echo "${scale_tutor_notes[$i]} ${minor_type} minor"
+    sed -e "s/transpose a a/transpose a ${lilypond_minor_notes[$i]}/" etc/a_${minor_type}_minor.ly > /tmp/temp.ly
+    lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_${minor_type}_minor /tmp/temp.ly >/dev/null 2>&1
+  done
 done
+
