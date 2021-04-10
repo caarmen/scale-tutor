@@ -5,8 +5,13 @@ scale_tutor_notes=(        c   cs    d   ds    e   f   fs    g   gs    a   as   
 
 for i in ${!lilypond_major_notes[@]}; do
   echo "${scale_tutor_notes[$i]} major"
+
   sed -e "s/transpose c c/transpose c ${lilypond_major_notes[$i]}/" etc/c_major.ly > /tmp/temp.ly
   lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major_treble /tmp/temp.ly > /dev/null 2>&1
+
+  sed -e "s/transpose c c/transpose c' ${lilypond_major_notes[$i]}/;s/\\\\key c \\\\major/\\\\key c \\\\major \\\\clef alto/" etc/c_major.ly > /tmp/temp.ly
+  lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major_alto /tmp/temp.ly > /dev/null 2>&1
+
   sed -e "s/transpose c c/transpose c'' ${lilypond_major_notes[$i]}/;s/\\\\key c \\\\major/\\\\key c \\\\major \\\\clef bass/" etc/c_major.ly > /tmp/temp.ly
   lilypond -dbackend=svg -o src/resources/${scale_tutor_notes[$i]}_major_bass /tmp/temp.ly > /dev/null 2>&1
 done
