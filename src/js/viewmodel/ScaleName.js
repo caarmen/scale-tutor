@@ -13,13 +13,14 @@ You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 class ScaleName {
-    constructor(i18n) {
+    constructor(settings, i18n) {
+        this._settings = settings
         this._i18n = i18n
     }
 
     getScaleName = (scale) => this._i18n.translate(`scale_type_${this._getScaleNameKey(scale)}`)
 
-    getScaleImage = (scale) => `src/resources/${scale.startingNote.name.toLowerCase()}_${this._getScaleNameKey(scale)}.svg`
+    getScaleImage = (scale) => `src/resources/${scale.startingNote.name.toLowerCase()}_${this._getScaleNameKey(scale)}_${this._settings.getClef()}.svg`
     _getScaleNameKey(scale) {
         if (scale.halfSteps == Scale.MAJOR) return "major"
         else if (scale.halfSteps == Scale.NATURAL_MINOR) return "natural_minor"

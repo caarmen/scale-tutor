@@ -19,7 +19,7 @@ class MainViewModel {
 
         this._model = new MainModel(this._settings)
         this._noteName = new NoteName(this._settings, this.i18n)
-        this._scaleName = new ScaleName(this.i18n)
+        this._scaleName = new ScaleName(this._settings, this.i18n)
         this._stateMachine = new StateMachine()
         this._stateMachine.autoPlay = this._settings.isAutoPlayEnabled()
 

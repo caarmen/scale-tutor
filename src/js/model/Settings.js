@@ -41,7 +41,10 @@ class Settings {
 
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 
+    getClef = () => this._settingsAccess.getSetting(Settings._KEY_MINOR_SCALE_SHIFT, Settings.Clef.TREBLE)
+
 }
+Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass" })
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
 Settings.ScaleOrder = Object.freeze({
     INCREASING_NOTES: "increasing_notes",
@@ -62,3 +65,4 @@ Settings._KEY_TEMPO_BPM = "tempo_bpm"
 Settings._KEY_PREPARATION_TIME_S = "preparation_time_s"
 Settings._KEY_SPEECH_SYNTHESIS = "speech_synthesis"
 Settings._KEY_TRANSPOSITION = "transposition"
+Settings._KEY_CLEF = "clef"
