@@ -35,10 +35,7 @@ class MainViewModel {
 
     }
 
-    stop() {
-        this._model.stop()
-        this._stateMachine.doAction(StateMachine.Action.STOP)
-    }
+    stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
     play = () => this._stateMachine.doAction(StateMachine.Action.PLAY)
     next() {
         this._onMoveToScale(this._scaleIndex + 1)
@@ -77,6 +74,7 @@ class MainViewModel {
                 })
                 break;
             case StateMachine.State.PLAY_INTERRUPTED:
+                this._model.stop()
                 this.isPlayingState.value = false
                 break;
             case StateMachine.State.PLAY_NOTES:
