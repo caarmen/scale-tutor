@@ -44,6 +44,8 @@ class ControlsView {
 
     setPlayingState(isPlaying) {
         this._isPlaying = isPlaying
-        this._elemButtonStartStop.innerText = this._i18n.translate(isPlaying ? "button_title_stop" : "button_title_start")
+        this._elemButtonStartStop.innerText = isPlaying ? "stop" : "play_arrow"
+        this._elemButtonStartStop.setAttribute("label-string-key", isPlaying ? "button_title_stop" : "button_title_start")
+        this._i18n.translateElement(this._elemButtonStartStop.parentElement)
     }
 }
