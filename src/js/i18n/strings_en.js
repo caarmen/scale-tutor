@@ -95,6 +95,16 @@ const strings_en = {
     "setting_title_minor_scale_shift": "Major/Minor scale relationship",
     "setting_value_minor_scale_shift_0": "Same starting note",
     "setting_value_minor_scale_shift_-3": "Same key signature",
-    "setting_title_transposition": "Transpose playback (half-steps)"
+    "setting_title_transposition": "Transpose playback (half-steps)",
+    "setting_title_tempo": "Tempo",
+    "setting_value_tempo_40": "Largo (40 bpm)",
+    "setting_value_tempo_60": "Lento (60 bpm)",
+    "setting_value_tempo_76": "Adagio (76 bpm)",
+    "setting_value_tempo_90": "Andante (90 bpm)",
+    "setting_value_tempo_108": "Moderato (108 bpm)",
+    "setting_value_tempo_120": "Allegretto (120 bpm)",
+    "setting_value_tempo_140": "Allegro (140 bpm)",
+    "setting_value_tempo_160": "Vivace (160 bpm)",
+    "setting_value_tempo_180": "Presto (180 bpm)",
 
 }

@@ -47,12 +47,14 @@ class MainView {
         document.querySelector("#placeholder-setting__octaves").innerHTML = templateSetting("octaves", "setting_title_octaves")
         document.querySelector("#placeholder-setting__minor_scale_shift").innerHTML = templateSetting("minor_scale_shift", "setting_title_minor_scale_shift")
         document.querySelector("#placeholder-setting__transposition").innerHTML = templateSetting("transposition", "setting_title_transposition")
+        document.querySelector("#placeholder-setting__tempo").innerHTML = templateSetting("tempo", "setting_title_tempo")
         this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
         this._bindSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
         this._bindSetting("order", this._viewModel.orderDisplayValue, () => this._viewModel.getOrderRadioGroup())
         this._bindSetting("octaves", this._viewModel.octavesDisplayValue, () => this._viewModel.getOctavesRadioGroup())
         this._bindSetting("minor_scale_shift", this._viewModel.minorScaleShiftDisplayValue, () => this._viewModel.getMinorScaleShiftRadioGroup())
-        this._bindSetting("transposition", this._viewModel.transpositionDisplayValue, () => this._viewModel.getMTranspositionRadioGroup())
+        this._bindSetting("transposition", this._viewModel.transpositionDisplayValue, () => this._viewModel.getTranspositionRadioGroup())
+        this._bindSetting("tempo", this._viewModel.tempoDisplayValue, () => this._viewModel.getTempoRadioGroup())
     }
 
     _bindViewModel() {

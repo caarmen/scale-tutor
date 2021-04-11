@@ -35,6 +35,7 @@ class MainViewModel {
         this.octavesDisplayValue = new ObservableField(this._getOctavesDisplayValue(this._settings.getPlaybackOctaves()))
         this.minorScaleShiftDisplayValue = new ObservableField(this._getMinorScaleShiftDisplayValue(this._settings.getMinorScaleShift()))
         this.transpositionDisplayValue = new ObservableField(this._settings.getTransposition())
+        this.tempoDisplayValue = new ObservableField(this._getTempoDisplayValue(this._settings.getTempoBpm()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -67,6 +68,7 @@ class MainViewModel {
         this._settings.observerTransposition = (newValue) => {
             this.transpositionDisplayValue.value = newValue
         }
+        this._settings.observerTempo = (newValue) => { this.tempoDisplayValue.value = this._getTempoDisplayValue(newValue) }
     }
 
     stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
@@ -107,6 +109,8 @@ class MainViewModel {
 
     _getMinorScaleShiftDisplayValue = (value) => this.i18n.translate(`setting_value_minor_scale_shift_${value}`)
 
+    _getTempoDisplayValue = (value) => this.i18n.translate(`setting_value_tempo_${value}`)
+
     getClefRadioGroup = () => new RadioGroup(
         "setting__clef",
         "clef",
@@ -142,7 +146,7 @@ class MainViewModel {
         (newValue) => {
             this._settings.setMinorScaleShift(newValue)
         })
-    getMTranspositionRadioGroup = () => new RadioGroup(
+    getTranspositionRadioGroup = () => new RadioGroup(
         "setting__transposition",
         "transposition",
         "setting_title_transposition",
@@ -150,6 +154,15 @@ class MainViewModel {
         [...Array(24).keys()].reverse().map((item) => new RadioItem(`transposition__${item}`, item - 12, item - 12)),
         (newValue) => {
             this._settings.setTransposition(newValue)
+        })
+    getTempoRadioGroup = () => new RadioGroup(
+        "setting__tempo",
+        "tempo",
+        "setting_title_tempo",
+        this._settings.getTempoBpm(),
+        Object.values(Settings.Tempo).map((item) => new RadioItem(`tempo__${item}`, `setting_value_tempo_${item}`, item)),
+        (newValue) => {
+            this._settings.setTempoBpm(newValue)
         })
 
     _onMoveToScale(newIndex) {

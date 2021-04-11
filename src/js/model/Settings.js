@@ -24,7 +24,8 @@ class Settings {
         this.observerOrder = (newValue) => { }
         this.observerOctaves = (newValue) => { }
         this.observerMinorScaleShift = (newValue) => { }
-        this.observerTransposition= (newValue) => { }
+        this.observerTransposition = (newValue) => { }
+        this.observerTempo = (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
@@ -39,6 +40,8 @@ class Settings {
                 this.observerMinorScaleShift(value)
             } else if (key == Settings._KEY_TRANSPOSITION) {
                 this.observerTransposition(value)
+            } else if (key == Settings._KEY_TEMPO_BPM) {
+                this.observerTempo(value)
             }
         })
     }
@@ -67,11 +70,13 @@ class Settings {
     getTransposition = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0))
     setTransposition = (value) => this._settingsAccess.setSetting(Settings._KEY_TRANSPOSITION, value)
 
+    getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, Settings.Tempo.ALLEGRETTO)
+    setTempoBpm = (value) => this._settingsAccess.setSetting(Settings._KEY_TEMPO_BPM, value)
+
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
-    getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
@@ -86,6 +91,17 @@ Settings.ScaleOrder = Object.freeze({
     INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps"
 })
 Settings.NoteNameFormat = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
+Settings.Tempo = Object.freeze({
+    LARGO: 40,
+    LENTO: 60,
+    ADAGIO: 76,
+    ANDANTE: 90,
+    MODERATO: 108,
+    ALLEGRETTO: 120,
+    ALLEGRO: 140,
+    VIVACE: 160,
+    PRESTO: 180
+})
 
 Settings._KEY_AUTOPLAY = "autoplay"
 Settings._KEY_SCALE_TYPES = "scale_types"
