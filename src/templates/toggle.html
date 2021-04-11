@@ -1,6 +1,8 @@
 templateToggle = (id, title) => `
-<label class="settings__label" for="${id}" string-key="${title}"></label>
-<div id="${id}" class="mdc-switch settings__value">
+<div class="settings__label_value">
+    <label class="settings__label" for="${id}" string-key="${title}"></label>
+</div>
+<div id="${id}" class="mdc-switch settings__widget">
     <div class="mdc-switch__track"></div>
     <div class="mdc-switch__thumb-underlay">
         <div class="mdc-switch__thumb"></div>
