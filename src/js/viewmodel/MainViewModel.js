@@ -66,16 +66,12 @@ class MainViewModel {
         "setting__note-names-format",
         "note-names-format",
         "setting_title_note_names",
-        this.getNoteNameFormat(),
-        [
-            new RadioItem("note-name-format__abc", "setting_value_note_names_abc", Settings.NoteNameFormat.ABC),
-            new RadioItem("note-name-format__solfege", "setting_value_note_names_solfege", Settings.NoteNameFormat.SOLFEGE),
-        ],
+        this._settings.getNoteNameFormat(),
+        Object.values(Settings.NoteNameFormat).map((item) => new RadioItem(`note-name-format__${item}`, `setting_value_note_names_${item}`, item)),
         (newValue) => {
             this._settings.setNoteNameFormat(newValue)
         })
 
-    getNoteNameFormat = () => this._settings.getNoteNameFormat()
     _getNoteNameFormatDisplayValue = (value) => this.i18n.translate(`setting_value_note_names_${value}`)
 
     _getClefDisplayValue = (value) => this.i18n.translate(`setting_value_clef_${value}`)
