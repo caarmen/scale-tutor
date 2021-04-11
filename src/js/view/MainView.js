@@ -42,17 +42,13 @@ class MainView {
         document.querySelector("#placeholder-setting__tts-enabled").innerHTML = templateToggle("setting__tts-enabled", "setting_tts_enabled")
         document.querySelector("#placeholder-setting__autoplay-enabled").innerHTML = templateToggle("setting__autoplay-enabled", "setting_autoplay_enabled")
         document.querySelector("#placeholder-setting__note-names").innerHTML = templateSetting("note-names", "setting_title_note_names")
-        this._elemSettingNoteNamesFormatLabel = document.querySelector("#label_setting__note-names")
-        this._elemSettingNoteNamesFormatValue = document.querySelector("#setting__note-names")
+        this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
     }
 
     _bindViewModel() {
         this._viewModel.scaleName.observer = (scaleName) => this._scaleView.displayScaleName(scaleName)
         this._viewModel.scaleImage.observer = (scaleImage) => this._scaleView.displayScaleImage(scaleImage)
         this._viewModel.isPlayingState.observer = (isPlayingState) => this._controlsView.setPlayingState(isPlayingState)
-        this._viewModel.noteNameFormatDisplayValue.observer = (newValue) => {
-            this._elemSettingNoteNamesFormatValue.innerText = newValue
-        }
 
         this._controlsView.onStopListener = () => this._viewModel.stop()
         this._controlsView.onStartListener = () => this._viewModel.play()
@@ -73,9 +69,15 @@ class MainView {
             mdcSwitchAutoPlayEnabled.listen("change", (e) => {
                 this._viewModel.setAutoPlayEnabled(mdcSwitchAutoPlayEnabled.checked)
             })
-            this._elemSettingNoteNamesFormatLabel.onclick = () => this._displayNoteNamesFormatSetting()
-            this._elemSettingNoteNamesFormatValue.onclick = () => this._displayNoteNamesFormatSetting()
         })
+    }
+
+    _bindSetting(settingId, valueObservableField, radioGroupCreatorFunc) {
+        const elemSettingLabel = document.querySelector(`#label_setting__${settingId}`)
+        const elemSettingValue = document.querySelector(`#setting__${settingId}`)
+        elemSettingLabel.onclick = () => this._displayOptionsSetting(radioGroupCreatorFunc())
+        elemSettingValue.onclick = () => this._displayOptionsSetting(radioGroupCreatorFunc())
+        valueObservableField.observer = (newValue) => elemSettingValue.innerText = newValue
     }
     _displayNoteNamesFormatSetting = () => this._displayOptionsSetting(this._viewModel.getNoteNameFormatRadioGroup())
 
