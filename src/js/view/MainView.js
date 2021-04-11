@@ -32,15 +32,18 @@ class MainView {
     _initViews() {
         this._controlsView.initViews()
         this._elemButtonSettings.onclick = () => this._showSettings()
+        this._inflateSettingsViews()
+        this._viewModel.i18n.translateElement(document.documentElement)
+        this._mdcDialog = new mdc.dialog.MDCDialog(document.querySelector('#settings-dialog'))
+    }
+
+    _inflateSettingsViews() {
         document.querySelector("#placeholder-settings-dialog").innerHTML = templateDialog("settings-dialog", "settings_title", templateSettings, "")
         document.querySelector("#placeholder-setting__tts-enabled").innerHTML = templateToggle("setting__tts-enabled", "setting_tts_enabled")
         document.querySelector("#placeholder-setting__autoplay-enabled").innerHTML = templateToggle("setting__autoplay-enabled", "setting_autoplay_enabled")
         document.querySelector("#placeholder-setting__note-names").innerHTML = templateSetting("note-names", "setting_title_note_names")
         this._elemSettingNoteNamesFormatLabel = document.querySelector("#label_setting__note-names")
         this._elemSettingNoteNamesFormatValue = document.querySelector("#setting__note-names")
-        this._viewModel.i18n.translateElement(document.documentElement)
-
-        this._mdcDialog = new mdc.dialog.MDCDialog(document.querySelector('#settings-dialog'))
     }
 
     _bindViewModel() {
