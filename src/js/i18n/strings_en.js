@@ -83,5 +83,11 @@ const strings_en = {
     "setting_value_clef_treble": "Treble",
     "setting_value_clef_bass": "Bass",
     "setting_value_clef_alto": "Alto",
+    "setting_title_order": "Scale order",
+    "setting_value_order_increasing_notes": "Increasing notes",
+    "setting_value_order_decreasing_notes": "Decreasing notes",
+    "setting_value_order_increasing_flats": "Increasing flats",
+    "setting_value_order_increasing_sharps": "Increasing sharps",
+    "setting_value_order_incresing_flats_and_sharps": "Increasing flats and sharps"
 
 }

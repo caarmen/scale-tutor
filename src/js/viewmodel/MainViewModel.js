@@ -31,6 +31,7 @@ class MainViewModel {
         this.isPlayingState = new ObservableField(false)
         this.noteNameFormatDisplayValue = new ObservableField(this._getNoteNameFormatDisplayValue(this._settings.getNoteNameFormat()))
         this.clefDisplayValue = new ObservableField(this._getClefDisplayValue(this._settings.getClef()))
+        this.orderDisplayValue = new ObservableField(this._getOrderDisplayValue(this._settings.getScaleOrder()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -40,6 +41,12 @@ class MainViewModel {
         }
         this._settings.observerClef = (newValue) => {
             this.clefDisplayValue.value = this._getClefDisplayValue(newValue)
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
+        this._settings.observerOrder = (newValue) => {
+            this.orderDisplayValue.value = this._getOrderDisplayValue(newValue)
+            this._scaleIndex = 0
+            this._scales = this._model.generateScales()
             this._onScaleChange(this._scales[this._scaleIndex])
         }
     }
@@ -76,6 +83,8 @@ class MainViewModel {
 
     _getClefDisplayValue = (value) => this.i18n.translate(`setting_value_clef_${value}`)
 
+    _getOrderDisplayValue = (value) => this.i18n.translate(`setting_value_order_${value}`)
+
     getClefRadioGroup = () => new RadioGroup(
         "setting__clef",
         "clef",
@@ -83,6 +92,16 @@ class MainViewModel {
         this._settings.getClef(),
         Object.values(Settings.Clef).map((item) => new RadioItem(`clef__${item}`, `setting_value_clef_${item}`, item)),
         (newValue) => { this._settings.setClef(newValue) })
+
+    getOrderRadioGroup = () => new RadioGroup(
+        "setting__order",
+        "order",
+        "setting_title_order",
+        this._settings.getScaleOrder(),
+        Object.values(Settings.ScaleOrder).map((item) => new RadioItem(`order__${item}`, `setting_value_order_${item}`, item)),
+        (newValue) => {
+            this._settings.setScaleOrder(newValue)
+        })
 
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex

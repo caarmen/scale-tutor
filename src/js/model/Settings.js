@@ -21,12 +21,15 @@ class Settings {
         this._settingsAccess = settingsAccess
         this.observerNoteNameFormatListener = (newValue) => { }
         this.observerClef = (newValue) => { }
+        this.observerOrder = (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
                 this.observerNoteNameFormatListener(value)
             } else if (key == Settings._KEY_CLEF) {
                 this.observerClef(value)
+            } else if (key == Settings._KEY_SCALE_ORDER) {
+                this.observerOrder(value)
             }
         })
     }
@@ -43,13 +46,15 @@ class Settings {
     getClef = () => this._settingsAccess.getSetting(Settings._KEY_CLEF, Settings.Clef.TREBLE)
     setClef = (value) => this._settingsAccess.setSetting(Settings._KEY_CLEF, value)
 
+    getScaleOrder = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_ORDER, Settings.ScaleOrder.INCREASING_FLATS)
+    setScaleOrder = (value) => this._settingsAccess.setSetting(Settings._KEY_SCALE_ORDER, value)
+
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
     getMinorScaleShift = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, -3)
 
-    getScaleOrder = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_ORDER, Settings.ScaleOrder.INCREASING_FLATS)
 
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
@@ -68,8 +73,7 @@ Settings.ScaleOrder = Object.freeze({
     DECREASING_NOTES: "decreasing_notes",
     INCREASING_FLATS: "increasing_flats",
     INCREASING_SHARPS: "increasing_sharps",
-    INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps",
-    RANDOM: "random"
+    INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps"
 })
 Settings.NoteNameFormat = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
 
