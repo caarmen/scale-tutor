@@ -18,7 +18,6 @@ class MainView {
 
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
-        this._countdownTimer = new CountdownTimer()
 
         this._initViews()
         this._bindViewModel()
@@ -27,15 +26,12 @@ class MainView {
     _initViews() {
         this._viewModel.i18n.translateElement(document.documentElement)
         this._controlsView.initViews()
-        this._countdownTimer.initViews()
     }
 
     _bindViewModel() {
         this._viewModel.scaleName.observer = (scaleName) => this._scaleView.displayScaleName(scaleName)
         this._viewModel.scaleImage.observer = (scaleImage) => this._scaleView.displayScaleImage(scaleImage)
         this._viewModel.isPlayingState.observer = (isPlayingState) => this._controlsView.setPlayingState(isPlayingState)
-        this._viewModel.countDownTimerStartListener = (timeS) => this._countdownTimer.start(timeS)
-        this._viewModel.countDownTimerStopListener = () => this._countdownTimer.reset()
 
         this._controlsView.onStopListener = () => this._viewModel.stop()
         this._controlsView.onStartListener = () => this._viewModel.play()

@@ -30,9 +30,6 @@ class MainViewModel {
         this.scaleImage = new ObservableField()
         this.isPlayingState = new ObservableField(false)
 
-        this.countDownTimerStartListener = (timeS) => { }
-        this.countDownTimerStopListener = () => { }
-
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
 
@@ -64,11 +61,9 @@ class MainViewModel {
                 this._model.stop()
                 this.isPlayingState.value = false
                 this._onScaleChange(scale)
-                this.countDownTimerStopListener()
                 break;
             case StateMachine.State.AUTO_SCALE_DISPLAY:
                 this._onScaleChange(scale)
-                this.countDownTimerStopListener()
                 break;
             case StateMachine.State.SPEAK_SCALE_NAME:
                 this._model.playText(this._getTtsText(scale))
@@ -77,13 +72,11 @@ class MainViewModel {
             case StateMachine.State.PLAY_PREPARE:
                 break;
             case StateMachine.State.COUNTDOWN_START:
-                this.countDownTimerStartListener(this._model.getPreparationTimeS())
                 this._model.playScale(scale).then(() => {
                     this._stateMachine.doAction(StateMachine.Action.PLAY_COMPLETED)
                 })
                 break;
             case StateMachine.State.PLAY_INTERRUPTED:
-                this.countDownTimerStopListener()
                 this.isPlayingState.value = false
                 break;
             case StateMachine.State.PLAY_NOTES:
