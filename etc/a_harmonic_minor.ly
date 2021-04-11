@@ -1,6 +1,6 @@
 \version "2.20.0"
 
-#(set! paper-alist (cons '("my size" . (cons (* 10 cm) (* 1.7 cm))) paper-alist))
+#(set! paper-alist (cons '("my size" . (cons (* 12 cm) (* 3.5 cm))) paper-alist))
 
 \paper {
   left-margin = 0
@@ -16,7 +16,7 @@
 \transpose a a {
   \relative a {
     \key a \minor
-      a b c d e f gis a gis f e d c b a r
+      <a a' a'> <b b' b'> <c c' c'> <d d' d'> <e e' e'> <f f' f'> <gis gis' gis'> <a a' a'> <gis gis' gis'> <f f' f'> <e e' e'> <d d' d'> <c c' c'> <b b' b'> <a a' a'> r
   }
 }
 
