@@ -34,6 +34,7 @@ class MainViewModel {
         this.orderDisplayValue = new ObservableField(this._getOrderDisplayValue(this._settings.getScaleOrder()))
         this.octavesDisplayValue = new ObservableField(this._getOctavesDisplayValue(this._settings.getPlaybackOctaves()))
         this.minorScaleShiftDisplayValue = new ObservableField(this._getMinorScaleShiftDisplayValue(this._settings.getMinorScaleShift()))
+        this.transpositionDisplayValue = new ObservableField(this._settings.getTransposition())
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -62,6 +63,9 @@ class MainViewModel {
             this._scaleIndex = 0
             this._scales = this._model.generateScales()
             this._onScaleChange(this._scales[this._scaleIndex])
+        }
+        this._settings.observerTransposition = (newValue) => {
+            this.transpositionDisplayValue.value = newValue
         }
     }
 
@@ -137,6 +141,15 @@ class MainViewModel {
         [0, -3].map((item) => new RadioItem(`minor_scale_shift__${item}`, `setting_value_minor_scale_shift_${item}`, item)),
         (newValue) => {
             this._settings.setMinorScaleShift(newValue)
+        })
+    getMTranspositionRadioGroup = () => new RadioGroup(
+        "setting__transposition",
+        "transposition",
+        "setting_title_transposition",
+        this._settings.getTransposition(),
+        [...Array(24).keys()].reverse().map((item) => new RadioItem(`transposition__${item}`, item - 12, item - 12)),
+        (newValue) => {
+            this._settings.setTransposition(newValue)
         })
 
     _onMoveToScale(newIndex) {

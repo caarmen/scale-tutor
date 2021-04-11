@@ -95,4 +95,6 @@ const strings_en = {
     "setting_title_minor_scale_shift": "Major/Minor scale relationship",
     "setting_value_minor_scale_shift_0": "Same starting note",
     "setting_value_minor_scale_shift_-3": "Same key signature",
+    "setting_title_transposition": "Transpose playback (half-steps)"
+
 }

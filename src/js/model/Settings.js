@@ -24,6 +24,7 @@ class Settings {
         this.observerOrder = (newValue) => { }
         this.observerOctaves = (newValue) => { }
         this.observerMinorScaleShift = (newValue) => { }
+        this.observerTransposition= (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
@@ -36,6 +37,8 @@ class Settings {
                 this.observerOctaves(value)
             } else if (key == Settings._KEY_MINOR_SCALE_SHIFT) {
                 this.observerMinorScaleShift(value)
+            } else if (key == Settings._KEY_TRANSPOSITION) {
+                this.observerTransposition(value)
             }
         })
     }
@@ -65,13 +68,14 @@ class Settings {
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
+    getTransposition = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0))
+    setTransposition = (value) => this._settingsAccess.setSetting(Settings._KEY_TRANSPOSITION, value)
 
 
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
-    getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 
 
 

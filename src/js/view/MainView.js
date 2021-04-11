@@ -46,11 +46,13 @@ class MainView {
         document.querySelector("#placeholder-setting__order").innerHTML = templateSetting("order", "setting_title_order")
         document.querySelector("#placeholder-setting__octaves").innerHTML = templateSetting("octaves", "setting_title_octaves")
         document.querySelector("#placeholder-setting__minor_scale_shift").innerHTML = templateSetting("minor_scale_shift", "setting_title_minor_scale_shift")
+        document.querySelector("#placeholder-setting__transposition").innerHTML = templateSetting("transposition", "setting_title_transposition")
         this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
         this._bindSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
         this._bindSetting("order", this._viewModel.orderDisplayValue, () => this._viewModel.getOrderRadioGroup())
         this._bindSetting("octaves", this._viewModel.octavesDisplayValue, () => this._viewModel.getOctavesRadioGroup())
         this._bindSetting("minor_scale_shift", this._viewModel.minorScaleShiftDisplayValue, () => this._viewModel.getMinorScaleShiftRadioGroup())
+        this._bindSetting("transposition", this._viewModel.transpositionDisplayValue, () => this._viewModel.getMTranspositionRadioGroup())
     }
 
     _bindViewModel() {
@@ -100,8 +102,8 @@ class MainView {
             const radioControl = new mdc.radio.MDCRadio(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-radio`))
             const formField = new mdc.formField.MDCFormField(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-form-field`))
             radioControl.checked = radioGroup.initialValue == item.value
+            console.log(`${radioGroup.initialValue} <> ${item.value}: ${radioGroup.initialValue == item.value}`)
             formField.input = radioControl
-            console.log("radioControl " + radioControl + " for item " + item)
             radioControl.listen("change", (e) => {
                 console.log(item.label + ": " + radioControl.checked)
                 if (radioControl.checked) radioGroup.listener(item.value)
