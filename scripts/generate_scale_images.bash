@@ -1,4 +1,4 @@
-lilypond_major_notes=(     c   des   d   ees   e   f   ges   g   aes   a   bes   b)
+lilypond_major_notes=(     c   des   d   ees   e   f   ges   g   aes,   a,   bes,   b,)
 lilypond_minor_notes=(     c\' cis\' d\' ees\' e\' f\' fis\' g\' aes\' a   bes   b)
 lilypond_minor_bass_notes=(c\' cis\' d\' ees\' e\' f\' fis\' g\' aes\' a\' bes\' b\')
 scale_tutor_notes=(        c   cs    d   ds    e   f   fs    g   gs    a   as    b)

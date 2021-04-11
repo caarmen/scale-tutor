@@ -1,6 +1,6 @@
 \version "2.20.0"
 
-#(set! paper-alist (cons '("my size" . (cons (* 10 cm) (* 1.7 cm))) paper-alist))
+#(set! paper-alist (cons '("my size" . (cons (* 10 cm) (* 2 cm))) paper-alist))
 
 \paper {
   left-margin = 0
@@ -16,7 +16,7 @@
 \transpose c c {
   \relative c {
     \key c \major
-      c' d e f g a b c b a g f e d c r
+      <c' c'> <d d'> <e e'> <f f'> <g g'> <a a'> <b b'> <c c'> <b b'> <a a'> <g g'> <f f'> <e e'> <d d'> <c c'> r
   }
 }
 
