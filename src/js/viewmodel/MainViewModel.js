@@ -45,6 +45,8 @@ class MainViewModel {
         this._onMoveToScale(this._scaleIndex - 1)
         this._stateMachine.doAction(StateMachine.Action.PREVIOUS)
     }
+    isSpeechSynthesisEnabled = () => this._settings.isSpeechSynthesisEnabled()
+    setSpeechSynthesisEnabled = (value) => this._settings.setSpeechSynthesisEnabled(value)
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
         if (this._scaleIndex >= this._scales.length) this._scaleIndex = 0

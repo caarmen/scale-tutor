@@ -75,4 +75,6 @@ const strings_en = {
     "scale_type_harmonic_minor": "Harmonic minor",
     "scale_type_melodic_minor": "Melodic minor",
     "scale_type_blues": "Blues",
+    "settings_title": "Settings",
+    "setting_tts_enabled": "Speak scale names",
 }

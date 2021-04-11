@@ -37,7 +37,8 @@ class Settings {
 
     isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, true)
 
-    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, true)
+    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, true) == "true"
+    setSpeechSynthesisEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_SPEECH_SYNTHESIS, value)
 
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 

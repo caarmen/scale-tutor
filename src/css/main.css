@@ -44,5 +44,20 @@ body {
 	display: flex;
 	justify-content: center;
 }
-.button-bar button {
+.mdc-dialog .mdc-dialog__content  {
+	color: var(--mdc-theme-text-primary-on-background)
+}
+.settings {
+	display: grid;
+	grid-template-columns: auto max-content;
+	align-items: center
+}
+.setting__label {
+	font-weight: bold;
+	grid-column: 1;
+}
+.setting__value {
+	margin-top: 16px;
+	grid-column: 2;
+	margin-inline-start: 16px;
 }

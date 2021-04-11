@@ -16,9 +16,11 @@ class MainView {
     constructor() {
         this._viewModel = new MainViewModel()
 
+        this._elemButtonSettings = document.querySelector("#button-settings")
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
 
+        this._mdcDialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'))
         this._initViews()
         this._bindViewModel()
     }
@@ -26,6 +28,7 @@ class MainView {
     _initViews() {
         this._viewModel.i18n.translateElement(document.documentElement)
         this._controlsView.initViews()
+        this._elemButtonSettings.onclick = () => this._showSettings()
     }
 
     _bindViewModel() {
@@ -37,5 +40,17 @@ class MainView {
         this._controlsView.onStartListener = () => this._viewModel.play()
         this._controlsView.onPrevListener = () => this._viewModel.prev()
         this._controlsView.onNextListener = () => this._viewModel.next()
+    }
+
+    _showSettings() {
+        this._mdcDialog.open()
+        this._mdcDialog.listen('MDCDialog:opened', () => {
+            const mdcSwitchTtsEnabled = new mdc.switchControl.MDCSwitch(document.querySelector("#setting__tts-enabled"))
+            mdcSwitchTtsEnabled.checked = this._viewModel.isSpeechSynthesisEnabled()
+            mdcSwitchTtsEnabled.listen("change", (e) => {
+                this._viewModel.setSpeechSynthesisEnabled(mdcSwitchTtsEnabled.checked)
+            })
+
+        })
     }
 }
