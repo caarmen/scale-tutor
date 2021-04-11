@@ -20,6 +20,7 @@ class MainView {
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
 
+        this._elemPlaceHolderOptionsSettingDialog = document.querySelector("#placeholder-options-setting-dialog")
         this._mdcDialog
 
         this._elemSettingNoteNamesFormatLabel
@@ -35,9 +36,6 @@ class MainView {
         document.querySelector("#placeholder-setting__tts-enabled").innerHTML = templateToggle("setting__tts-enabled", "setting_tts_enabled")
         document.querySelector("#placeholder-setting__autoplay-enabled").innerHTML = templateToggle("setting__autoplay-enabled", "setting_autoplay_enabled")
         document.querySelector("#placeholder-setting__note-names").innerHTML = templateSetting("note-names", "setting_title_note_names")
-        document.querySelector("#placeholder-options-note-name-format").innerHTML = templateDialog("options-note-name-format", "setting_title_note_names", templateOptionsNoteNameFormat, "settings-detail-dialog")
-        document.querySelector("#placeholder_note-name-format__abc").innerHTML = templateRadio("note-name-format", "note-name-format__abc", "setting_value_note_names_abc")
-        document.querySelector("#placeholder_note-name-format__solfege").innerHTML = templateRadio("note-name-format", "note-name-format__solfege", "setting_value_note_names_solfege")
         this._elemSettingNoteNamesFormatLabel = document.querySelector("#label_setting__note-names")
         this._elemSettingNoteNamesFormatValue = document.querySelector("#setting__note-names")
         this._viewModel.i18n.translateElement(document.documentElement)
@@ -75,19 +73,27 @@ class MainView {
         })
     }
     _displayNoteNamesFormatSetting() {
-        const dialog = new mdc.dialog.MDCDialog(document.querySelector("#options-note-name-format"))
+
+        const items = [
+            { id: "note-name-format__abc", label: "setting_value_note_names_abc", value: Settings.NoteNameFormat.ABC },
+            { id: "note-name-format__solfege", label: "setting_value_note_names_solfege", value: Settings.NoteNameFormat.SOLFEGE },
+        ]
+        this._elemPlaceHolderOptionsSettingDialog.innerHTML =
+            this._createOptionsSettingDialogHtml("setting__note-names-format", "note-names-format", "setting_title_note_names", items)
+        this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
+        const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
         dialog.open()
         const noteNameFormat = this._viewModel.getNoteNameFormat()
-        this._checkRadio("note-name-format__abc", noteNameFormat == Settings.NoteNameFormat.ABC, () => {
-            this._viewModel.setNoteNameFormat(Settings.NoteNameFormat.ABC)
-            this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
+        items.forEach((item) => {
+            this._checkRadio(item.id, noteNameFormat == item.value, () => {
+                this._viewModel.setNoteNameFormat(item.value)
+                this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
+            })
         })
-        this._checkRadio("note-name-format__solfege", noteNameFormat == Settings.NoteNameFormat.SOLFEGE, () => {
-            this._viewModel.setNoteNameFormat(Settings.NoteNameFormat.SOLFEGE)
-            this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
-        })
-
     }
+    _createOptionsSettingDialogHtml = (id, groupId, title, items) => templateDialog(id, title, this._createRadioGroupHtml(groupId, items), "")
+    _createRadioGroupHtml = (groupId, items) => items.map((item) => templateRadio(groupId, item.id, item.label)).join("")
+
     _checkRadio(id, checked, listener) {
         const radioControl = new mdc.radio.MDCRadio(document.querySelector(`#${id}__mdc-radio`))
         const formField = new mdc.formField.MDCFormField(document.querySelector(`#${id}__mdc-form-field`))
