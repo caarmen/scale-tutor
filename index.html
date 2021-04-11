@@ -31,10 +31,11 @@
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script src="src/js/viewmodel/StateMachine.js"></script>
     <script src="src/templates/dialog.html" type="text/javascript"></script>
-    <script src="src/templates/dialog-ok-button.html" type="text/javascript"></script>
     <script src="src/templates/radio.html" type="text/javascript"></script>
+    <script src="src/templates/setting.html" type="text/javascript"></script>
     <script src="src/templates/toggle.html" type="text/javascript"></script>
     <script src="src/templates/options-note-name-format.html" type="text/javascript"></script>
+    <script src="src/templates/settings.html" type="text/javascript"></script>
     <script>
         function app_init() {
             const mainView = new MainView()
@@ -63,23 +64,7 @@
             </div>
         </div>
         <img id="scale-img">
-        <div id="settings-dialog" class="mdc-dialog">
-            <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-describedby="my-dialog-content">
-                    <div class="mdc-dialog__content" id="settings-dialog-content">
-                        <div class="mdc-typography--headline6 settings__title" string-key="settings_title"></div>
-                        <div class="settings">
-                            <div id="placeholder-setting__tts-enabled" class="setting"></div>
-                            <div id="placeholder-setting__autoplay-enabled" class="setting"></div>
-                            <label class="settings__label" for="setting__note-names" string-key="setting_title_note_names"></label>
-                            <div id="setting__note-names" class="settings__value"></div>
-                        </div>
-                        <div class="template-dialog-ok-button"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="mdc-dialog__scrim"></div>
-        </div>
+        <div id="placeholder-settings-dialog"></div>
         <div id="placeholder-options-note-name-format"></div>
     </main>
 </body>
