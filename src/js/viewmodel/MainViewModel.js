@@ -33,6 +33,7 @@ class MainViewModel {
         this.clefDisplayValue = new ObservableField(this._getClefDisplayValue(this._settings.getClef()))
         this.orderDisplayValue = new ObservableField(this._getOrderDisplayValue(this._settings.getScaleOrder()))
         this.octavesDisplayValue = new ObservableField(this._getOctavesDisplayValue(this._settings.getPlaybackOctaves()))
+        this.minorScaleShiftDisplayValue = new ObservableField(this._getMinorScaleShiftDisplayValue(this._settings.getMinorScaleShift()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -52,6 +53,12 @@ class MainViewModel {
         }
         this._settings.observerOctaves = (newValue) => {
             this.octavesDisplayValue.value = this._getOctavesDisplayValue(newValue)
+            this._scaleIndex = 0
+            this._scales = this._model.generateScales()
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
+        this._settings.observerMinorScaleShift = (newValue) => {
+            this.minorScaleShiftDisplayValue.value = this._getMinorScaleShiftDisplayValue(newValue)
             this._scaleIndex = 0
             this._scales = this._model.generateScales()
             this._onScaleChange(this._scales[this._scaleIndex])
@@ -94,6 +101,8 @@ class MainViewModel {
 
     _getOctavesDisplayValue = (value) => this.i18n.translate(`setting_value_octaves_${value}`)
 
+    _getMinorScaleShiftDisplayValue = (value) => this.i18n.translate(`setting_value_minor_scale_shift_${value}`)
+
     getClefRadioGroup = () => new RadioGroup(
         "setting__clef",
         "clef",
@@ -119,6 +128,15 @@ class MainViewModel {
         [1, 2].map((item) => new RadioItem(`octaves__${item}`, `setting_value_octaves_${item}`, item)),
         (newValue) => {
             this._settings.setPlaybackOctaves(newValue)
+        })
+    getMinorScaleShiftRadioGroup = () => new RadioGroup(
+        "setting__minor_scale_shift",
+        "minor_scale_shift",
+        "setting_title_minor_scale_shift",
+        this._settings.getMinorScaleShift(),
+        [0, -3].map((item) => new RadioItem(`minor_scale_shift__${item}`, `setting_value_minor_scale_shift_${item}`, item)),
+        (newValue) => {
+            this._settings.setMinorScaleShift(newValue)
         })
 
     _onMoveToScale(newIndex) {

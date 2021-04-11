@@ -91,5 +91,8 @@ const strings_en = {
     "setting_value_order_incresing_flats_and_sharps": "Increasing flats and sharps",
     "setting_title_octaves": "Scale difficulty",
     "setting_value_octaves_1": "Basic",
-    "setting_value_octaves_2": "Advanced"
+    "setting_value_octaves_2": "Advanced",
+    "setting_title_minor_scale_shift": "Major/Minor scale relationship",
+    "setting_value_minor_scale_shift_0": "Same starting note",
+    "setting_value_minor_scale_shift_-3": "Same key signature",
 }

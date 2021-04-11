@@ -23,6 +23,7 @@ class Settings {
         this.observerClef = (newValue) => { }
         this.observerOrder = (newValue) => { }
         this.observerOctaves = (newValue) => { }
+        this.observerMinorScaleShift = (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
@@ -33,6 +34,8 @@ class Settings {
                 this.observerOrder(value)
             } else if (key == Settings._KEY_PLAYbACK_OCTAVES) {
                 this.observerOctaves(value)
+            } else if (key == Settings._KEY_MINOR_SCALE_SHIFT) {
+                this.observerMinorScaleShift(value)
             }
         })
     }
@@ -55,11 +58,13 @@ class Settings {
     getPlaybackOctaves = () => this._settingsAccess.getSetting(Settings._KEY_PLAYbACK_OCTAVES, 1)
     setPlaybackOctaves = (value) => this._settingsAccess.setSetting(Settings._KEY_PLAYbACK_OCTAVES, value)
 
+    getMinorScaleShift = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_MINOR_SCALE_SHIFT, -3))
+    setMinorScaleShift = (value) => this._settingsAccess.setSetting(Settings._KEY_MINOR_SCALE_SHIFT, value)
+
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
-    getMinorScaleShift = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, -3)
 
 
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
