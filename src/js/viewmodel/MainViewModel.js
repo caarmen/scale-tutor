@@ -66,9 +66,7 @@ class MainViewModel {
                 this._model.playText(this._getTtsText(scale))
                 this.isPlayingState.value = true
                 break;
-            case StateMachine.State.PLAY_PREPARE:
-                break;
-            case StateMachine.State.COUNTDOWN_START:
+            case StateMachine.State.PLAY_NOTES:
                 this._model.playScale(scale).then(() => {
                     this._stateMachine.doAction(StateMachine.Action.PLAY_COMPLETED)
                 })
@@ -76,8 +74,6 @@ class MainViewModel {
             case StateMachine.State.PLAY_INTERRUPTED:
                 this._model.stop()
                 this.isPlayingState.value = false
-                break;
-            case StateMachine.State.PLAY_NOTES:
                 break;
             case StateMachine.State.PLAY_COMPLETE:
                 this._onMoveToScale(this._scaleIndex + 1)

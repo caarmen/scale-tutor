@@ -43,7 +43,7 @@ class StateMachine {
                 } else if (this.state == StateMachine.State.MANUAL_SCALE_DISPLAY) {
                     return StateMachine.State.SPEAK_SCALE_NAME
                 } else {
-                    return StateMachine.State.PLAY_PREPARE
+                    return StateMachine.State.PLAY_NOTES
                 }
             case StateMachine.Action.STOP:
                 return StateMachine.State.PLAY_INTERRUPTED
@@ -56,10 +56,6 @@ class StateMachine {
             case StateMachine.State.AUTO_SCALE_DISPLAY:
                 return StateMachine.State.SPEAK_SCALE_NAME
             case StateMachine.State.SPEAK_SCALE_NAME:
-                return StateMachine.State.PLAY_PREPARE
-            case StateMachine.State.PLAY_PREPARE:
-                return StateMachine.State.COUNTDOWN_START
-            case StateMachine.State.COUNTDOWN_START:
                 return StateMachine.State.PLAY_NOTES
             case StateMachine.State.PLAY_COMPLETE:
                 if (this.autoPlay) return StateMachine.State.AUTO_SCALE_DISPLAY
@@ -80,8 +76,6 @@ StateMachine.State = Object.freeze({
     MANUAL_SCALE_DISPLAY: "manual_scale_display",
     AUTO_SCALE_DISPLAY: "auto_scale_display",
     SPEAK_SCALE_NAME: "speak_scale_name",
-    PLAY_PREPARE: "play_prepare",
-    COUNTDOWN_START: "countdown_start",
     PLAY_INTERRUPTED: "play_interrupted",
     PLAY_NOTES: "play_notes",
     PLAY_COMPLETE: "play_completed"
