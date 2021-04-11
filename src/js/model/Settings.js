@@ -35,9 +35,10 @@ class Settings {
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
 
-    isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, true)
+    isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, "true") == "true"
+    setAutoPlayEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_AUTOPLAY, value)
 
-    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, true) == "true"
+    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, "true") == "true"
     setSpeechSynthesisEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_SPEECH_SYNTHESIS, value)
 
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)

@@ -50,6 +50,11 @@ class MainView {
             mdcSwitchTtsEnabled.listen("change", (e) => {
                 this._viewModel.setSpeechSynthesisEnabled(mdcSwitchTtsEnabled.checked)
             })
+            const mdcSwitchAutoPlayEnabled = new mdc.switchControl.MDCSwitch(document.querySelector("#setting__autoplay-enabled"))
+            mdcSwitchAutoPlayEnabled.checked = this._viewModel.isAutoPlayEnabled()
+            mdcSwitchAutoPlayEnabled.listen("change", (e) => {
+                this._viewModel.setAutoPlayEnabled(mdcSwitchAutoPlayEnabled.checked)
+            })
 
         })
     }

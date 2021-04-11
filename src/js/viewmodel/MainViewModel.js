@@ -47,6 +47,11 @@ class MainViewModel {
     }
     isSpeechSynthesisEnabled = () => this._settings.isSpeechSynthesisEnabled()
     setSpeechSynthesisEnabled = (value) => this._settings.setSpeechSynthesisEnabled(value)
+    isAutoPlayEnabled = () => this._settings.isAutoPlayEnabled()
+    setAutoPlayEnabled(value) {
+        this._settings.setAutoPlayEnabled(value)
+        this._stateMachine.autoPlay = value
+    }
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
         if (this._scaleIndex >= this._scales.length) this._scaleIndex = 0
@@ -79,6 +84,7 @@ class MainViewModel {
                 break;
             case StateMachine.State.PLAY_COMPLETE:
                 this._onMoveToScale(this._scaleIndex + 1)
+                if (!this.isAutoPlayEnabled()) this.isPlayingState.value = false
                 break;
             default:
                 break;

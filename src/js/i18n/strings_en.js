@@ -77,4 +77,5 @@ const strings_en = {
     "scale_type_blues": "Blues",
     "settings_title": "Settings",
     "setting_tts_enabled": "Speak scale names",
+    "setting_autoplay_enabled": "Autoplay",
 }
