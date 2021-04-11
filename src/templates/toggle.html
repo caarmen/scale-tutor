@@ -1,0 +1,10 @@
+templateToggle = (id, title) => `
+<label class="settings__label" for="${id}" string-key="${title}"></label>
+<div id="${id}" class="mdc-switch settings__value">
+    <div class="mdc-switch__track"></div>
+    <div class="mdc-switch__thumb-underlay">
+        <div class="mdc-switch__thumb"></div>
+        <input type="checkbox" class="mdc-switch__native-control" role="switch" aria-checked="false">
+    </div>
+</div>
+`

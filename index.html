@@ -33,6 +33,7 @@
     <script src="src/templates/dialog.html" type="text/javascript"></script>
     <script src="src/templates/dialog-ok-button.html" type="text/javascript"></script>
     <script src="src/templates/radio.html" type="text/javascript"></script>
+    <script src="src/templates/toggle.html" type="text/javascript"></script>
     <script src="src/templates/options-note-name-format.html" type="text/javascript"></script>
     <script>
         function app_init() {
@@ -68,22 +69,8 @@
                     <div class="mdc-dialog__content" id="settings-dialog-content">
                         <div class="mdc-typography--headline6 settings__title" string-key="settings_title"></div>
                         <div class="settings">
-                            <label class="settings__label" for="setting__tts-enabled" string-key="setting_tts_enabled"></label>
-                            <div id="setting__tts-enabled" class="mdc-switch settings__value">
-                                <div class="mdc-switch__track"></div>
-                                <div class="mdc-switch__thumb-underlay">
-                                    <div class="mdc-switch__thumb"></div>
-                                    <input type="checkbox" class="mdc-switch__native-control" role="switch" aria-checked="false">
-                                </div>
-                            </div>
-                            <label class="settings__label" for="setting__autoplay-enabled" string-key="setting_autoplay_enabled"></label>
-                            <div id="setting__autoplay-enabled" class="mdc-switch settings__value">
-                                <div class="mdc-switch__track"></div>
-                                <div class="mdc-switch__thumb-underlay">
-                                    <div class="mdc-switch__thumb"></div>
-                                    <input type="checkbox" class="mdc-switch__native-control" role="switch" aria-checked="false">
-                                </div>
-                            </div>
+                            <div id="placeholder-setting__tts-enabled" class="setting"></div>
+                            <div id="placeholder-setting__autoplay-enabled" class="setting"></div>
                             <label class="settings__label" for="setting__note-names" string-key="setting_title_note_names"></label>
                             <div id="setting__note-names" class="settings__value"></div>
                         </div>

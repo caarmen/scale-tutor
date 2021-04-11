@@ -32,8 +32,10 @@ class MainView {
         document.querySelectorAll(".template-dialog-ok-button").forEach((element) => {
             element.innerHTML = templateDialogOkButton
         })
+        document.querySelector("#placeholder-setting__tts-enabled").innerHTML = templateToggle("setting__tts-enabled", "setting_tts_enabled")
+        document.querySelector("#placeholder-setting__autoplay-enabled").innerHTML = templateToggle("setting__autoplay-enabled", "setting_autoplay_enabled")
         document.querySelector("#placeholder-options-note-name-format").innerHTML =
-            templateDialog("options-note-name-format", "settings_title_note_names", templateOptionsNoteNameFormat, "settings-detail-dialog")
+            templateDialog("options-note-name-format", "setting_title_note_names", templateOptionsNoteNameFormat, "settings-detail-dialog")
         document.querySelector("#placeholder_note-name-format__abc").innerHTML = templateRadio("note-name-format", "note-name-format__abc", "setting_value_note_names_abc")
         document.querySelector("#placeholder_note-name-format__solfege").innerHTML = templateRadio("note-name-format", "note-name-format__solfege", "setting_value_note_names_solfege")
         this._viewModel.i18n.translateElement(document.documentElement)

@@ -48,8 +48,6 @@ body {
 	color: var(--mdc-theme-text-primary-on-background)
 }
 .settings {
-	display: grid;
-	grid-template-columns: auto max-content;
 	align-items: center
 }
 .settings__title {
@@ -57,20 +55,23 @@ body {
 }
 .settings__label {
 	margin-top: 16px;
-	grid-column: 1;
 	min-height: 32px;
+	display: table-cell;
+	width: 100%;
 }
 .settings__value {
 	margin-top: 16px;
-	grid-column: 2;
 	margin-inline-start: 16px;
 	min-height: 32px;
+	min-width: 64px;
+	display: table-cell;
 }
 .radio-group {
 	display: none;
 	z-index: 3;
 }
-.setting-detail-dialog {
+.setting{
+	min-height: 48px;
 }
 .mdc-form-field {
 	display: flex;
