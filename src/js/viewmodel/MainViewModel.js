@@ -30,10 +30,18 @@ class MainViewModel {
         this.scaleImage = new ObservableField()
         this.isPlayingState = new ObservableField(false)
         this.noteNameFormatDisplayValue = new ObservableField(this._getNoteNameFormatDisplayValue(this._settings.getNoteNameFormat()))
+        this.clefDisplayValue = new ObservableField(this._getClefDisplayValue(this._settings.getClef()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
-        this._settings.observerNoteNameFormatListener = (newValue) => this.noteNameFormatDisplayValue.value = this._getNoteNameFormatDisplayValue(newValue)
+        this._settings.observerNoteNameFormatListener = (newValue) => {
+            this.noteNameFormatDisplayValue.value = this._getNoteNameFormatDisplayValue(newValue)
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
+        this._settings.observerClef = (newValue) => {
+            this.clefDisplayValue.value = this._getClefDisplayValue(newValue)
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
     }
 
     stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
@@ -64,16 +72,22 @@ class MainViewModel {
             new RadioItem("note-name-format__solfege", "setting_value_note_names_solfege", Settings.NoteNameFormat.SOLFEGE),
         ],
         (newValue) => {
-            this.setNoteNameFormat(newValue)
+            this._settings.setNoteNameFormat(newValue)
         })
+
     getNoteNameFormat = () => this._settings.getNoteNameFormat()
-    setNoteNameFormat(value) {
-        this._settings.setNoteNameFormat(value)
-        const scale = this._scales[this._scaleIndex]
-        this.scaleName.value = `${this._noteName.getNoteName(scale.startingNote)} ${this._scaleName.getScaleName(scale)}`
-    }
-    _getNoteNameFormatDisplayValue = (value) =>
-        this.i18n.translate(value == Settings.NoteNameFormat.ABC ? "setting_value_note_names_abc" : "setting_value_note_names_solfege")
+    _getNoteNameFormatDisplayValue = (value) => this.i18n.translate(`setting_value_note_names_${value}`)
+
+    _getClefDisplayValue = (value) => this.i18n.translate(`setting_value_clef_${value}`)
+
+    getClefRadioGroup = () => new RadioGroup(
+        "setting__clef",
+        "clef",
+        "setting_title_clef",
+        this._settings.getClef(),
+        Object.values(Settings.Clef).map((item) => new RadioItem(`clef__${item}`, `setting_value_clef_${item}`, item)),
+        (newValue) => { this._settings.setClef(newValue) })
+
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
         if (this._scaleIndex >= this._scales.length) this._scaleIndex = 0

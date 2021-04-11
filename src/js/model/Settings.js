@@ -20,10 +20,13 @@ class Settings {
     constructor(settingsAccess) {
         this._settingsAccess = settingsAccess
         this.observerNoteNameFormatListener = (newValue) => { }
+        this.observerClef = (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
                 this.observerNoteNameFormatListener(value)
+            } else if (key == Settings._KEY_CLEF) {
+                this.observerClef(value)
             }
         })
     }
@@ -36,6 +39,9 @@ class Settings {
 
     getNoteNameFormat = () => this._settingsAccess.getSetting(Settings._KEY_NOTE_NAME_FORMAt, Settings.NoteNameFormat.ABC)
     setNoteNameFormat = (value) => this._settingsAccess.setSetting(Settings._KEY_NOTE_NAME_FORMAt, value)
+
+    getClef = () => this._settingsAccess.getSetting(Settings._KEY_CLEF, Settings.Clef.TREBLE)
+    setClef = (value) => this._settingsAccess.setSetting(Settings._KEY_CLEF, value)
 
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
@@ -51,7 +57,6 @@ class Settings {
 
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 
-    getClef = () => this._settingsAccess.getSetting(Settings._KEY_MINOR_SCALE_SHIFT, Settings.Clef.TREBLE)
 
     getPlaybackOctaves = () => this._settingsAccess.getSetting(Settings._KEY_PLAYbACK_OCTAVES, 1)
 

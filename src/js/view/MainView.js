@@ -42,7 +42,9 @@ class MainView {
         document.querySelector("#placeholder-setting__tts-enabled").innerHTML = templateToggle("setting__tts-enabled", "setting_tts_enabled")
         document.querySelector("#placeholder-setting__autoplay-enabled").innerHTML = templateToggle("setting__autoplay-enabled", "setting_autoplay_enabled")
         document.querySelector("#placeholder-setting__note-names").innerHTML = templateSetting("note-names", "setting_title_note_names")
+        document.querySelector("#placeholder-setting__clef").innerHTML = templateSetting("clef", "setting_title_clef")
         this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
+        this._bindSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
     }
 
     _bindViewModel() {

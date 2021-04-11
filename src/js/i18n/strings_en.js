@@ -79,4 +79,9 @@ const strings_en = {
     "setting_title_note_names": "Note names",
     "setting_value_note_names_abc": "C, D, E...",
     "setting_value_note_names_solfege": "Do, Re, Mi...",
+    "setting_title_clef": "Clef",
+    "setting_value_clef_treble": "Treble",
+    "setting_value_clef_bass": "Bass",
+    "setting_value_clef_alto": "Alto",
+
 }
