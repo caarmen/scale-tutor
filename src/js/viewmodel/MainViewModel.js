@@ -52,6 +52,13 @@ class MainViewModel {
         this._settings.setAutoPlayEnabled(value)
         this._stateMachine.autoPlay = value
     }
+    getNoteNameFormat = () => this._settings.getNoteNameFormat()
+    setNoteNameFormat(value) {
+        this._settings.setNoteNameFormat(value)
+        const scale = this._scales[this._scaleIndex]
+        this.scaleName.value = `${this._noteName.getNoteName(scale.startingNote)} ${this._scaleName.getScaleName(scale)}`
+    }
+    getNoteNamesDisplayValue = () => this.i18n.translate(this._settings.getNoteNameFormat() == Settings.NoteNameFormat.ABC ? "setting_value_note_names_abc" : "setting_value_note_names_solfege")
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
         if (this._scaleIndex >= this._scales.length) this._scaleIndex = 0

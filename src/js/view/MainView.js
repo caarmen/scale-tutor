@@ -20,7 +20,8 @@ class MainView {
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
 
-        this._mdcDialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'))
+        this._mdcDialog = new mdc.dialog.MDCDialog(document.querySelector('#settings-dialog'))
+        this._elemNoteNamesValueLabel = document.querySelector("#setting__note-names")
         this._initViews()
         this._bindViewModel()
     }
@@ -55,7 +56,27 @@ class MainView {
             mdcSwitchAutoPlayEnabled.listen("change", (e) => {
                 this._viewModel.setAutoPlayEnabled(mdcSwitchAutoPlayEnabled.checked)
             })
-
+            this._elemNoteNamesValueLabel.innerText = this._viewModel.getNoteNamesDisplayValue()
+            this._elemNoteNamesValueLabel.onclick = () => {
+                const dialog = new mdc.dialog.MDCDialog(document.querySelector("#note-name-options"))
+                dialog.open()
+                const noteNameFormat = this._viewModel.getNoteNameFormat()
+                this._checkRadio("note-name-format__abc", noteNameFormat == Settings.NoteNameFormat.ABC, () => {
+                    this._viewModel.setNoteNameFormat(Settings.NoteNameFormat.ABC)
+                    this._elemNoteNamesValueLabel.innerText = this._viewModel.getNoteNamesDisplayValue()
+                })
+                this._checkRadio("note-name-format__solfege", noteNameFormat == Settings.NoteNameFormat.SOLFEGE, () => {
+                    this._viewModel.setNoteNameFormat(Settings.NoteNameFormat.SOLFEGE)
+                    this._elemNoteNamesValueLabel.innerText = this._viewModel.getNoteNamesDisplayValue()
+                })
+            }
         })
+    }
+    _checkRadio(id, checked, listener) {
+        const radioControl = new mdc.radio.MDCRadio(document.querySelector(`#${id}__mdc-radio`))
+        const formField = new mdc.formField.MDCFormField(document.querySelector(`#${id}__mdc-form-field`))
+        radioControl.checked = checked
+        formField.input = radioControl
+        radioControl.listen("change", (e) => { if (radioControl.checked) listener() })
     }
 }

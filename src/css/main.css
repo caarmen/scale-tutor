@@ -56,6 +56,7 @@ body {
 	margin-bottom: 16px;
 }
 .settings__label {
+	margin-top: 16px;
 	grid-column: 1;
 	min-height: 32px;
 }
@@ -64,4 +65,17 @@ body {
 	grid-column: 2;
 	margin-inline-start: 16px;
 	min-height: 32px;
+}
+.radio-group {
+	display: none;
+	z-index: 3;
+}
+.setting-detail-dialog {
+}
+.mdc-form-field {
+	display: flex;
+	width: fit-content;
+}
+.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+	border-color: var(--mdc-theme-secondary);
 }

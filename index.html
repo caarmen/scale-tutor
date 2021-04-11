@@ -44,8 +44,7 @@
                 <span class="mdc-top-app-bar__title" string-key="app_name"></span>
             </section>
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                <button id="button-settings" class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                    label-string-key="app_bar_settings">settings</button>
+                <button id="button-settings" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" label-string-key="app_bar_settings">settings</button>
             </section>
         </div>
     </header>
@@ -53,47 +52,78 @@
         <div class="toolbar">
             <div id="scale-id" class="mdc-typography--body1"></div>
             <div class="button-bar">
-                <button class="mdc-icon-button material-icons" id="button-prev"
-                    label-string-key="button_title_prev">skip_previous</button>
-                <button class="mdc-icon-button material-icons" id="button-start-stop"
-                    label-string-key="button_title_start">play_arrow</button>
-                <button class="mdc-icon-button material-icons" id="button-next"
-                    label-string-key="button_title_next">skip_next</button>
+                <button class="mdc-icon-button material-icons" id="button-prev" label-string-key="button_title_prev">skip_previous</button>
+                <button class="mdc-icon-button material-icons" id="button-start-stop" label-string-key="button_title_start">play_arrow</button>
+                <button class="mdc-icon-button material-icons" id="button-next" label-string-key="button_title_next">skip_next</button>
             </div>
         </div>
         <img id="scale-img">
         <div id="settings-dialog" class="mdc-dialog">
             <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true"
-                    aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-describedby="my-dialog-content">
                     <div class="mdc-dialog__content" id="settings-dialog-content">
                         <div class="mdc-typography--headline6 settings__title" string-key="settings_title"></div>
                         <div class="settings">
-                            <label class="settings__label" for="setting__tts-enabled"
-                                string-key="setting_tts_enabled"></label>
+                            <label class="settings__label" for="setting__tts-enabled" string-key="setting_tts_enabled"></label>
                             <div id="setting__tts-enabled" class="mdc-switch settings__value">
                                 <div class="mdc-switch__track"></div>
                                 <div class="mdc-switch__thumb-underlay">
                                     <div class="mdc-switch__thumb"></div>
-                                    <input type="checkbox" class="mdc-switch__native-control" role="switch"
-                                        aria-checked="false">
+                                    <input type="checkbox" class="mdc-switch__native-control" role="switch" aria-checked="false">
                                 </div>
                             </div>
-                            <label class="settings__label" for="setting__autoplay-enabled"
-                                string-key="setting_autoplay_enabled"></label>
+                            <label class="settings__label" for="setting__autoplay-enabled" string-key="setting_autoplay_enabled"></label>
                             <div id="setting__autoplay-enabled" class="mdc-switch settings__value">
                                 <div class="mdc-switch__track"></div>
                                 <div class="mdc-switch__thumb-underlay">
                                     <div class="mdc-switch__thumb"></div>
-                                    <input type="checkbox" class="mdc-switch__native-control" role="switch"
-                                        aria-checked="false">
+                                    <input type="checkbox" class="mdc-switch__native-control" role="switch" aria-checked="false">
                                 </div>
                             </div>
+                            <label class="settings__label" for="setting__note-names" string-key="setting_title_note_names"></label>
+                            <div id="setting__note-names" class="settings__value"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mdc-dialog__scrim"></div>
+        </div>
+        <div id="note-name-options" class="mdc-dialog setting-detail-dialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
+                    <div class="mdc-dialog__content">
+                        <div class="mdc-typography--headline6 settings__title" string-key="setting_title_note_names"></div>
+                        <div id="note-name-format__abc__mdc-form-field" class="mdc-form-field">
+                            <div id="note-name-format__abc__mdc-radio" class="mdc-radio">
+                                <input class="mdc-radio__native-control" type="radio" id="note-name-format__abc__" name="note-name-format">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="note-name-format__abc__" string-key="setting_value_note_names_abc"></label>
+                        </div>
+                        <div id="note-name-format__solfege__mdc-form-field" class="mdc-form-field">
+                            <div id="note-name-format__solfege__mdc-radio" class="mdc-radio">
+                                <input class="mdc-radio__native-control" type="radio" id="note-name-format__solfege__" name="note-name-format">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="note-name-format__solfege__" string-key="setting_value_note_names_solfege"></label>
+                        </div>
+                        <div class="mdc-dialog__actions">
+                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label" string-key="ok"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 </body>

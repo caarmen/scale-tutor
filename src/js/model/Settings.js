@@ -21,7 +21,14 @@ class Settings {
         this._settingsAccess = settingsAccess
     }
 
+    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, "true") == "true"
+    setSpeechSynthesisEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_SPEECH_SYNTHESIS, value)
+    
+    isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, "true") == "true"
+    setAutoPlayEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_AUTOPLAY, value)
+
     getNoteNameFormat = () => this._settingsAccess.getSetting(Settings._KEY_NOTE_NAME_FORMAt, Settings.NoteNameFormat.ABC)
+    setNoteNameFormat = (value) => this._settingsAccess.setSetting(Settings._KEY_NOTE_NAME_FORMAt, value)
 
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
@@ -34,12 +41,6 @@ class Settings {
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
-
-    isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, "true") == "true"
-    setAutoPlayEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_AUTOPLAY, value)
-
-    isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, "true") == "true"
-    setSpeechSynthesisEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_SPEECH_SYNTHESIS, value)
 
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 
