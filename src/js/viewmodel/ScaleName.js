@@ -22,10 +22,10 @@ class ScaleName {
 
     getScaleImage = (scale) => `src/resources/${scale.startingNote.name.toLowerCase()}_${this._getScaleNameKey(scale)}_${this._settings.getClef()}.svg`
     _getScaleNameKey(scale) {
-        if (scale.halfSteps == Scale.MAJOR) return "major"
-        else if (scale.halfSteps == Scale.NATURAL_MINOR) return "natural_minor"
-        else if (scale.halfSteps == Scale.HARMONIC_MINOR) return "harmonic_minor"
-        else if (scale.halfSteps == Scale.MELODIC_MINOR) return "melodic_minor"
+        if (scale.halfSteps == Scale.MAJOR || scale.halfSteps == Scale.MAJOR2) return "major"
+        else if (scale.halfSteps == Scale.NATURAL_MINOR || scale.halfSteps == Scale.NATURAL_MINOR2) return "natural_minor"
+        else if (scale.halfSteps == Scale.HARMONIC_MINOR || scale.halfSteps == Scale.HARMONIC_MINOR2) return "harmonic_minor"
+        else if (scale.halfSteps == Scale.MELODIC_MINOR || scale.halfSteps == Scale.MELODIC_MINOR2) return "melodic_minor"
         else if (scale.halfSteps == Scale.BLUES) return "blues"
         return undefined
     }

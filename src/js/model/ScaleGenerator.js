@@ -27,10 +27,11 @@ class ScaleGenerator {
     _createScales(baseNote) {
         const minorScaleShift = this._settings.getMinorScaleShift()
         return this._settings.getScaleTypes().map(name => {
-            if (name == Settings.ScaleTypes.MAJOR) return new Scale(baseNote, Scale.MAJOR)
-            else if (name == Settings.ScaleTypes.NATURAL_MINOR) return new Scale(baseNote.getNote(minorScaleShift), Scale.NATURAL_MINOR)
-            else if (name == Settings.ScaleTypes.HARMONIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), Scale.HARMONIC_MINOR)
-            else if (name == Settings.ScaleTypes.MELODIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), Scale.MELODIC_MINOR)
+            const singleOctave = this._settings.getPlaybackOctaves() == 1
+            if (name == Settings.ScaleTypes.MAJOR) return new Scale(baseNote, singleOctave ? Scale.MAJOR : Scale.MAJOR2)
+            else if (name == Settings.ScaleTypes.NATURAL_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.NATURAL_MINOR: Scale.NATURAL_MINOR2)
+            else if (name == Settings.ScaleTypes.HARMONIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.HARMONIC_MINOR: Scale.HARMONIC_MINOR2)
+            else if (name == Settings.ScaleTypes.MELODIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.MELODIC_MINOR: Scale.MELODIC_MINOR2)
             else if (name == Settings.ScaleTypes.BLUES) return new Scale(baseNote, Scale.BLUES)
             else return undefined
         })
