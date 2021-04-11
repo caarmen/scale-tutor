@@ -19,11 +19,18 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 class Settings {
     constructor(settingsAccess) {
         this._settingsAccess = settingsAccess
+        this.observerNoteNameFormatListener = (newValue) => { }
+
+        this._settingsAccess.addObserver((key, value) => {
+            if (key == Settings._KEY_NOTE_NAME_FORMAt) {
+                this.observerNoteNameFormatListener(value)
+            }
+        })
     }
 
     isSpeechSynthesisEnabled = () => this._settingsAccess.getSetting(Settings._KEY_SPEECH_SYNTHESIS, "true") == "true"
     setSpeechSynthesisEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_SPEECH_SYNTHESIS, value)
-    
+
     isAutoPlayEnabled = () => this._settingsAccess.getSetting(Settings._KEY_AUTOPLAY, "true") == "true"
     setAutoPlayEnabled = (value) => this._settingsAccess.setSetting(Settings._KEY_AUTOPLAY, value)
 

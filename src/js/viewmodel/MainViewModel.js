@@ -29,10 +29,11 @@ class MainViewModel {
         this.scaleName = new ObservableField()
         this.scaleImage = new ObservableField()
         this.isPlayingState = new ObservableField(false)
+        this.noteNameFormatDisplayValue = new ObservableField(this._getNoteNameFormatDisplayValue(this._settings.getNoteNameFormat()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
-
+        this._settings.observerNoteNameFormatListener = (newValue) => this.noteNameFormatDisplayValue.value = this._getNoteNameFormatDisplayValue(newValue)
     }
 
     stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
@@ -52,13 +53,27 @@ class MainViewModel {
         this._settings.setAutoPlayEnabled(value)
         this._stateMachine.autoPlay = value
     }
+
+    getNoteNameFormatRadioGroup = () => new RadioGroup(
+        "setting__note-names-format",
+        "note-names-format",
+        "setting_title_note_names",
+        this.getNoteNameFormat(),
+        [
+            new RadioItem("note-name-format__abc", "setting_value_note_names_abc", Settings.NoteNameFormat.ABC),
+            new RadioItem("note-name-format__solfege", "setting_value_note_names_solfege", Settings.NoteNameFormat.SOLFEGE),
+        ],
+        (newValue) => {
+            this.setNoteNameFormat(newValue)
+        })
     getNoteNameFormat = () => this._settings.getNoteNameFormat()
     setNoteNameFormat(value) {
         this._settings.setNoteNameFormat(value)
         const scale = this._scales[this._scaleIndex]
         this.scaleName.value = `${this._noteName.getNoteName(scale.startingNote)} ${this._scaleName.getScaleName(scale)}`
     }
-    getNoteNamesDisplayValue = () => this.i18n.translate(this._settings.getNoteNameFormat() == Settings.NoteNameFormat.ABC ? "setting_value_note_names_abc" : "setting_value_note_names_solfege")
+    _getNoteNameFormatDisplayValue = (value) =>
+        this.i18n.translate(value == Settings.NoteNameFormat.ABC ? "setting_value_note_names_abc" : "setting_value_note_names_solfege")
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
         if (this._scaleIndex >= this._scales.length) this._scaleIndex = 0

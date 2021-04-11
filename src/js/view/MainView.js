@@ -47,6 +47,9 @@ class MainView {
         this._viewModel.scaleName.observer = (scaleName) => this._scaleView.displayScaleName(scaleName)
         this._viewModel.scaleImage.observer = (scaleImage) => this._scaleView.displayScaleImage(scaleImage)
         this._viewModel.isPlayingState.observer = (isPlayingState) => this._controlsView.setPlayingState(isPlayingState)
+        this._viewModel.noteNameFormatDisplayValue.observer = (newValue) => {
+            this._elemSettingNoteNamesFormatValue.innerText = newValue
+        }
 
         this._controlsView.onStopListener = () => this._viewModel.stop()
         this._controlsView.onStartListener = () => this._viewModel.play()
@@ -67,26 +70,13 @@ class MainView {
             mdcSwitchAutoPlayEnabled.listen("change", (e) => {
                 this._viewModel.setAutoPlayEnabled(mdcSwitchAutoPlayEnabled.checked)
             })
-            this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
             this._elemSettingNoteNamesFormatLabel.onclick = () => this._displayNoteNamesFormatSetting()
             this._elemSettingNoteNamesFormatValue.onclick = () => this._displayNoteNamesFormatSetting()
         })
     }
-    _displayNoteNamesFormatSetting() {
-        const noteNameFormat = this._viewModel.getNoteNameFormat()
-        const radioGroup = new RadioGroup(
-            "setting__note-names-format",
-            "note-names-format",
-            "setting_title_note_names",
-            noteNameFormat,
-            [
-                new RadioItem("note-name-format__abc", "setting_value_note_names_abc", Settings.NoteNameFormat.ABC),
-                new RadioItem("note-name-format__solfege", "setting_value_note_names_solfege", Settings.NoteNameFormat.SOLFEGE),
-            ],
-            (newValue) => {
-                this._viewModel.setNoteNameFormat(newValue)
-                this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
-            })
+    _displayNoteNamesFormatSetting = () => this._displayOptionsSetting(this._viewModel.getNoteNameFormatRadioGroup())
+
+    _displayOptionsSetting(radioGroup) {
         this._elemPlaceHolderOptionsSettingDialog.innerHTML =
             this._createOptionsSettingDialogHtml(radioGroup)
         this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
