@@ -30,7 +30,7 @@ class ScalePlayer {
         this._isPlaying = false
     }
 
-    playScale(scale, preparationTimeS, tempoBpm, transposition) {
+    playScale(scale, preparationTimeS, tempoBpm, transposition, rhythm) {
         const noteDuration = 60 / tempoBpm
         Log.log(this._tag, "playScale, context = " + this._context)
         if (!this._context) {
@@ -40,7 +40,7 @@ class ScalePlayer {
             this._isPlaying = true
             const oscillator = this._context.createOscillator();
             // oscillator.type = "sine";
-            for (let i = 0; i <4; i++) {
+            for (let i = 0; i < 4; i++) {
                 oscillator.frequency.setValueAtTime(
                     scale.startingNote.getNote(transposition).frequency(),
                     this._context.currentTime + preparationTimeS - i - 1)
@@ -48,23 +48,40 @@ class ScalePlayer {
                     0,
                     this._context.currentTime + preparationTimeS - i - 0.5)
             }
-            
+
+            const noteStartTimes = this._getNoteStartTimes(scale, noteDuration, rhythm)
             scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep + transposition))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
                     oscillator.frequency.setValueAtTime(
                         note.frequency(),
-                        this._context.currentTime + preparationTimeS + index * noteDuration);
+                        this._context.currentTime + preparationTimeS + noteStartTimes[index]);
 
                 })
             oscillator.connect(this._context.destination);
             oscillator.start(this._context.currentTime + preparationTimeS - 4)
-            oscillator.stop(this._context.currentTime + preparationTimeS + scale.halfSteps.length * noteDuration)
+            oscillator.stop(this._context.currentTime + preparationTimeS + noteStartTimes[noteStartTimes.length - 1] + noteDuration)
             oscillator.onended = () => {
                 this._isPlaying = false
                 completionFunction()
             }
         })
     }
+    _getNoteStartTimes(scale, baseNoteDuration, rhythm) {
+        if (rhythm == ScalePlayer.Rhythm.SIMPLE) return this._getNoteStartTimesSimple(scale, baseNoteDuration)
+        else return this._getNoteStartTimesAdvanced(scale, baseNoteDuration)
+    }
+    _getNoteStartTimesSimple = (scale, baseNoteDuration) => scale.halfSteps.map(function (value, index) {
+        if (index == 0) return 0
+        this.acc += baseNoteDuration
+        return this.acc
+    }, { acc: 0 })
+    _getNoteStartTimesAdvanced = (scale, baseNoteDuration) => scale.halfSteps.map(function (value, index) {
+        if (index == 0) return 0
+        const isAfterRootNote = (index) % 7 == 1
+        this.acc += (isAfterRootNote ? baseNoteDuration : baseNoteDuration / 2)
+        return this.acc
+    }, { acc: 0 })
 
 }
+ScalePlayer.Rhythm = Object.freeze({ SIMPLE: 1, ADVANCED: 2 })
