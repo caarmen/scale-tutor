@@ -106,5 +106,6 @@ const strings_en = {
     "setting_value_tempo_140": "Allegro (140 bpm)",
     "setting_value_tempo_160": "Vivace (160 bpm)",
     "setting_value_tempo_180": "Presto (180 bpm)",
+    "setting_title_scale_types": "Scale types"
 
 }

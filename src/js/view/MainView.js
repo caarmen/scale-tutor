@@ -48,13 +48,15 @@ class MainView {
         document.querySelector("#placeholder-setting__minor_scale_shift").innerHTML = templateSetting("minor_scale_shift", "setting_title_minor_scale_shift")
         document.querySelector("#placeholder-setting__transposition").innerHTML = templateSetting("transposition", "setting_title_transposition")
         document.querySelector("#placeholder-setting__tempo").innerHTML = templateSetting("tempo", "setting_title_tempo")
-        this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
-        this._bindSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
-        this._bindSetting("order", this._viewModel.orderDisplayValue, () => this._viewModel.getOrderRadioGroup())
-        this._bindSetting("octaves", this._viewModel.octavesDisplayValue, () => this._viewModel.getOctavesRadioGroup())
-        this._bindSetting("minor_scale_shift", this._viewModel.minorScaleShiftDisplayValue, () => this._viewModel.getMinorScaleShiftRadioGroup())
-        this._bindSetting("transposition", this._viewModel.transpositionDisplayValue, () => this._viewModel.getTranspositionRadioGroup())
-        this._bindSetting("tempo", this._viewModel.tempoDisplayValue, () => this._viewModel.getTempoRadioGroup())
+        document.querySelector("#placeholder-setting__scale_types").innerHTML = templateSetting("scale_types", "setting_title_scale_types")
+        this._bindRadioSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
+        this._bindRadioSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
+        this._bindRadioSetting("order", this._viewModel.orderDisplayValue, () => this._viewModel.getOrderRadioGroup())
+        this._bindRadioSetting("octaves", this._viewModel.octavesDisplayValue, () => this._viewModel.getOctavesRadioGroup())
+        this._bindRadioSetting("minor_scale_shift", this._viewModel.minorScaleShiftDisplayValue, () => this._viewModel.getMinorScaleShiftRadioGroup())
+        this._bindRadioSetting("transposition", this._viewModel.transpositionDisplayValue, () => this._viewModel.getTranspositionRadioGroup())
+        this._bindRadioSetting("tempo", this._viewModel.tempoDisplayValue, () => this._viewModel.getTempoRadioGroup())
+        this._bindCheckboxSetting("scale_types", this._viewModel.scaleTypesDisplayValue, () => this._viewModel.getScaletypesCheckboxGroup())
     }
 
     _bindViewModel() {
@@ -84,18 +86,18 @@ class MainView {
         })
     }
 
-    _bindSetting(settingId, valueObservableField, radioGroupCreatorFunc) {
+    _bindRadioSetting(settingId, valueObservableField, radioGroupCreatorFunc) {
         const elemSettingLabel = document.querySelector(`#label_setting__${settingId}`)
         const elemSettingValue = document.querySelector(`#setting__${settingId}`)
-        elemSettingLabel.onclick = () => this._displayOptionsSetting(radioGroupCreatorFunc())
-        elemSettingValue.onclick = () => this._displayOptionsSetting(radioGroupCreatorFunc())
+        elemSettingLabel.onclick = () => this._displayRadioOptionsSetting(radioGroupCreatorFunc())
+        elemSettingValue.onclick = () => this._displayRadioOptionsSetting(radioGroupCreatorFunc())
         valueObservableField.observer = (newValue) => elemSettingValue.innerText = newValue
     }
-    _displayNoteNamesFormatSetting = () => this._displayOptionsSetting(this._viewModel.getNoteNameFormatRadioGroup())
+    _displayNoteNamesFormatSetting = () => this._displayRadioOptionsSetting(this._viewModel.getNoteNameFormatRadioGroup())
 
-    _displayOptionsSetting(radioGroup) {
+    _displayRadioOptionsSetting(radioGroup) {
         this._elemPlaceHolderOptionsSettingDialog.innerHTML =
-            this._createOptionsSettingDialogHtml(radioGroup)
+            this._createRadioOptionsSettingDialogHtml(radioGroup)
         this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
         const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
         dialog.open()
@@ -109,6 +111,34 @@ class MainView {
             })
         })
     }
-    _createOptionsSettingDialogHtml = (radioGroup) => templateDialog(radioGroup.id, radioGroup.title, this._createRadioGroupHtml(radioGroup), "")
+    _createRadioOptionsSettingDialogHtml = (radioGroup) => templateDialog(radioGroup.id, radioGroup.title, this._createRadioGroupHtml(radioGroup), "")
     _createRadioGroupHtml = (radioGroup) => radioGroup.items.map((item) => templateRadio(radioGroup.groupId, item.id, item.label)).join("")
+
+    _bindCheckboxSetting(settingId, valueObservableField, checkboxGroupCreatorFunc) {
+        const elemSettingLabel = document.querySelector(`#label_setting__${settingId}`)
+        const elemSettingValue = document.querySelector(`#setting__${settingId}`)
+        elemSettingLabel.onclick = () => this._displayCheckboxOptionsSetting(checkboxGroupCreatorFunc())
+        elemSettingValue.onclick = () => this._displayCheckboxOptionsSetting(checkboxGroupCreatorFunc())
+        valueObservableField.observer = (newValue) => elemSettingValue.innerText = newValue
+    }
+    _createCheckboxGroupHtml = (checkboxGroup) => checkboxGroup.items.map((item) => templateCheckbox(item.id, item.label)).join("")
+    _createCheckboxOptionsSettingDialogHtml = (checkboxGroup) => templateDialog(checkboxGroup.id, checkboxGroup.title, this._createCheckboxGroupHtml(checkboxGroup), "")
+    _displayCheckboxOptionsSetting(checkboxGroup) {
+        this._elemPlaceHolderOptionsSettingDialog.innerHTML =
+            this._createCheckboxOptionsSettingDialogHtml(checkboxGroup)
+        this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
+        const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
+        dialog.open()
+        checkboxGroup.items.forEach((item) => {
+            const checkboxControl = new mdc.checkbox.MDCCheckbox(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-checkbox`));
+            const formField = new mdc.formField.MDCFormField(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-form-field`))
+            checkboxControl.checked = checkboxGroup.initialValues.includes(item.value)
+            item.checked = checkboxControl.checked
+            formField.input = checkboxControl
+            checkboxControl.listen("change", (e) => {
+                item.checked = checkboxControl.checked
+                checkboxGroup.listener(checkboxGroup.items.filter((checkboxItem)=>checkboxItem.checked).map((checkboxItem) => checkboxItem.value))
+            })
+        })
+    }
 }

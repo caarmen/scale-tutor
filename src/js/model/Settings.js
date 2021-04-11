@@ -26,6 +26,7 @@ class Settings {
         this.observerMinorScaleShift = (newValue) => { }
         this.observerTransposition = (newValue) => { }
         this.observerTempo = (newValue) => { }
+        this.observerScaleTypes = (newValues) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
@@ -42,6 +43,8 @@ class Settings {
                 this.observerTransposition(value)
             } else if (key == Settings._KEY_TEMPO_BPM) {
                 this.observerTempo(value)
+            } else if (key == Settings._KEY_SCALE_TYPES) {
+                this.observerScaleTypes(JSON.parse(value))
             }
         })
     }
@@ -76,10 +79,11 @@ class Settings {
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
+    setScaleTypes = (values) => this._settingsAccess.setSetting(Settings._KEY_SCALE_TYPES, JSON.stringify(values))
 
 }
 Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass", ALTO: "alto" })
-Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor", BLUES: "blues" })
+Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor" })
 Settings.ScaleOrder = Object.freeze({
     INCREASING_NOTES: "increasing_notes",
     DECREASING_NOTES: "decreasing_notes",

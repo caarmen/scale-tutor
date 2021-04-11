@@ -36,6 +36,7 @@ class MainViewModel {
         this.minorScaleShiftDisplayValue = new ObservableField(this._getMinorScaleShiftDisplayValue(this._settings.getMinorScaleShift()))
         this.transpositionDisplayValue = new ObservableField(this._settings.getTransposition())
         this.tempoDisplayValue = new ObservableField(this._getTempoDisplayValue(this._settings.getTempoBpm()))
+        this.scaleTypesDisplayValue = new ObservableField(this._getScaleTypesDisplayValue(this._settings.getScaleTypes()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -69,6 +70,12 @@ class MainViewModel {
             this.transpositionDisplayValue.value = newValue
         }
         this._settings.observerTempo = (newValue) => { this.tempoDisplayValue.value = this._getTempoDisplayValue(newValue) }
+        this._settings.observerScaleTypes = (newValues) => { 
+            this.scaleTypesDisplayValue.value = this._getScaleTypesDisplayValue(newValues) 
+            this._scaleIndex = 0
+            this._scales = this._model.generateScales()
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
     }
 
     stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
@@ -110,6 +117,8 @@ class MainViewModel {
     _getMinorScaleShiftDisplayValue = (value) => this.i18n.translate(`setting_value_minor_scale_shift_${value}`)
 
     _getTempoDisplayValue = (value) => this.i18n.translate(`setting_value_tempo_${value}`)
+
+    _getScaleTypesDisplayValue = (values) => values.map((item) => this.i18n.translate(`scale_type_${item}`)).join(",")
 
     getClefRadioGroup = () => new RadioGroup(
         "setting__clef",
@@ -164,6 +173,15 @@ class MainViewModel {
         (newValue) => {
             this._settings.setTempoBpm(newValue)
         })
+    getScaletypesCheckboxGroup = () => new CheckboxGroup(
+        "setting__scale_types",
+        "setting_title_scale_types",
+        this._settings.getScaleTypes(),
+        Object.values(Settings.ScaleTypes).map((item) => new CheckboxIttem(`scale_type__${item}`, `scale_type_${item}`, item)),
+        (newValues) => {
+            this._settings.setScaleTypes(newValues)
+        })
+
 
     _onMoveToScale(newIndex) {
         this._scaleIndex = newIndex
