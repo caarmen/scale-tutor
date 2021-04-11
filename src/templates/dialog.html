@@ -1,0 +1,18 @@
+templateDialog = (id, title, content, cssClass) => `
+<div id="${id}" class="mdc-dialog ${cssClass}">
+    <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
+            <div class="mdc-dialog__content">
+                <div class="mdc-typography--headline6 dialog__title" string-key="${title}"></div>
+                ${content}
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label" string-key="ok"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`

@@ -46,7 +46,7 @@ class ScaleGenerator {
             return [Note.Notes.C4, Note.Notes.G4, Note.Notes.D4, Note.Notes.A4, Note.Notes.E4, Note.Notes.B4, Note.Notes.FS4,
             Note.Notes.CS4, Note.Notes.GS4, Note.Notes.DS4, Note.Notes.AS4, Note.Notes.F4]
         } else if (scaleOrder == Settings.ScaleOrder.INCREASING_FLATS_AND_SHARPS) {
-            return [Notes.Notes.C4, Note.Notes.F4, Note.Notes.G4, Note.Notes.AS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.A4,
+            return [Note.Notes.C4, Note.Notes.F4, Note.Notes.G4, Note.Notes.AS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.A4,
             Note.Notes.GS4, Note.Notes.E4, Note.Notes.CS4, Note.Notes.B4, Note.Notes.FS4]
         } else if (scaleOrder == Settings.ScaleOrder.INCREASING_NOTES) {
             return [Note.Notes.C4, Note.Notes.CS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.E4, Note.Notes.F4, Note.Notes.FS4,

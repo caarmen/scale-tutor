@@ -44,5 +44,39 @@ body {
 	display: flex;
 	justify-content: center;
 }
-.button-bar button {
+.mdc-dialog .mdc-dialog__content  {
+	color: var(--mdc-theme-text-primary-on-background)
+}
+.settings {
+	align-items: center
+}
+.dialog__title {
+	margin-bottom: 16px;
+}
+.settings__label {
+	margin-top: 16px;
+	min-height: 32px;
+	display: table-cell;
+	width: 100%;
+}
+.settings__value {
+	margin-top: 16px;
+	margin-inline-start: 16px;
+	min-height: 32px;
+	min-width: 64px;
+	display: table-cell;
+}
+.radio-group {
+	display: none;
+	z-index: 3;
+}
+.setting{
+	min-height: 48px;
+}
+.mdc-form-field {
+	display: flex;
+	width: fit-content;
+}
+.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+	border-color: var(--mdc-theme-secondary);
 }
