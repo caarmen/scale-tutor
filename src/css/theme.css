@@ -13,16 +13,16 @@ You should have received a copy of the GNU General Public License
 along with Poet Assistant.  If not, see <http://www.gnu.org/licenses/>.
 */
 :root {
-	--day--mdc-theme-primary: #607D8B;
+	--day--mdc-theme-primary:#1A237E;
 	--day--mdc-theme-secondary: var(--day--mdc-theme-primary);
-	--day--mdc-theme-surface:#f6f7f9;
+	--day--mdc-theme-surface: #E8EAF6;
 	--day--mdc-theme-background:#fff;
 	--day--mdc-theme-on-primary:#fff;
 	--day--mdc-theme-on-surface: rgba(0, 0, 0, 0.87);
 	--day--mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);
 	--day--mdc-theme-text-secondary-on-background: rgba(0,0,0,0.5);
 	--day--mdc-theme-text-disabled-on-background: rgba(0,0,0, .38);
-	--night--mdc-theme-primary: #879fab;
+	--night--mdc-theme-primary:#283593;
 	--night--mdc-theme-secondary: var(--night--mdc-theme-primary);
 	--night--mdc-theme-surface:#181818;
 	--night--mdc-theme-background:#000;

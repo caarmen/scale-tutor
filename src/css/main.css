@@ -1,0 +1,48 @@
+/**
+Copyright (c) 2021 - present Carmen Alvarez
+This file is part of Poet Assistant.
+Poet Assistant is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+Poet Assistant is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with Poet Assistant.  If not, see <http://www.gnu.org/licenses/>.
+*/
+html {
+	font-family: var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+}
+body {
+	margin: 0px;
+	background-color: var(--mdc-theme-background);
+	color: var(--mdc-theme-text-primary-on-background);
+}
+#scale-id {
+	display: flex;
+	align-items: center;
+}
+#scale-img {
+	margin-top: 24px;
+	margin-bottom: 24px;
+	background-color:var(--day--mdc-theme-background);
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	max-width: 800px;
+}
+.toolbar {
+	display: flex;
+	justify-content: space-between;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.button-bar {
+	display: flex;
+	justify-content: center;
+}
+.button-bar button {
+}

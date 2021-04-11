@@ -13,6 +13,8 @@ You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 const strings_en = {
+    "app_name": "Scale tutor",
+    "app_bar_settings": "Settings",
     "button_title_start": "Start",
     "button_title_stop": "Stop",
     "button_title_prev": "Previous",
