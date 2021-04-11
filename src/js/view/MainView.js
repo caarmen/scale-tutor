@@ -16,6 +16,7 @@ class MainView {
     constructor() {
         this._viewModel = new MainViewModel()
 
+        this._elemButtonAbout = document.querySelector("#button-about")
         this._elemButtonSettings = document.querySelector("#button-settings")
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
@@ -31,6 +32,7 @@ class MainView {
 
     _initViews() {
         this._controlsView.initViews()
+        this._elemButtonAbout.onclick = () => this._showAbout()
         this._elemButtonSettings.onclick = () => this._showSettings()
         this._inflateSettingsViews()
         this._viewModel.i18n.translateElement(document.documentElement)
@@ -70,6 +72,12 @@ class MainView {
         this._controlsView.onNextListener = () => this._viewModel.next()
     }
 
+    _showAbout() {
+        this._elemPlaceHolderOptionsSettingDialog.innerHTML = templateDialog("dialog__about", "app_name", templateAbout)
+        this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
+        const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
+        dialog.open()
+    }
     _showSettings() {
         this._mdcDialog.open()
         this._mdcDialog.listen('MDCDialog:opened', () => {

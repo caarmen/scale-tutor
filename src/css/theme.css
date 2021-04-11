@@ -1,16 +1,16 @@
 /**
 Copyright (c) 2021 - present Carmen Alvarez
-This file is part of Poet Assistant.
-Poet Assistant is free software: you can redistribute it and/or modify
+This file is part of Scale Tutor.
+Scale Tutor is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-Poet Assistant is distributed in the hope that it will be useful,
+Scale Tutor is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
-along with Poet Assistant.  If not, see <http://www.gnu.org/licenses/>.
+along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 :root {
 	--day--mdc-theme-primary:#1A237E;
@@ -22,7 +22,7 @@ along with Poet Assistant.  If not, see <http://www.gnu.org/licenses/>.
 	--day--mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);
 	--day--mdc-theme-text-secondary-on-background: rgba(0,0,0,0.5);
 	--day--mdc-theme-text-disabled-on-background: rgba(0,0,0, .38);
-	--night--mdc-theme-primary:#283593;
+	--night--mdc-theme-primary:#5C6BC0;
 	--night--mdc-theme-secondary: var(--night--mdc-theme-primary);
 	--night--mdc-theme-surface:#181818;
 	--night--mdc-theme-background:#000;

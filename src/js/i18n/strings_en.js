@@ -13,7 +13,16 @@ You should have received a copy of the GNU General Public License
 along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 const strings_en = {
-    "app_name": "Scale tutor",
+    "app_name": "Scale Tutor",
+    "app_version": "1.0.0",
+    "about_copyright": "Copyright (c) 2021 - present, Carmen Alvarez",
+    "about_contact": "carmen@rmen.ca",
+    "about_source_code": "Source code",
+    "about_legal": "Legal",
+    "about_license": "Poet Assistant License (GPLv3)",
+    "about_license_material_components_web": "Material Components Web License",
+    "about_license_material_design_icons": "Material Design Icons License",
+    "app_bar_about": "About",
     "app_bar_settings": "Settings",
     "button_title_start": "Start",
     "button_title_stop": "Stop",

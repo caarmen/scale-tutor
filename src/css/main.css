@@ -1,16 +1,16 @@
 /**
 Copyright (c) 2021 - present Carmen Alvarez
-This file is part of Poet Assistant.
-Poet Assistant is free software: you can redistribute it and/or modify
+This file is part of Scale Tutor.
+Scale Tutor is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-Poet Assistant is distributed in the hope that it will be useful,
+Scale Tutor is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
-along with Poet Assistant.  If not, see <http://www.gnu.org/licenses/>.
+along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 html {
 	font-family: var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
@@ -79,4 +79,31 @@ body {
 }
 .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
 	border-color: var(--mdc-theme-secondary);
+}
+.about__version {
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+}
+.about__copyright {
+	font-size: 0.8em;
+	width: 100%;
+	text-align: center;
+}
+.about__contact {
+	font-size: 0.8em;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 16px;
+}
+.about__list .material-icons{
+	margin-inline-end: 16px;
+}
+.about__legal-list {
+	margin-left: 16px
+}
+a:link, a.active:link,a:hover, a:visited {
+	color: var(--mdc-theme-primary);
+	text-decoration: none;
+	font-weight: bold;
 }
