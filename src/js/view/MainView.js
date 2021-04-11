@@ -44,9 +44,11 @@ class MainView {
         document.querySelector("#placeholder-setting__note-names").innerHTML = templateSetting("note-names", "setting_title_note_names")
         document.querySelector("#placeholder-setting__clef").innerHTML = templateSetting("clef", "setting_title_clef")
         document.querySelector("#placeholder-setting__order").innerHTML = templateSetting("order", "setting_title_order")
+        document.querySelector("#placeholder-setting__octaves").innerHTML = templateSetting("octaves", "setting_title_octaves")
         this._bindSetting("note-names", this._viewModel.noteNameFormatDisplayValue, () => this._viewModel.getNoteNameFormatRadioGroup())
         this._bindSetting("clef", this._viewModel.clefDisplayValue, () => this._viewModel.getClefRadioGroup())
         this._bindSetting("order", this._viewModel.orderDisplayValue, () => this._viewModel.getOrderRadioGroup())
+        this._bindSetting("octaves", this._viewModel.octavesDisplayValue, () => this._viewModel.getOctavesRadioGroup())
     }
 
     _bindViewModel() {

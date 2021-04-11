@@ -22,6 +22,7 @@ class Settings {
         this.observerNoteNameFormatListener = (newValue) => { }
         this.observerClef = (newValue) => { }
         this.observerOrder = (newValue) => { }
+        this.observerOctaves = (newValue) => { }
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
@@ -30,6 +31,8 @@ class Settings {
                 this.observerClef(value)
             } else if (key == Settings._KEY_SCALE_ORDER) {
                 this.observerOrder(value)
+            } else if (key == Settings._KEY_PLAYbACK_OCTAVES) {
+                this.observerOctaves(value)
             }
         })
     }
@@ -49,6 +52,9 @@ class Settings {
     getScaleOrder = () => this._settingsAccess.getSetting(Settings._KEY_SCALE_ORDER, Settings.ScaleOrder.INCREASING_FLATS)
     setScaleOrder = (value) => this._settingsAccess.setSetting(Settings._KEY_SCALE_ORDER, value)
 
+    getPlaybackOctaves = () => this._settingsAccess.getSetting(Settings._KEY_PLAYbACK_OCTAVES, 1)
+    setPlaybackOctaves = (value) => this._settingsAccess.setSetting(Settings._KEY_PLAYbACK_OCTAVES, value)
+
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
@@ -63,7 +69,6 @@ class Settings {
     getTransposition = () => this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0)
 
 
-    getPlaybackOctaves = () => this._settingsAccess.getSetting(Settings._KEY_PLAYbACK_OCTAVES, 1)
 
 }
 Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass", ALTO: "alto" })

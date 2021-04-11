@@ -32,6 +32,7 @@ class MainViewModel {
         this.noteNameFormatDisplayValue = new ObservableField(this._getNoteNameFormatDisplayValue(this._settings.getNoteNameFormat()))
         this.clefDisplayValue = new ObservableField(this._getClefDisplayValue(this._settings.getClef()))
         this.orderDisplayValue = new ObservableField(this._getOrderDisplayValue(this._settings.getScaleOrder()))
+        this.octavesDisplayValue = new ObservableField(this._getOctavesDisplayValue(this._settings.getPlaybackOctaves()))
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
@@ -45,6 +46,12 @@ class MainViewModel {
         }
         this._settings.observerOrder = (newValue) => {
             this.orderDisplayValue.value = this._getOrderDisplayValue(newValue)
+            this._scaleIndex = 0
+            this._scales = this._model.generateScales()
+            this._onScaleChange(this._scales[this._scaleIndex])
+        }
+        this._settings.observerOctaves = (newValue) => {
+            this.octavesDisplayValue.value = this._getOctavesDisplayValue(newValue)
             this._scaleIndex = 0
             this._scales = this._model.generateScales()
             this._onScaleChange(this._scales[this._scaleIndex])
@@ -85,6 +92,8 @@ class MainViewModel {
 
     _getOrderDisplayValue = (value) => this.i18n.translate(`setting_value_order_${value}`)
 
+    _getOctavesDisplayValue = (value) => this.i18n.translate(`setting_value_octaves_${value}`)
+
     getClefRadioGroup = () => new RadioGroup(
         "setting__clef",
         "clef",
@@ -101,6 +110,15 @@ class MainViewModel {
         Object.values(Settings.ScaleOrder).map((item) => new RadioItem(`order__${item}`, `setting_value_order_${item}`, item)),
         (newValue) => {
             this._settings.setScaleOrder(newValue)
+        })
+    getOctavesRadioGroup = () => new RadioGroup(
+        "setting__octaves",
+        "octaves",
+        "setting_title_octaves",
+        this._settings.getPlaybackOctaves(),
+        [1, 2].map((item) => new RadioItem(`octaves__${item}`, `setting_value_octaves_${item}`, item)),
+        (newValue) => {
+            this._settings.setPlaybackOctaves(newValue)
         })
 
     _onMoveToScale(newIndex) {
