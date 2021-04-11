@@ -32,6 +32,8 @@ class MainView {
         document.querySelectorAll(".template-dialog-ok-button").forEach((element) => {
             element.innerHTML = templateDialogOkButton
         })
+        document.querySelector("#placeholder-options-note-name-format").innerHTML =
+            templateDialog("options-note-name-format", "settings_title_note_names", templateOptionsNoteNameFormat, "settings-detail-dialog")
         document.querySelector("#placeholder_note-name-format__abc").innerHTML = templateRadio("note-name-format", "note-name-format__abc", "setting_value_note_names_abc")
         document.querySelector("#placeholder_note-name-format__solfege").innerHTML = templateRadio("note-name-format", "note-name-format__solfege", "setting_value_note_names_solfege")
         this._viewModel.i18n.translateElement(document.documentElement)
@@ -63,7 +65,7 @@ class MainView {
             })
             this._elemNoteNamesValueLabel.innerText = this._viewModel.getNoteNamesDisplayValue()
             this._elemNoteNamesValueLabel.onclick = () => {
-                const dialog = new mdc.dialog.MDCDialog(document.querySelector("#note-name-options"))
+                const dialog = new mdc.dialog.MDCDialog(document.querySelector("#options-note-name-format"))
                 dialog.open()
                 const noteNameFormat = this._viewModel.getNoteNameFormat()
                 this._checkRadio("note-name-format__abc", noteNameFormat == Settings.NoteNameFormat.ABC, () => {

@@ -30,8 +30,10 @@
     <script src="src/js/viewmodel/ObservableField.js"></script>
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script src="src/js/viewmodel/StateMachine.js"></script>
+    <script src="src/templates/dialog.html" type="text/javascript"></script>
     <script src="src/templates/dialog-ok-button.html" type="text/javascript"></script>
     <script src="src/templates/radio.html" type="text/javascript"></script>
+    <script src="src/templates/options-note-name-format.html" type="text/javascript"></script>
     <script>
         function app_init() {
             const mainView = new MainView()
@@ -91,18 +93,7 @@
             </div>
             <div class="mdc-dialog__scrim"></div>
         </div>
-        <div id="note-name-options" class="mdc-dialog setting-detail-dialog">
-            <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
-                    <div class="mdc-dialog__content">
-                        <div class="mdc-typography--headline6 settings__title" string-key="setting_title_note_names"></div>
-                        <div id="placeholder_note-name-format__abc"></div>
-                        <div id="placeholder_note-name-format__solfege"></div>
-                        <div class="template-dialog-ok-button"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="placeholder-options-note-name-format"></div>
     </main>
 </body>
 
