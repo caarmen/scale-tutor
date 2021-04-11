@@ -52,12 +52,16 @@ body {
 	grid-template-columns: auto max-content;
 	align-items: center
 }
-.setting__label {
-	font-weight: bold;
-	grid-column: 1;
+.settings__title {
+	margin-bottom: 16px;
 }
-.setting__value {
+.settings__label {
+	grid-column: 1;
+	min-height: 32px;
+}
+.settings__value {
 	margin-top: 16px;
 	grid-column: 2;
 	margin-inline-start: 16px;
+	min-height: 32px;
 }
