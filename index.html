@@ -2,6 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Third party dependencies -->
     <link rel="stylesheet" href="libs/material-components-web-10.0.0.min.css">
     <link rel="stylesheet" href="libs/material-icons.css">
@@ -9,6 +10,7 @@
 
     <!-- Our own resources-->
     <link rel="stylesheet" href="src/css/theme.css">
+    <link rel="stylesheet" href="src/css/main.css">
     <script src="src/js/Log.js"></script>
     <script src="src/js/Note.js"></script>
     <script src="src/js/Scale.js"></script>
@@ -36,15 +38,33 @@
     </script>
 </head>
 
-<body onload="app_init()">
-    <div id="scale-id"></div>
-    <div><img id="scale-img"></div>
-    <div>
-        <button id="button-prev" string-key="button_title_prev"></button>
-        <button id="button-start-stop" string-key="button_title_start"></button>
-        <button id="button-next" string-key="button_title_next"></button>
-    </div>
-    <div id="countdown-timer"></div>
+<body onload="app_init()" class="night-mode__auto">
+    <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <span class="mdc-top-app-bar__title" string-key="app_name"></span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                    label-string-key="app_bar_settings">settings</button>
+            </section>
+        </div>
+    </header>
+    <main class="mdc-top-app-bar--fixed-adjust">
+        <div class="toolbar">
+            <div id="scale-id" class="mdc-typography--body1"></div>
+            <div class="button-bar">
+                <button class="mdc-icon-button material-icons" id="button-prev"
+                    label-string-key="button_title_prev">skip_previous</button>
+                <button class="mdc-icon-button material-icons" id="button-start-stop"
+                    label-string-key="button_title_start">play_arrow</button>
+                <button class="mdc-icon-button material-icons" id="button-next"
+                    label-string-key="button_title_next">skip_next</button>
+            </div>
+        </div>
+        <img id="scale-img">
+        <div id="countdown-timer"></div>
+    </main>
 </body>
 
 </html>
