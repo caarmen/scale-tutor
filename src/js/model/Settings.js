@@ -64,20 +64,16 @@ class Settings {
     getMinorScaleShift = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_MINOR_SCALE_SHIFT, -3))
     setMinorScaleShift = (value) => this._settingsAccess.setSetting(Settings._KEY_MINOR_SCALE_SHIFT, value)
 
+    getTransposition = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0))
+    setTransposition = (value) => this._settingsAccess.setSetting(Settings._KEY_TRANSPOSITION, value)
+
     getScaleTypes = () => JSON.parse(this._settingsAccess.getSetting(Settings._KEY_SCALE_TYPES, JSON.stringify([
         Settings.ScaleTypes.MAJOR, Settings.ScaleTypes.MELODIC_MINOR
     ])))
 
-    getTransposition = () => parseInt(this._settingsAccess.getSetting(Settings._KEY_TRANSPOSITION, 0))
-    setTransposition = (value) => this._settingsAccess.setSetting(Settings._KEY_TRANSPOSITION, value)
-
-
     getTempoBpm = () => this._settingsAccess.getSetting(Settings._KEY_TEMPO_BPM, 120)
 
     getPreparationTimeS = () => this._settingsAccess.getSetting(Settings._KEY_PREPARATION_TIME, 5)
-
-
-
 
 }
 Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass", ALTO: "alto" })
