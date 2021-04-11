@@ -100,14 +100,11 @@ class MainView {
         const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
         dialog.open()
         radioGroup.items.forEach((item) => {
-            console.log("for each " + JSON.stringify(item))
             const radioControl = new mdc.radio.MDCRadio(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-radio`))
             const formField = new mdc.formField.MDCFormField(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-form-field`))
             radioControl.checked = radioGroup.initialValue == item.value
-            console.log(`${radioGroup.initialValue} <> ${item.value}: ${radioGroup.initialValue == item.value}`)
             formField.input = radioControl
             radioControl.listen("change", (e) => {
-                console.log(item.label + ": " + radioControl.checked)
                 if (radioControl.checked) radioGroup.listener(item.value)
             })
         })
