@@ -73,32 +73,38 @@ class MainView {
         })
     }
     _displayNoteNamesFormatSetting() {
-
-        const items = [
-            { id: "note-name-format__abc", label: "setting_value_note_names_abc", value: Settings.NoteNameFormat.ABC },
-            { id: "note-name-format__solfege", label: "setting_value_note_names_solfege", value: Settings.NoteNameFormat.SOLFEGE },
-        ]
+        const noteNameFormat = this._viewModel.getNoteNameFormat()
+        const radioGroup = new RadioGroup(
+            "setting__note-names-format",
+            "note-names-format",
+            "setting_title_note_names",
+            noteNameFormat,
+            [
+                new RadioItem("note-name-format__abc", "setting_value_note_names_abc", Settings.NoteNameFormat.ABC),
+                new RadioItem("note-name-format__solfege", "setting_value_note_names_solfege", Settings.NoteNameFormat.SOLFEGE),
+            ],
+            (newValue) => {
+                this._viewModel.setNoteNameFormat(newValue)
+                this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
+            })
         this._elemPlaceHolderOptionsSettingDialog.innerHTML =
-            this._createOptionsSettingDialogHtml("setting__note-names-format", "note-names-format", "setting_title_note_names", items)
+            this._createOptionsSettingDialogHtml(radioGroup)
         this._viewModel.i18n.translateElement(this._elemPlaceHolderOptionsSettingDialog)
         const dialog = new mdc.dialog.MDCDialog(this._elemPlaceHolderOptionsSettingDialog.querySelector(".mdc-dialog"))
         dialog.open()
-        const noteNameFormat = this._viewModel.getNoteNameFormat()
-        items.forEach((item) => {
-            this._checkRadio(item.id, noteNameFormat == item.value, () => {
-                this._viewModel.setNoteNameFormat(item.value)
-                this._elemSettingNoteNamesFormatValue.innerText = this._viewModel.getNoteNamesDisplayValue()
+        radioGroup.items.forEach((item) => {
+            console.log("for each " + JSON.stringify(item))
+            const radioControl = new mdc.radio.MDCRadio(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-radio`))
+            const formField = new mdc.formField.MDCFormField(this._elemPlaceHolderOptionsSettingDialog.querySelector(`#${item.id}__mdc-form-field`))
+            radioControl.checked = radioGroup.initialValue == item.value
+            formField.input = radioControl
+            console.log("radioControl " + radioControl + " for item " + item)
+            radioControl.listen("change", (e) => {
+                console.log(item.label + ": " + radioControl.checked)
+                if (radioControl.checked) radioGroup.listener(item.value)
             })
         })
     }
-    _createOptionsSettingDialogHtml = (id, groupId, title, items) => templateDialog(id, title, this._createRadioGroupHtml(groupId, items), "")
-    _createRadioGroupHtml = (groupId, items) => items.map((item) => templateRadio(groupId, item.id, item.label)).join("")
-
-    _checkRadio(id, checked, listener) {
-        const radioControl = new mdc.radio.MDCRadio(document.querySelector(`#${id}__mdc-radio`))
-        const formField = new mdc.formField.MDCFormField(document.querySelector(`#${id}__mdc-form-field`))
-        radioControl.checked = checked
-        formField.input = radioControl
-        radioControl.listen("change", (e) => { if (radioControl.checked) listener() })
-    }
+    _createOptionsSettingDialogHtml = (radioGroup) => templateDialog(radioGroup.id, radioGroup.title, this._createRadioGroupHtml(radioGroup), "")
+    _createRadioGroupHtml = (radioGroup) => radioGroup.items.map((item) => templateRadio(radioGroup.groupId, item.id, item.label)).join("")
 }
