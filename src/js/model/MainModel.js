@@ -33,13 +33,10 @@ class MainModel {
         }
     }
 
-    getPreparationTimeS = () => this._settings.getPreparationTimeS() + (this._settings.isSpeechSynthesisEnabled() ? 1 : 0)
-
     playScale(scale) {
         const tempoBpm = this._settings.getTempoBpm()
         const transposition = this._settings.getTransposition()
-        const preparationTimeS = this.getPreparationTimeS()
-        return this._scalePlayer.playScale(scale, preparationTimeS, tempoBpm, transposition, this._settings.getPlaybackOctaves() == 1? ScalePlayer.Rhythm.SIMPLE : ScalePlayer.Rhythm.ADVANCED)
+        return this._scalePlayer.playScale(scale, tempoBpm, transposition, this._settings.getPlaybackOctaves() == 1? ScalePlayer.Rhythm.SIMPLE : ScalePlayer.Rhythm.ADVANCED)
     }
 
     stop() {

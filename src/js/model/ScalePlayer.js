@@ -30,8 +30,10 @@ class ScalePlayer {
         this._isPlaying = false
     }
 
-    playScale(scale, preparationTimeS, tempoBpm, transposition, rhythm) {
+    playScale(scale, tempoBpm, transposition, rhythm) {
         const noteDuration = 60 / tempoBpm
+        const ttsTimeS = 2
+        const preparationTimeS = ttsTimeS + 4 * noteDuration
         Log.log(this._tag, "playScale, context = " + this._context)
         if (!this._context) {
             this._context = new (window.AudioContext || window.webkitAudioContext)();
@@ -43,10 +45,10 @@ class ScalePlayer {
             for (let i = 0; i < 4; i++) {
                 oscillator.frequency.setValueAtTime(
                     scale.startingNote.getNote(transposition).frequency(),
-                    this._context.currentTime + preparationTimeS - i - 1)
+                    this._context.currentTime + ttsTimeS + i * noteDuration)
                 oscillator.frequency.setValueAtTime(
                     0,
-                    this._context.currentTime + preparationTimeS - i - 0.5)
+                    this._context.currentTime + ttsTimeS + (i * noteDuration) + (noteDuration / 2))
             }
 
             const noteStartTimes = this._getNoteStartTimes(scale, noteDuration, rhythm)
@@ -59,7 +61,7 @@ class ScalePlayer {
 
                 })
             oscillator.connect(this._context.destination);
-            oscillator.start(this._context.currentTime + preparationTimeS - 4)
+            oscillator.start(this._context.currentTime + preparationTimeS - 4 * noteDuration)
             oscillator.stop(this._context.currentTime + preparationTimeS + noteStartTimes[noteStartTimes.length - 1] + noteDuration)
             oscillator.onended = () => {
                 this._isPlaying = false
