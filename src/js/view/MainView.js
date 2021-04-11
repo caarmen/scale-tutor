@@ -27,9 +27,12 @@ class MainView {
     }
 
     _initViews() {
-        this._viewModel.i18n.translateElement(document.documentElement)
         this._controlsView.initViews()
         this._elemButtonSettings.onclick = () => this._showSettings()
+        document.querySelectorAll(".template-dialog-ok-button").forEach((element)=> {
+            element.innerHTML = templateDialogOkButton
+        })
+        this._viewModel.i18n.translateElement(document.documentElement)
     }
 
     _bindViewModel() {

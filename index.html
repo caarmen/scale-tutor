@@ -30,6 +30,7 @@
     <script src="src/js/viewmodel/ObservableField.js"></script>
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script src="src/js/viewmodel/StateMachine.js"></script>
+    <script src="src/templates/dialog-ok-button.html" type="text/javascript"></script>
     <script>
         function app_init() {
             const mainView = new MainView()
@@ -83,6 +84,7 @@
                             <label class="settings__label" for="setting__note-names" string-key="setting_title_note_names"></label>
                             <div id="setting__note-names" class="settings__value"></div>
                         </div>
+                        <div class="template-dialog-ok-button"></div>
                     </div>
                 </div>
             </div>
@@ -115,12 +117,7 @@
                             </div>
                             <label for="note-name-format__solfege__" string-key="setting_value_note_names_solfege"></label>
                         </div>
-                        <div class="mdc-dialog__actions">
-                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
-                                <div class="mdc-button__ripple"></div>
-                                <span class="mdc-button__label" string-key="ok"></span>
-                            </button>
-                        </div>
+                        <div class="template-dialog-ok-button"></div>
                     </div>
                 </div>
             </div>
