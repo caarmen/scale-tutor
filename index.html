@@ -31,6 +31,7 @@
     <script src="src/js/viewmodel/ScaleName.js"></script>
     <script src="src/js/viewmodel/StateMachine.js"></script>
     <script src="src/templates/dialog-ok-button.html" type="text/javascript"></script>
+    <script src="src/templates/radio.html" type="text/javascript"></script>
     <script>
         function app_init() {
             const mainView = new MainView()
@@ -95,28 +96,8 @@
                 <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
                     <div class="mdc-dialog__content">
                         <div class="mdc-typography--headline6 settings__title" string-key="setting_title_note_names"></div>
-                        <div id="note-name-format__abc__mdc-form-field" class="mdc-form-field">
-                            <div id="note-name-format__abc__mdc-radio" class="mdc-radio">
-                                <input class="mdc-radio__native-control" type="radio" id="note-name-format__abc__" name="note-name-format">
-                                <div class="mdc-radio__background">
-                                    <div class="mdc-radio__outer-circle"></div>
-                                    <div class="mdc-radio__inner-circle"></div>
-                                </div>
-                                <div class="mdc-radio__ripple"></div>
-                            </div>
-                            <label for="note-name-format__abc__" string-key="setting_value_note_names_abc"></label>
-                        </div>
-                        <div id="note-name-format__solfege__mdc-form-field" class="mdc-form-field">
-                            <div id="note-name-format__solfege__mdc-radio" class="mdc-radio">
-                                <input class="mdc-radio__native-control" type="radio" id="note-name-format__solfege__" name="note-name-format">
-                                <div class="mdc-radio__background">
-                                    <div class="mdc-radio__outer-circle"></div>
-                                    <div class="mdc-radio__inner-circle"></div>
-                                </div>
-                                <div class="mdc-radio__ripple"></div>
-                            </div>
-                            <label for="note-name-format__solfege__" string-key="setting_value_note_names_solfege"></label>
-                        </div>
+                        <div id="placeholder_note-name-format__abc"></div>
+                        <div id="placeholder_note-name-format__solfege"></div>
                         <div class="template-dialog-ok-button"></div>
                     </div>
                 </div>

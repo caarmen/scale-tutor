@@ -29,9 +29,11 @@ class MainView {
     _initViews() {
         this._controlsView.initViews()
         this._elemButtonSettings.onclick = () => this._showSettings()
-        document.querySelectorAll(".template-dialog-ok-button").forEach((element)=> {
+        document.querySelectorAll(".template-dialog-ok-button").forEach((element) => {
             element.innerHTML = templateDialogOkButton
         })
+        document.querySelector("#placeholder_note-name-format__abc").innerHTML = templateRadio("note-name-format", "note-name-format__abc", "setting_value_note_names_abc")
+        document.querySelector("#placeholder_note-name-format__solfege").innerHTML = templateRadio("note-name-format", "note-name-format__solfege", "setting_value_note_names_solfege")
         this._viewModel.i18n.translateElement(document.documentElement)
     }
 
