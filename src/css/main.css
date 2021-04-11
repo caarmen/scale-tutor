@@ -47,6 +47,10 @@ body {
 .mdc-dialog .mdc-dialog__content  {
 	color: var(--mdc-theme-text-primary-on-background)
 }
+.mdc-list-item {
+	min-height: 48px;
+	height: fit-content;
+}
 .settings {
 	align-items: center
 }
