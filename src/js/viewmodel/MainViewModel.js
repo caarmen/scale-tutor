@@ -224,7 +224,7 @@ class MainViewModel {
                 this.isPlayingState.value = false
                 break;
             case StateMachine.State.PLAY_COMPLETE:
-                this._onMoveToScale(this._scaleIndex + 1)
+                if (this.isAutoPlayEnabled()) this._onMoveToScale(this._scaleIndex + 1)
                 if (!this.isAutoPlayEnabled()) this.isPlayingState.value = false
                 break;
             default:
