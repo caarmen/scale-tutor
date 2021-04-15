@@ -12,7 +12,7 @@ Copyright 2015, 2019, 2020, 2021 Google LLC. All Rights Reserved.
  limitations under the License.
 */
 
-const OFFLINE_VERSION = 10001;
+const OFFLINE_VERSION = 10002.5;
 
 const CACHE_NAME = 'offline';
 
@@ -41,9 +41,13 @@ const contentToCache = [
   "/src/js/model/SpeechEngine.js",
   "/src/js/model/ScaleGenerator.js",
   "/src/js/model/Settings.js",
-  "/src/js/view/MainView.js",
-  "/src/js/view/ScaleView.js",
+  "/src/js/view/CheckboxSettingView.js",
   "/src/js/view/ControlsView.js",
+  "/src/js/view/MainView.js",
+  "/src/js/view/MainView.js",
+  "/src/js/view/RadioSettingView.js",
+  "/src/js/view/ScaleView.js",
+  "/src/js/view/SettingsView.js",
   "/src/js/Scale.js",
   "/src/js/Note.js",
   "/src/js/i18n/strings_en.js",
