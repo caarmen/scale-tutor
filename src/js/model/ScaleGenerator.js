@@ -21,7 +21,8 @@ class ScaleGenerator {
         const scaleBaseNotes = this._getScaleBaseNotes()
         const startingNoteIndex = scaleBaseNotes.indexOf(startingNote)
         const rotatedBaseNotes = scaleBaseNotes.slice(startingNoteIndex, scaleBaseNotes.length).concat(scaleBaseNotes.slice(0, startingNoteIndex))
-        return rotatedBaseNotes.map(baseNote => this._createScales(baseNote)).flat()
+        const allScales = rotatedBaseNotes.map(baseNote => this._createScales(baseNote)).flat()
+        return this._settings.getScaleOrder() == Settings.ScaleOrder.RANDOM ? ArrayExt.shuffle(allScales) : allScales
     }
 
     _createScales(baseNote) {
@@ -32,14 +33,13 @@ class ScaleGenerator {
             else if (name == Settings.ScaleTypes.NATURAL_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.NATURAL_MINOR: Scale.NATURAL_MINOR2)
             else if (name == Settings.ScaleTypes.HARMONIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.HARMONIC_MINOR: Scale.HARMONIC_MINOR2)
             else if (name == Settings.ScaleTypes.MELODIC_MINOR) return new Scale(baseNote.getNote(minorScaleShift), singleOctave ? Scale.MELODIC_MINOR: Scale.MELODIC_MINOR2)
-            else if (name == Settings.ScaleTypes.BLUES) return new Scale(baseNote, Scale.BLUES)
             else return undefined
         })
     }
 
     _getScaleBaseNotes() {
         const scaleOrder = this._settings.getScaleOrder()
-        if (scaleOrder == Settings.ScaleOrder.INCREASING_FLATS) {
+        if (scaleOrder == Settings.ScaleOrder.INCREASING_FLATS || scaleOrder == Settings.ScaleOrder.RANDOM /* we shuffle it later */) {
             return [Note.Notes.C4, Note.Notes.F4, Note.Notes.AS4, Note.Notes.DS4, Note.Notes.GS4, Note.Notes.CS4, Note.Notes.FS4,
             Note.Notes.B4, Note.Notes.E4, Note.Notes.A4, Note.Notes.D4, Note.Notes.G4]
         } else if (scaleOrder == Settings.ScaleOrder.INCREASING_SHARPS) {
@@ -54,10 +54,6 @@ class ScaleGenerator {
         } else if (scaleOrder == Settings.ScaleOrder.DECREASING_NOTES) {
             return [Note.Notes.C4, Note.Notes.B4, Note.Notes.AS4, Note.Notes.A4, Note.Notes.GS4, Note.Notes.G4, Note.Notes.FS4,
             Note.Notes.F4, Note.Notes.E4, Note.Notes.DS4, Note.Notes.D4, Note.Notes.CS4]
-        } else if (scaleOrder == Settings.ScaleOrder.RANDOM) {
-            // TODO randomize this
-            return [Note.Notes.C4, Note.Notes.CS4, Note.Notes.D4, Note.Notes.DS4, Note.Notes.E4, Note.Notes.F4, Note.Notes.FS4,
-            Note.Notes.G4, Note.Notes.GS4, Note.Notes.A4, Note.Notes.AS4, Note.Notes.B4]
         }
     }
 

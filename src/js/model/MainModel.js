@@ -36,7 +36,7 @@ class MainModel {
     playScale(scale) {
         const tempoBpm = this._settings.getTempoBpm()
         const transposition = this._settings.getTransposition()
-        return this._scalePlayer.playScale(scale, tempoBpm, transposition, this._settings.getPlaybackOctaves() == 1? ScalePlayer.Rhythm.SIMPLE : ScalePlayer.Rhythm.ADVANCED)
+        return this._scalePlayer.playScale(scale, tempoBpm, transposition, this._settings.getPlaybackOctaves() == 1 ? ScalePlayer.Rhythm.SIMPLE : ScalePlayer.Rhythm.ADVANCED)
     }
 
     stop() {
