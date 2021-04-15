@@ -89,7 +89,8 @@ Settings.ScaleOrder = Object.freeze({
     DECREASING_NOTES: "decreasing_notes",
     INCREASING_FLATS: "increasing_flats",
     INCREASING_SHARPS: "increasing_sharps",
-    INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps"
+    INCREASING_FLATS_AND_SHARPS: "incresing_flats_and_sharps",
+    RANDOM: "random",
 })
 Settings.NoteNameFormat = Object.freeze({ ABC: "abc", SOLFEGE: "solfege" })
 Settings.Tempo = Object.freeze({

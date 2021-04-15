@@ -99,6 +99,7 @@ const strings_en = {
     "setting_value_order_increasing_flats": "Increasing flats",
     "setting_value_order_increasing_sharps": "Increasing sharps",
     "setting_value_order_incresing_flats_and_sharps": "Increasing flats and sharps",
+    "setting_value_order_random": "Random",
     "setting_title_octaves": "Scale difficulty",
     "setting_value_octaves_1": "Basic",
     "setting_value_octaves_2": "Advanced",
