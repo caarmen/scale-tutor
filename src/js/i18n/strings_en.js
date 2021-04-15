@@ -14,7 +14,7 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 */
 const strings_en = {
     "app_name": "Scale Tutor",
-    "app_version": "1.0.0",
+    "app_version": "1.0.1",
     "about_copyright": "Copyright (c) 2021 - present, Carmen Alvarez",
     "about_contact": "carmen@rmen.ca",
     "about_source_code": "Source code",

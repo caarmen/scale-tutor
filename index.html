@@ -1,14 +1,19 @@
-<html lang="en">
+<html lang="en" class="night-mode__auto">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- begin pwa config -->
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+    <meta name="theme-color" content="#1A237E">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end pwa config -->
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <!-- Third party dependencies -->
     <link rel="stylesheet" href="libs/material-components-web-10.0.0.min.css">
     <link rel="stylesheet" href="libs/material-icons.css">
@@ -51,11 +56,14 @@
     <script>
         function app_init() {
             const mainView = new MainView()
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+            }
         }
     </script>
 </head>
 
-<body onload="app_init()" class="night-mode__auto">
+<body onload="app_init()">
     <header class="mdc-top-app-bar">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">

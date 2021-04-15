@@ -28,6 +28,8 @@ class MainView {
         this._elemSettingNoteNamesFormatValue
         this._initViews()
         this._bindViewModel()
+        this._setThemeColorMeta()
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => { this._setThemeColorMeta() });
     }
 
     _initViews() {
@@ -148,5 +150,11 @@ class MainView {
                 checkboxGroup.listener(checkboxGroup.items.filter((checkboxItem)=>checkboxItem.checked).map((checkboxItem) => checkboxItem.value))
             })
         })
+    }
+
+    _setThemeColorMeta() {
+        const style = getComputedStyle(document.documentElement)
+        const themeColor = style.getPropertyValue("--mdc-theme-primary").trim()
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColor);
     }
 }
