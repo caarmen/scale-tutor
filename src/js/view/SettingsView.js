@@ -51,16 +51,10 @@ class SettingsView {
     show() {
         this._mdcSettngsListDialog.open()
         this._mdcSettngsListDialog.listen('MDCDialog:opened', () => {
-            const mdcSwitchTtsEnabled = new mdc.switchControl.MDCSwitch(document.querySelector("#setting__tts-enabled"))
-            mdcSwitchTtsEnabled.checked = this._viewModel.isSpeechSynthesisEnabled()
-            mdcSwitchTtsEnabled.listen("change", (e) => {
-                this._viewModel.setSpeechSynthesisEnabled(mdcSwitchTtsEnabled.checked)
-            })
-            const mdcSwitchAutoPlayEnabled = new mdc.switchControl.MDCSwitch(document.querySelector("#setting__autoplay-enabled"))
-            mdcSwitchAutoPlayEnabled.checked = this._viewModel.isAutoPlayEnabled()
-            mdcSwitchAutoPlayEnabled.listen("change", (e) => {
-                this._viewModel.setAutoPlayEnabled(mdcSwitchAutoPlayEnabled.checked)
-            })
+            const ttsEnabledSwitchView = new SwitchSettingView()
+            ttsEnabledSwitchView.bindSwitchSetting("tts-enabled", this._viewModel.isSpeechSynthesisEnabled(), (newValue) => this._viewModel.setSpeechSynthesisEnabled(newValue))
+            const autoplayEnabledSwitchView = new SwitchSettingView()
+            autoplayEnabledSwitchView.bindSwitchSetting("autoplay-enabled", this._viewModel.isAutoPlayEnabled(), (newValue) => this._viewModel.setAutoPlayEnabled(newValue))
         })
     }
 
