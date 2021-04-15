@@ -19,7 +19,7 @@ along with Scale Tutor.  If not, see <http://www.gnu.org/licenses/>.
 class Settings {
     constructor(settingsAccess) {
         this._settingsAccess = settingsAccess
-        this.observerNoteNameFormatListener = (newValue) => { }
+        this.observerNoteNameFormat = (newValue) => { }
         this.observerClef = (newValue) => { }
         this.observerOrder = (newValue) => { }
         this.observerOctaves = (newValue) => { }
@@ -30,7 +30,7 @@ class Settings {
 
         this._settingsAccess.addObserver((key, value) => {
             if (key == Settings._KEY_NOTE_NAME_FORMAt) {
-                this.observerNoteNameFormatListener(value)
+                this.observerNoteNameFormat(value)
             } else if (key == Settings._KEY_CLEF) {
                 this.observerClef(value)
             } else if (key == Settings._KEY_SCALE_ORDER) {

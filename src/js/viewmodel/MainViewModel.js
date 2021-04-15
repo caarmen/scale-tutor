@@ -29,6 +29,8 @@ class MainViewModel {
         this.scaleName = new ObservableField()
         this.scaleImage = new ObservableField()
         this.isPlayingState = new ObservableField(false)
+
+        // Settings display values
         this.noteNameFormatDisplayValue = new ObservableField(this._getNoteNameFormatDisplayValue(this._settings.getNoteNameFormat()))
         this.clefDisplayValue = new ObservableField(this._getClefDisplayValue(this._settings.getClef()))
         this.orderDisplayValue = new ObservableField(this._getOrderDisplayValue(this._settings.getScaleOrder()))
@@ -40,42 +42,50 @@ class MainViewModel {
 
         this._stateMachine.stateListener = (newState) => this._onStateChange(newState)
         this._onStateChange(this._stateMachine.state)
-        this._settings.observerNoteNameFormatListener = (newValue) => {
-            this.noteNameFormatDisplayValue.value = this._getNoteNameFormatDisplayValue(newValue)
-            this._onScaleChange(this._scales[this._scaleIndex])
-        }
-        this._settings.observerClef = (newValue) => {
-            this.clefDisplayValue.value = this._getClefDisplayValue(newValue)
-            this._onScaleChange(this._scales[this._scaleIndex])
-        }
-        this._settings.observerOrder = (newValue) => {
-            this.orderDisplayValue.value = this._getOrderDisplayValue(newValue)
-            this._scaleIndex = 0
-            this._scales = this._model.generateScales()
-            this._onScaleChange(this._scales[this._scaleIndex])
-        }
-        this._settings.observerOctaves = (newValue) => {
-            this.octavesDisplayValue.value = this._getOctavesDisplayValue(newValue)
-            this._scaleIndex = 0
-            this._scales = this._model.generateScales()
-            this._onScaleChange(this._scales[this._scaleIndex])
-        }
-        this._settings.observerMinorScaleShift = (newValue) => {
-            this.minorScaleShiftDisplayValue.value = this._getMinorScaleShiftDisplayValue(newValue)
-            this._scaleIndex = 0
-            this._scales = this._model.generateScales()
-            this._onScaleChange(this._scales[this._scaleIndex])
-        }
+
+        this._observeSettingsChanges()
+    }
+
+    _observeSettingsChanges() {
+        // Settings which only require a setting value display update
         this._settings.observerTransposition = (newValue) => {
             this.transpositionDisplayValue.value = newValue
         }
-        this._settings.observerTempo = (newValue) => { this.tempoDisplayValue.value = this._getTempoDisplayValue(newValue) }
-        this._settings.observerScaleTypes = (newValues) => { 
-            this.scaleTypesDisplayValue.value = this._getScaleTypesDisplayValue(newValues) 
-            this._scaleIndex = 0
-            this._scales = this._model.generateScales()
-            this._onScaleChange(this._scales[this._scaleIndex])
+        this._settings.observerTempo = (newValue) => {
+            this.tempoDisplayValue.value = this._getTempoDisplayValue(newValue)
         }
+
+        // Settings which also require a refresh of the scale display
+        this._settings.observerNoteNameFormat = (newValue) => {
+            this.noteNameFormatDisplayValue.value = this._getNoteNameFormatDisplayValue(newValue)
+            this._updateScaleDisplay(this._scales[this._scaleIndex])
+        }
+        this._settings.observerClef = (newValue) => {
+            this.clefDisplayValue.value = this._getClefDisplayValue(newValue)
+            this._updateScaleDisplay(this._scales[this._scaleIndex])
+        }
+        this._settings.observerOrder = (newValue) => {
+            this.orderDisplayValue.value = this._getOrderDisplayValue(newValue)
+            this._regenerateScales()
+        }
+        this._settings.observerOctaves = (newValue) => {
+            this.octavesDisplayValue.value = this._getOctavesDisplayValue(newValue)
+            this._regenerateScales()
+        }
+        this._settings.observerMinorScaleShift = (newValue) => {
+            this.minorScaleShiftDisplayValue.value = this._getMinorScaleShiftDisplayValue(newValue)
+            this._regenerateScales()
+        }
+        this._settings.observerScaleTypes = (newValues) => {
+            this.scaleTypesDisplayValue.value = this._getScaleTypesDisplayValue(newValues)
+            this._regenerateScales()
+        }
+    }
+
+    _regenerateScales() {
+        this._scaleIndex = 0
+        this._scales = this._model.generateScales()
+        this._updateScaleDisplay(this._scales[this._scaleIndex])
     }
 
     stop = () => this._stateMachine.doAction(StateMachine.Action.STOP)
@@ -195,10 +205,10 @@ class MainViewModel {
             case StateMachine.State.MANUAL_SCALE_DISPLAY:
                 this._model.stop()
                 this.isPlayingState.value = false
-                this._onScaleChange(scale)
+                this._updateScaleDisplay(scale)
                 break;
             case StateMachine.State.AUTO_SCALE_DISPLAY:
-                this._onScaleChange(scale)
+                this._updateScaleDisplay(scale)
                 break;
             case StateMachine.State.SPEAK_SCALE_NAME:
                 this._model.playText(this._getTtsText(scale))
@@ -223,7 +233,7 @@ class MainViewModel {
     }
 
     _getTtsText = (scale) => `${this._noteName.getTtsNoteName(scale.startingNote)} ${this._scaleName.getScaleName(scale)}`
-    _onScaleChange(scale) {
+    _updateScaleDisplay(scale) {
         this.scaleName.value = `${this._noteName.getNoteName(scale.startingNote)} ${this._scaleName.getScaleName(scale)}`
         this.scaleImage.value = this._scaleName.getScaleImage(scale)
     }
