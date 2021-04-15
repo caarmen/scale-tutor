@@ -24,6 +24,7 @@ class SpeechEngine {
 
     playText(text) {
         const speechSynthesisUtterance = new SpeechSynthesisUtterance(text)
+        speechSynthesisUtterance.lang = "en-US"
         this._synth.speak(speechSynthesisUtterance)
     }
 
