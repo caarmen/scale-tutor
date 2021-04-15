@@ -31,9 +31,9 @@ class ScalePlayer {
     }
 
     playScale(scale, tempoBpm, transposition, rhythm) {
-        const noteDuration = 60 / tempoBpm
-        const ttsTimeS = 2
-        const preparationTimeS = ttsTimeS + 4 * noteDuration
+        const noteDurationS = 60 / tempoBpm
+        const ttsDurationS = 2
+        const preparationBeepsDurationS = 4 * noteDurationS
         Log.log(this._tag, "playScale, context = " + this._context)
         if (!this._context) {
             this._context = new (window.AudioContext || window.webkitAudioContext)();
@@ -42,27 +42,37 @@ class ScalePlayer {
             this._isPlaying = true
             const oscillator = this._context.createOscillator();
             // oscillator.type = "sine";
+            // Schedule the preparation beeps
             for (let i = 0; i < 4; i++) {
                 oscillator.frequency.setValueAtTime(
                     scale.startingNote.getNote(transposition).frequency(),
-                    this._context.currentTime + ttsTimeS + i * noteDuration)
+                    this._context.currentTime + ttsDurationS + (i * noteDurationS))
                 oscillator.frequency.setValueAtTime(
                     0,
-                    this._context.currentTime + ttsTimeS + (i * noteDuration) + (noteDuration / 2))
+                    this._context.currentTime + ttsDurationS + (i * noteDurationS) + (noteDurationS / 2))
             }
 
-            const noteStartTimes = this._getNoteStartTimes(scale, noteDuration, rhythm)
+            // Schedule the scale notes
+            const noteStartTimes = this._getNoteStartTimes(scale, noteDurationS, rhythm)
+                .map(item => item + this._context.currentTime + ttsDurationS + preparationBeepsDurationS)
             scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep + transposition))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
                     oscillator.frequency.setValueAtTime(
                         note.frequency(),
-                        this._context.currentTime + preparationTimeS + noteStartTimes[index]);
-
+                        noteStartTimes[index]);
                 })
+            const scaleLastNoteEndTime = noteStartTimes[noteStartTimes.length - 1] + noteDurationS
+            // Schedule one rest at the end
+            oscillator.frequency.setValueAtTime(
+                0,
+                scaleLastNoteEndTime)
+
+            // Play everything we scheduled
+            const restEndTime = scaleLastNoteEndTime + noteDurationS
             oscillator.connect(this._context.destination);
-            oscillator.start(this._context.currentTime + preparationTimeS - 4 * noteDuration)
-            oscillator.stop(this._context.currentTime + preparationTimeS + noteStartTimes[noteStartTimes.length - 1] + noteDuration)
+            oscillator.start(this._context.currentTime + ttsDurationS)
+            oscillator.stop(restEndTime)
             oscillator.onended = () => {
                 this._isPlaying = false
                 completionFunction()
