@@ -19,8 +19,10 @@ class CheckboxSettingView {
     }
 
     bindCheckboxSetting(settingId, valueObservableField, checkboxGroupCreatorFunc) {
+        const elemSetting = document.querySelector(`#setting__${settingId}`)
         const elemSettingLabel = document.querySelector(`#label_setting__${settingId}`)
-        const elemSettingValue = document.querySelector(`#setting__${settingId}`)
+        const elemSettingValue = document.querySelector(`#value_setting__${settingId}`)
+        elemSetting.onclick = () => this._displayCheckboxOptionsSetting(checkboxGroupCreatorFunc())
         elemSettingLabel.onclick = () => this._displayCheckboxOptionsSetting(checkboxGroupCreatorFunc())
         elemSettingValue.onclick = () => this._displayCheckboxOptionsSetting(checkboxGroupCreatorFunc())
         valueObservableField.observer = (newValue) => elemSettingValue.innerText = newValue

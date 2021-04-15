@@ -19,8 +19,10 @@ class RadioSettingView {
     }
 
     bindRadioSetting(settingId, valueObservableField, radioGroupCreatorFunc) {
+        const elemSetting = document.querySelector(`#setting__${settingId}`)
         const elemSettingLabel = document.querySelector(`#label_setting__${settingId}`)
-        const elemSettingValue = document.querySelector(`#setting__${settingId}`)
+        const elemSettingValue = document.querySelector(`#value_setting__${settingId}`)
+        elemSetting.onclick = () => this._displayRadioOptionsSetting(radioGroupCreatorFunc())
         elemSettingLabel.onclick = () => this._displayRadioOptionsSetting(radioGroupCreatorFunc())
         elemSettingValue.onclick = () => this._displayRadioOptionsSetting(radioGroupCreatorFunc())
         valueObservableField.observer = (newValue) => elemSettingValue.innerText = newValue
