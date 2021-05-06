@@ -81,6 +81,9 @@ class Settings {
     ])))
     setScaleTypes = (values) => this._settingsAccess.setSetting(Settings._KEY_SCALE_TYPES, JSON.stringify(values))
 
+    getVolume = () => parseFloat(this._settingsAccess.getSetting(Settings._KEY_VOLUME, 1))
+    setVolume = (value) => this._settingsAccess.setSetting(Settings._KEY_VOLUME, value)
+
 }
 Settings.Clef = Object.freeze({ TREBLE: "treble", BASS: "bass", ALTO: "alto" })
 Settings.ScaleTypes = Object.freeze({ MAJOR: "major", NATURAL_MINOR: "natural_minor", HARMONIC_MINOR: "harmonic_minor", MELODIC_MINOR: "melodic_minor" })
@@ -115,3 +118,4 @@ Settings._KEY_SPEECH_SYNTHESIS = "speech_synthesis"
 Settings._KEY_TRANSPOSITION = "transposition"
 Settings._KEY_CLEF = "clef"
 Settings._KEY_PLAYbACK_OCTAVES = "playback_octaves"
+Settings._KEY_VOLUME= "volume"

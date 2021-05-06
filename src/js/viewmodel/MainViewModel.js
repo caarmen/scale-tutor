@@ -238,5 +238,7 @@ class MainViewModel {
         this.scaleImage.value = this._scaleName.getScaleImage(scale)
     }
 
+    getVolume = () => this._settings.getVolume() * 100
+    setVolume = (newVolume) => this._model.setVolume(newVolume / 100)
 
 }

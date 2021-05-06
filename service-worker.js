@@ -12,7 +12,7 @@ Copyright 2015, 2019, 2020, 2021 Google LLC. All Rights Reserved.
  limitations under the License.
 */
 
-const OFFLINE_VERSION = 10006;
+const OFFLINE_VERSION = 10010;
 
 const CACHE_NAME = 'offline';
 
@@ -48,6 +48,7 @@ const contentToCache = [
   "/src/js/view/SettingsView.js",
   "/src/js/view/CheckboxSettingView.js",
   "/src/js/view/ControlsView.js",
+  "/src/js/view/VolumeView.js",
   "/src/js/Scale.js",
   "/src/js/Note.js",
   "/src/js/i18n/strings_en.js",
@@ -204,6 +205,7 @@ const contentToCache = [
   "/src/templates/checkbox.html",
   "/src/templates/setting.html",
   "/src/templates/settings.html",
+  "/src/templates/slider.html",
 ]
 self.addEventListener('install', function (event) {
   console.log('[ServiceWorker] Install');
