@@ -211,8 +211,10 @@ class MainViewModel {
                 this._updateScaleDisplay(scale)
                 break;
             case StateMachine.State.SPEAK_SCALE_NAME:
-                this._model.playText(this._getTtsText(scale))
                 this.isPlayingState.value = true
+                this._model.playText(this._getTtsText(scale)).then(() =>{
+                    this._stateMachine.doAction(StateMachine.Action.SPEAK_SCALE_NAME_COMPLETED)
+                })
                 break;
             case StateMachine.State.PLAY_NOTES:
                 this._model.playScale(scale).then(() => {

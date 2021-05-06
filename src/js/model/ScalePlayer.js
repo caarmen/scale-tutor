@@ -40,7 +40,6 @@ class ScalePlayer {
 
     playScale(scale, tempoBpm, transposition, rhythm) {
         const noteDurationS = 60 / tempoBpm
-        const ttsDurationS = 2
         const preparationBeepsDurationS = 4 * noteDurationS
         Log.log(this._tag, "playScale, context = " + this._context)
         if (!this._context) {
@@ -54,15 +53,15 @@ class ScalePlayer {
             for (let i = 0; i < 4; i++) {
                 oscillator.frequency.setValueAtTime(
                     scale.startingNote.getNote(transposition).frequency(),
-                    this._context.currentTime + ttsDurationS + (i * noteDurationS))
+                    this._context.currentTime + (i * noteDurationS))
                 oscillator.frequency.setValueAtTime(
                     0,
-                    this._context.currentTime + ttsDurationS + (i * noteDurationS) + (noteDurationS / 2))
+                    this._context.currentTime + (i * noteDurationS) + (noteDurationS / 2))
             }
 
             // Schedule the scale notes
             const noteStartTimes = this._getNoteStartTimes(scale, noteDurationS, rhythm)
-                .map(item => item + this._context.currentTime + ttsDurationS + preparationBeepsDurationS)
+                .map(item => item + this._context.currentTime + preparationBeepsDurationS)
             scale.halfSteps.map(halfStep => scale.startingNote.getNote(halfStep + transposition))
                 .filter(note => note != undefined)
                 .forEach((note, index) => {
@@ -81,7 +80,7 @@ class ScalePlayer {
             this._gainNode = this._context.createGain()
             this._gainNode.gain.value = this._volume
             oscillator.connect(this._gainNode).connect(this._context.destination)
-            oscillator.start(this._context.currentTime + ttsDurationS)
+            oscillator.start(this._context.currentTime)
             oscillator.stop(restEndTime)
             oscillator.onended = () => {
                 this._isPlaying = false

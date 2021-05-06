@@ -45,6 +45,8 @@ class StateMachine {
                 } else {
                     return StateMachine.State.PLAY_NOTES
                 }
+            case StateMachine.Action.SPEAK_SCALE_NAME_COMPLETED:
+                return StateMachine.State.PLAY_NOTES
             case StateMachine.Action.STOP:
                 return StateMachine.State.PLAY_INTERRUPTED
             default: /* PLAY_COMPLETED*/
@@ -55,8 +57,6 @@ class StateMachine {
         switch (this.state) {
             case StateMachine.State.AUTO_SCALE_DISPLAY:
                 return StateMachine.State.SPEAK_SCALE_NAME
-            case StateMachine.State.SPEAK_SCALE_NAME:
-                return StateMachine.State.PLAY_NOTES
             case StateMachine.State.PLAY_COMPLETE:
                 if (this.autoPlay) return StateMachine.State.AUTO_SCALE_DISPLAY
                 else return undefined
@@ -70,6 +70,7 @@ StateMachine.Action = Object.freeze({
     PREVIOUS: "previous",
     PLAY: "play",
     STOP: "stop",
+    SPEAK_SCALE_NAME_COMPLETED: "speak_scale_name_completed",
     PLAY_COMPLETED: "play_completed"
 })
 StateMachine.State = Object.freeze({

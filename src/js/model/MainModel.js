@@ -30,7 +30,9 @@ class MainModel {
 
     playText(text) {
         if (this._settings.isSpeechSynthesisEnabled()) {
-            this._speechEngine.playText(text, this._settings.getVolume())
+            return this._speechEngine.playText(text, this._settings.getVolume())
+        } else {
+            return Promise.resolve()
         }
     }
 

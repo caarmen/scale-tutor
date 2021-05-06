@@ -22,11 +22,13 @@ class SpeechEngine {
         this._synth = window.speechSynthesis
     }
 
-    playText(text, volume) {
+    playText = (text, volume) => new Promise(completionFunc => {
         const speechSynthesisUtterance = new SpeechSynthesisUtterance(text)
         speechSynthesisUtterance.lang = "en-US"
         speechSynthesisUtterance.volume = volume
+        speechSynthesisUtterance.onend = completionFunc
+        speechSynthesisUtterance.onerror = completionFunc
         this._synth.speak(speechSynthesisUtterance)
-    }
+    })
 
 }
