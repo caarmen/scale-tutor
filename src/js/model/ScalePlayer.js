@@ -16,9 +16,17 @@ class ScalePlayer {
     constructor() {
         this._tag = "ScalePlayer"
         this._context = new (window.AudioContext || window.webkitAudioContext)();
+        this._gainNode
         this._isPlaying = false
+        this._volume = 1.0
     }
 
+    set volume(newValue) {
+        this._volume = newValue
+        if (this._gainNode) {
+            this._gainNode.gain.value = newValue
+        }
+    }
     isPlaying = () => this._isPlaying
 
     stop() {
@@ -70,7 +78,9 @@ class ScalePlayer {
 
             // Play everything we scheduled
             const restEndTime = scaleLastNoteEndTime + noteDurationS
-            oscillator.connect(this._context.destination);
+            this._gainNode = this._context.createGain()
+            this._gainNode.gain.value = this._volume
+            oscillator.connect(this._gainNode).connect(this._context.destination)
             oscillator.start(this._context.currentTime + ttsDurationS)
             oscillator.stop(restEndTime)
             oscillator.onended = () => {

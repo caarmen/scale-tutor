@@ -23,13 +23,14 @@ class MainModel {
         this._settings = settings
         this._scaleGenerator = new ScaleGenerator(this._settings)
         this._speechEngine = new SpeechEngine()
+        this._scalePlayer.volume = this._settings.getVolume()
     }
 
     generateScales = () => this._scaleGenerator.createScales(Note.Notes.C4)
 
     playText(text) {
         if (this._settings.isSpeechSynthesisEnabled()) {
-            this._speechEngine.playText(text)
+            this._speechEngine.playText(text, this._settings.getVolume())
         }
     }
 
@@ -43,4 +44,8 @@ class MainModel {
         this._scalePlayer.stop()
     }
 
+    setVolume(newVolume) {
+        this._settings.setVolume(newVolume)
+        this._scalePlayer.volume = newVolume
+    }
 }

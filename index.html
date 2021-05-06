@@ -41,6 +41,7 @@
     <script src="src/js/view/ScaleView.js"></script>
     <script src="src/js/view/SettingsView.js"></script>
     <script src="src/js/view/SwitchSettingView.js"></script>
+    <script src="src/js/view/VolumeView.js"></script>
     <script src="src/js/viewmodel/CheckboxGroup.js"></script>
     <script src="src/js/viewmodel/CheckboxItem.js"></script>
     <script src="src/js/viewmodel/MainViewModel.js"></script>
@@ -57,6 +58,7 @@
     <script src="src/templates/setting.html" type="text/javascript"></script>
     <script src="src/templates/toggle.html" type="text/javascript"></script>
     <script src="src/templates/settings.html" type="text/javascript"></script>
+    <script src="src/templates/slider.html" type="text/javascript"></script>
     <script>
         function app_init() {
             const mainView = new MainView()
@@ -89,6 +91,7 @@
             </div>
         </div>
         <img id="scale-img">
+        <div id="placeholder-volume-control"></div>
         <div id="placeholder-about-dialog"></div>
         <div id="placeholder-settings-list-dialog"></div>
         <div id="placeholder-setting-detail-dialog"></div>

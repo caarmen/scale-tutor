@@ -22,6 +22,7 @@ class MainView {
         this._scaleView = new ScaleView()
         this._controlsView = new ControlsView(this._viewModel.i18n)
         this._settingsView = new SettingsView(this._viewModel)
+        this._volumeView = new VolumeView()
 
         this._initViews()
         this._bindViewModel()
@@ -32,6 +33,7 @@ class MainView {
     _initViews() {
         this._controlsView.initViews()
         this._settingsView.initViews()
+        this._volumeView.initViews()
         this._elemButtonAbout.onclick = () => this._showAbout()
         this._elemButtonSettings.onclick = () => this._settingsView.show()
         this._viewModel.i18n.translateElement(document.documentElement)
@@ -46,6 +48,9 @@ class MainView {
         this._controlsView.onStartListener = () => this._viewModel.play()
         this._controlsView.onPrevListener = () => this._viewModel.prev()
         this._controlsView.onNextListener = () => this._viewModel.next()
+
+        this._volumeView.onVolumeChanged = (newVolume) => this._viewModel.setVolume(newVolume)
+        this._volumeView.setVolume(this._viewModel.getVolume())
     }
 
     _showAbout() {
